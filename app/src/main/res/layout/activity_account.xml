@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/fragment_nameAccount"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginRight="200dp"/>
+    <TextView
+        android:id="@+id/fragment_phoneAccount"
+        android:layout_width="match_parent"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_height="30dp"
+        android:layout_marginRight="200dp"
+        android:layout_below="@id/fragment_nameAccount"/>
+
+    <TextView
+        android:id="@+id/txtChangeInfo"
+        android:layout_width="272dp"
+        android:layout_height="53dp"
+        android:layout_below="@id/fragment_phoneAccount"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:drawableStart="@drawable/ic_baseline_settings_24"
+        android:drawablePadding="25dp"
+        android:gravity="center"
+        android:text="Đổi thông tin tài khoản"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtTableHistory"
+        android:layout_width="276dp"
+        android:layout_height="51dp"
+        android:layout_below="@id/txtChangeInfo"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:drawableStart="@drawable/ic_baseline_access_alarm_24"
+        android:drawablePadding="25dp"
+        android:gravity="center"
+        android:text="Lịch sử đặt bàn"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtTransactionHistory"
+        android:layout_width="281dp"
+        android:layout_height="51dp"
+        android:layout_below="@id/txtTableHistory"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="30dp"
+        android:drawableStart="@drawable/ic_baseline_description_24"
+        android:drawablePadding="25dp"
+        android:gravity="center"
+        android:text="Lịch sử giao dịch"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtLogout"
+        android:layout_width="284dp"
+        android:layout_height="51dp"
+        android:layout_below="@id/txtTransactionHistory"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="30dp"
+        android:drawableStart="@drawable/ic_baseline_login_24"
+        android:drawablePadding="25dp"
+        android:gravity="center"
+        android:text="Đăng xuất"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_above="@id/txtTableHistory"
+        android:background="#FF0000FF" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_above="@id/txtTransactionHistory"
+        android:background="#FF0000FF" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_above="@id/txtLogout"
+        android:background="#FF0000FF" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@id/txtLogout"
+        android:background="#FF0000FF" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        app:itemBackground="@color/colorPrimaryDark"
+        app:itemIconTint="@color/color_bottom_nav"
+        app:itemTextColor="@color/color_bottom_nav"
+        app:menu="@menu/navigation" />
+</RelativeLayout>
