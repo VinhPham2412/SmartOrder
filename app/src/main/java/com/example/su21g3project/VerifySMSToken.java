@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
@@ -25,8 +26,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -63,23 +67,49 @@ public class VerifySMSToken extends AppCompatActivity {
                            assert firebaseUser != null;
                            String userId=firebaseUser.getUid();
                             databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id", userId);
-                            hashMap.put("username",FName+LName);
-                            hashMap.put("phone", phone);
-                            databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            ValueEventListener eventListener=new ValueEventListener() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(!snapshot.exists()){
+                                        HashMap<String, String> hashMap = new HashMap<>();
+                                        hashMap.put("id", userId);
+                                        hashMap.put("username",FName+LName);
+                                        hashMap.put("phone", phone);
+                                        databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    // Update UI
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        });
+                                    }else{
                                         Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         // Update UI
                                         startActivity(intent);
-                                        finish();
-                                    }else
-                                        Log.d(TAG,"Can't connect database");
+                                    }
+
                                 }
-                            });
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+//                                    Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+//                                    // Update UI
+//                                    startActivity(intent);
+//                                    finish();
+                                }
+                            };
+                            databaseReference.addListenerForSingleValueEvent(eventListener);
+
 
                         } else {
                             // Sign in failed, display a message and update the UI
