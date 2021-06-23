@@ -1,5 +1,12 @@
 package Model;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
 public class User {
     private String id;
     private String name;
@@ -9,8 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(String id,String name, String address, String phone) {
-        this.id=id;
+    public User(String name, String phone, String address) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -47,4 +53,14 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("phone", phone);
+        result.put("address", address);
+
+        return result;
+    }
+
 }

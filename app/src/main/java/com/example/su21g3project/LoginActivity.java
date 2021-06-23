@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 intent.putExtra("phone", phoneNumber);
                 intent.putExtra("verificationId",verificationId);
+                progressBar.setVisibility(View.GONE);
+                btnLogin.setVisibility(View.VISIBLE);
                 startActivity(intent);
             }
 
@@ -67,27 +69,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         btnLogin=findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (phone.getText().toString().trim().isEmpty()){
-                    Toast.makeText(LoginActivity.this,"Enter phone number",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                phoneNumber = phone.getText().toString().replaceFirst("0","+84");
-                progressBar.setVisibility(View.VISIBLE);
-                btnLogin.setVisibility(View.INVISIBLE);
-
-                PhoneAuthOptions options =
-                        PhoneAuthOptions.newBuilder(mAuth)
-                                .setPhoneNumber(phoneNumber)       // Phone number to verify
-                                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                                .setActivity(LoginActivity.this)                 // Activity (for callback binding)
-                                .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                                .build();
-                PhoneAuthProvider.verifyPhoneNumber(options);
+        btnLogin.setOnClickListener(v -> {
+            if (phone.getText().toString().trim().isEmpty()){
+                Toast.makeText(LoginActivity.this,"Enter phone number",Toast.LENGTH_SHORT).show();
+                return;
             }
+            phoneNumber = phone.getText().toString().replaceFirst("0","+84");
+            progressBar.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.INVISIBLE);
+
+            PhoneAuthOptions options =
+                    PhoneAuthOptions.newBuilder(mAuth)
+                            .setPhoneNumber(phoneNumber)       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setActivity(LoginActivity.this)                 // Activity (for callback binding)
+                            .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                            .build();
+            PhoneAuthProvider.verifyPhoneNumber(options);
         });
     }
 }
