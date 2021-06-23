@@ -45,20 +45,6 @@ public class ResisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resister);
-//        imageView=findViewById(R.id.imageView2);
-//        URL url = null;
-//        try {
-//            url = new URL("https://ibb.co/JvWMjkN");
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-//        Bitmap bmp = null;
-//        try {
-//            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        imageView.setImageBitmap(bmp);
 
         Button btnRegister = findViewById(R.id.btnRegister);
         txtFName = findViewById(R.id.txtfName);
@@ -81,6 +67,7 @@ public class ResisterActivity extends AppCompatActivity {
                 intent.putExtra("FName", fName);
                 intent.putExtra("LName", lName);
                 intent.putExtra("verificationId",verificationId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
 

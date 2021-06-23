@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import Model.User;
+
 import static android.content.ContentValues.TAG;
 
 public class VerifySMSToken extends AppCompatActivity {
@@ -58,11 +60,10 @@ public class VerifySMSToken extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-//                            Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            // Update UI
-//                            startActivity(intent);
-//                            finish();
+                            Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            // Update UI
+                            startActivity(intent);
                            FirebaseUser firebaseUser=mAuth.getCurrentUser();
                            assert firebaseUser != null;
                            String userId=firebaseUser.getUid();
@@ -71,46 +72,21 @@ public class VerifySMSToken extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(!snapshot.exists()){
-                                        HashMap<String, String> hashMap = new HashMap<>();
-                                        hashMap.put("id", userId);
-                                        hashMap.put("username",FName+LName);
-                                        hashMap.put("phone", phone);
-                                        databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    // Update UI
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
+                                        User user = new User(FName+LName,phone,"");
+                                        databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
+                                            if(task1.isSuccessful()){
+                                                finish();
                                             }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        });
-                                    }else{
-                                        Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-                                        // Update UI
-                                        startActivity(intent);
+                                        }).addOnFailureListener(e -> e.printStackTrace());
                                     }
-
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-//                                    Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-//                                    // Update UI
-//                                    startActivity(intent);
-//                                    finish();
+//
                                 }
                             };
                             databaseReference.addListenerForSingleValueEvent(eventListener);
-
-
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

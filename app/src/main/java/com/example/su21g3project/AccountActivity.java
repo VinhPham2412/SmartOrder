@@ -40,11 +40,13 @@ public class AccountActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.navigation_home:
                         Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.navigation_account:
                         Intent intent1=new Intent(getApplicationContext(), AccountActivity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent1);
                         overridePendingTransition(0,0);
                         return true;
@@ -56,8 +58,7 @@ public class AccountActivity extends AppCompatActivity {
         });
         txtChange.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this,UpdateProfile.class);
-            intent.putExtra("user",user);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
     }

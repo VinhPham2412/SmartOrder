@@ -3,4 +3,10 @@
     <string name="phone">Phone</string>
     <string name="createAccount">Create Account</string>
     <string name="account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="selectDate">Chọn ngày</string>
+    <string name="selectTime">Chọn giờ</string>
+    <string name="sl_nopeople">Số người</string>
+    <string name="btnNext">Next</string>
 </resources>

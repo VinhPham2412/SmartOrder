@@ -3,6 +3,7 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnNotHaveAccount;
+    private ImageButton btnGetTable;
     private CircleIndicator circleIndicator;
     private Timer timer;
     ViewPager viewPager,view_pager;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this,ResisterActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
             });
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             btnNotHaveAccount.setVisibility(View.INVISIBLE);
             imageButton.setVisibility(View.VISIBLE);
             String welcome = "Welcome ";
-//            welcome+= user.getDisplayName();
+            welcome+= user.getDisplayName();
             txtUsername.setText(welcome);
 
             BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -81,23 +84,26 @@ public class MainActivity extends AppCompatActivity {
         view_pager=findViewById(R.id.view_pager);
         mNavigationView=findViewById(R.id.navigation);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
-        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.navigation_home:
-                        return true;
-                    case R.id.navigation_account:
-                        Intent intent1=new Intent(getApplicationContext(), AccountActivity.class);
-                        startActivity(intent1);
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.navigation_address:
-                        return true;
-                }
-                return false;
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.navigation_home:
+                    return true;
+                case R.id.navigation_account:
+                    Intent intent1=new Intent(MainActivity.this, AccountActivity.class);
+                    startActivity(intent1);
+                    return true;
+                case R.id.navigation_address:
+                    return true;
             }
+            return false;
         });
+        btnGetTable = findViewById(R.id.btnGetTable);
+        btnGetTable.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
     }
     private void autoSlideImage(){
         if(timer==null){
@@ -106,17 +112,14 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentItem=viewPager.getCurrentItem();
-                        int totalTtem=photoList.size()-1;
-                        if(currentItem<totalTtem){
-                            currentItem++;
-                            viewPager.setCurrentItem(currentItem);
-                        }else {
-                            viewPager.setCurrentItem(0);
-                        }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    int currentItem=viewPager.getCurrentItem();
+                    int totalTtem=photoList.size()-1;
+                    if(currentItem<totalTtem){
+                        currentItem++;
+                        viewPager.setCurrentItem(currentItem);
+                    }else {
+                        viewPager.setCurrentItem(0);
                     }
                 });
             }

@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 intent.putExtra("phone", phoneNumber);
                 intent.putExtra("verificationId",verificationId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 progressBar.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
                 startActivity(intent);
