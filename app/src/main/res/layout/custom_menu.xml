@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/buffet_name"
+        android:textSize="18dp"
+        android:textColor="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <TextView
+        android:gravity="center"
+        android:id="@+id/bufet_description"
+        android:textSize="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:rowCount="5"
+        android:columnCount="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </GridLayout>
+</LinearLayout>

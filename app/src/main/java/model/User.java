@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

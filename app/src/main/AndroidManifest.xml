@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
-        <activity android:name=".GetTableActivity"></activity>
+        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".GetTableActivity" />
         <activity android:name=".UpdateProfile" />
         <activity android:name=".AccountActivity" />
         <activity android:name=".VerifySMSToken" />

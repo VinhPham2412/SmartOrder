@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Adapter.PhotoAdapter;
-import Model.Photo;
-import Model.User;
+import adapter.PhotoAdapter;
+import model.Photo;
+import model.User;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {

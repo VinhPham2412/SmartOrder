@@ -13,5 +13,6 @@
     <color name="red">#ff0039</color>
     <color name="mainColor">#FF03DAC5</color>
     <color name="bgBottomNavigation">#96E13E</color>
-    <color name="green">#FF96E13E</color>
+    <color name="green">#E34C1C</color>
+    <color name="yellow">#FFE34C1C</color>
 </resources>

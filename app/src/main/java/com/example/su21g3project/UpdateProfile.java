@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import Model.User;
+import model.User;
 
 public class UpdateProfile extends AppCompatActivity {
 
