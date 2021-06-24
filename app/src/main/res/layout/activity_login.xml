@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:keepScreenOn="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -115,7 +116,7 @@
                     android:layout_marginEnd="50dp"
                     android:background="@drawable/border"
                     android:backgroundTint="@color/colorPrimary"
-                    android:text="Login"
+                    android:text="Đăng nhập"
                     android:textColor="@color/cardview_light_background"
                     android:textStyle="bold" />
 

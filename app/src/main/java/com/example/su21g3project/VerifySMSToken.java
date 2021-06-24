@@ -3,7 +3,9 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -58,10 +60,12 @@ public class VerifySMSToken extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                             // Update UI
                             startActivity(intent);
                            FirebaseUser firebaseUser=mAuth.getCurrentUser();
@@ -75,6 +79,8 @@ public class VerifySMSToken extends AppCompatActivity {
                                         User user = new User(FName+LName,phone,"");
                                         databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
                                             if(task1.isSuccessful()){
+//                                                SharedPreferences preferences = getSharedPreferences("main", 0);
+//                                                preferences.edit().clear().commit();
                                                 finish();
                                             }
                                         }).addOnFailureListener(e -> e.printStackTrace());

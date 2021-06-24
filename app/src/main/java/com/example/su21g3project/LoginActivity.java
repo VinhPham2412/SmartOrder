@@ -3,7 +3,9 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         };
         btnLogin=findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> {
+
             if (phone.getText().toString().trim().isEmpty()){
                 Toast.makeText(LoginActivity.this,"Enter phone number",Toast.LENGTH_SHORT).show();
                 return;
@@ -89,4 +92,5 @@ public class LoginActivity extends AppCompatActivity {
             PhoneAuthProvider.verifyPhoneNumber(options);
         });
     }
+
 }

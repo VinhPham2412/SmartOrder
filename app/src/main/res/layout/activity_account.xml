@@ -1,120 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/fragment_nameAccount"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="4dp"
-        android:gravity="center"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_phoneAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/fragment_nameAccount"
+            android:layout_width="353dp"
+            android:layout_height="33dp"
+            android:layout_margin="30dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/fragment_phoneAccount"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtChangeInfo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_nameAccount" />
+        <TextView
+            android:id="@+id/fragment_phoneAccount"
+            android:layout_width="351dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtChangeInfo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="24dp"
-        android:drawableStart="@drawable/ic_baseline_settings_24"
-        android:drawablePadding="25dp"
-        android:gravity="center"
-        android:text="Đổi thông tin tài khoản"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtTableHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_phoneAccount" />
+        <TextView
+            android:id="@+id/txtChangeInfo"
+            android:layout_width="378dp"
+            android:layout_height="43dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_baseline_settings_24"
+            android:drawablePadding="25dp"
+            android:text="Đổi thông tin tài khoản"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtTableHistory"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="24dp"
-        android:drawableStart="@drawable/ic_baseline_access_alarm_24"
-        android:drawablePadding="25dp"
-        android:gravity="center"
-        android:text="Lịch sử đặt bàn"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtTransactionHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtChangeInfo" />
+        <TextView
+            android:id="@+id/txtTableHistory"
+            android:layout_width="376dp"
+            android:layout_height="39dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_baseline_access_alarm_24"
+            android:drawablePadding="25dp"
+            android:text="Lịch sử đặt bàn"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtTransactionHistory"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="28dp"
-        android:drawableStart="@drawable/ic_baseline_description_24"
-        android:drawablePadding="25dp"
-        android:gravity="center"
-        android:text="Lịch sử giao dịch"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtLogout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTableHistory" />
+        <TextView
+            android:id="@+id/txtTransactionHistory"
+            android:layout_width="382dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_baseline_description_24"
+            android:drawablePadding="25dp"
+            android:text="Lịch sử giao dịch"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtLogout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginBottom="340dp"
-        android:drawableStart="@drawable/ic_baseline_login_24"
-        android:drawablePadding="25dp"
-        android:gravity="center"
-        android:text="Đăng xuất"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTransactionHistory" />
-
+        <TextView
+            android:id="@+id/txtLogout"
+            android:layout_width="375dp"
+            android:layout_height="39dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_baseline_login_24"
+            android:drawablePadding="25dp"
+            android:text="Đăng xuất"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/navigation1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:itemBackground="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
         app:itemIconTint="@color/color_bottom_nav"
         app:itemTextColor="@color/color_bottom_nav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
         app:menu="@menu/navigation" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

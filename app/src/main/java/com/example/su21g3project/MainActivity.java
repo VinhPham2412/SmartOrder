@@ -3,14 +3,14 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,6 +19,11 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +32,54 @@ import java.util.TimerTask;
 
 import Adapter.PhotoAdapter;
 import Model.Photo;
+import Model.User;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnNotHaveAccount;
+    private Button btnNotHaveAccount,mainLogin;
     private ImageButton btnGetTable;
     private CircleIndicator circleIndicator;
     private Timer timer;
-    ViewPager viewPager,view_pager;
+    ViewPager viewPager;
     private List<Photo> photoList;
     private ActionBar toolbar;
     private TextView txtUsername;
     private FirebaseUser user;
     private ImageButton imageButton;
     private BottomNavigationView mNavigationView;
+    private DatabaseReference reference;
+    private FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        txtUsername = findViewById(R.id.txtUseName);
+
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user =snapshot.getValue(User.class);
+                txtUsername.setText("Xin chào "+user.getName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        mainLogin=findViewById(R.id.mainLogin);
+        mainLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
+                preferences.edit().clear().commit();
+                finish();
+            }
+        });
         viewPager =findViewById(R.id.viewImageResstaurant);
         photoList=getPhoto();
         PhotoAdapter photoAdapter =new PhotoAdapter(this,photoList);
@@ -54,13 +88,20 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator.setViewPager(viewPager);
         autoSlideImage();
         toolbar = getSupportActionBar();
-        txtUsername = findViewById(R.id.txtUseName);
         btnNotHaveAccount=findViewById(R.id.btnNotHaveAccount);
         imageButton=findViewById(R.id.imageButton);
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user==null){
+        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
+        String visible=preferences.getString("1","login");
+        if (visible.equals("logout")){
+            mainLogin.setVisibility(View.VISIBLE);
+            imageButton.setVisibility(View.INVISIBLE);
+            btnNotHaveAccount.setVisibility(View.INVISIBLE);
+        }
+        else if(user==null){
             btnNotHaveAccount.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.INVISIBLE);
+            mainLogin.setVisibility(View.INVISIBLE);
             btnNotHaveAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,15 +114,15 @@ public class MainActivity extends AppCompatActivity {
         }else{
             btnNotHaveAccount.setVisibility(View.INVISIBLE);
             imageButton.setVisibility(View.VISIBLE);
-            String welcome = "Welcome ";
-            welcome+= user.getDisplayName();
-            txtUsername.setText(welcome);
+            mainLogin.setVisibility(View.INVISIBLE);
+//            String welcome = "Welcome ";
+//            welcome+= user.getDisplayName();
+//            txtUsername.setText(welcome);
 
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
             toolbar.setTitle("Trang chủ");
         }
-        view_pager=findViewById(R.id.view_pager);
+//        view_pager=findViewById(R.id.view_pager);
         mNavigationView=findViewById(R.id.navigation);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -89,8 +130,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_account:
-                    Intent intent1=new Intent(MainActivity.this, AccountActivity.class);
-                    startActivity(intent1);
+                    Intent intent=new Intent(MainActivity.this, AccountActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
                     return true;
                 case R.id.navigation_address:
                     return true;
@@ -141,4 +184,24 @@ public class MainActivity extends AppCompatActivity {
             timer=null;
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
+//        String visible=preferences.getString("1","login");
+//        if (visible.equals("logout")){
+//            mainLogin.setVisibility(View.VISIBLE);
+//            imageButton.setVisibility(View.INVISIBLE);
+//            btnNotHaveAccount.setVisibility(View.INVISIBLE);
+//        }
+//        else
+//            return;
+//    }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//
+//    }
 }
