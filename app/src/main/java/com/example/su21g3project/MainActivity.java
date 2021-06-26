@@ -37,7 +37,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnNotHaveAccount,mainLogin;
-    private ImageButton btnGetTable;
+    private ImageButton btnGetTable,btnMenu;
     private CircleIndicator circleIndicator;
     private Timer timer;
     ViewPager viewPager;
@@ -54,29 +54,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        mNavigationView=findViewById(R.id.navigation);
+        mNavigationView.setSelectedItemId(R.id.navigation_home);
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.navigation_home:
+                    return true;
+                case R.id.navigation_account:
+                    Intent intent=new Intent(MainActivity.this, AccountActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.navigation_address:
+                    return true;
+            }
+            return false;
+        });
+        btnMenu=findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,MenuActivity.class));
+                finish();
+            }
+        });
         txtUsername = findViewById(R.id.txtUseName);
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user =snapshot.getValue(User.class);
-                txtUsername.setText("Xin chào "+user.getName());
-            }
+        if (firebaseUser!=null) {
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    txtUsername.setText("Xin chào " + user.getName());
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        else
+            txtUsername.setText("Xin chào ");
         mainLogin=findViewById(R.id.mainLogin);
         mainLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
-                preferences.edit().clear().commit();
                 finish();
             }
         });
@@ -91,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
         btnNotHaveAccount=findViewById(R.id.btnNotHaveAccount);
         imageButton=findViewById(R.id.imageButton);
         user = FirebaseAuth.getInstance().getCurrentUser();
-        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
-        String visible=preferences.getString("1","login");
-        if (visible.equals("logout")){
-            mainLogin.setVisibility(View.VISIBLE);
-            imageButton.setVisibility(View.INVISIBLE);
-            btnNotHaveAccount.setVisibility(View.INVISIBLE);
-        }
-        else if(user==null){
+//        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
+//        String visible=preferences.getString("1","login");
+//        if (visible.equals("logout")){
+//            mainLogin.setVisibility(View.VISIBLE);
+//            imageButton.setVisibility(View.INVISIBLE);
+//            btnNotHaveAccount.setVisibility(View.INVISIBLE);
+//        }
+         if(user==null){
             btnNotHaveAccount.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.INVISIBLE);
             mainLogin.setVisibility(View.INVISIBLE);
@@ -123,23 +151,6 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setTitle("Trang chủ");
         }
 //        view_pager=findViewById(R.id.view_pager);
-        mNavigationView=findViewById(R.id.navigation);
-        mNavigationView.setSelectedItemId(R.id.navigation_home);
-        mNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_account:
-                    Intent intent=new Intent(MainActivity.this, AccountActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
-                    return true;
-                case R.id.navigation_address:
-                    return true;
-            }
-            return false;
-        });
         btnGetTable = findViewById(R.id.btnGetTable);
         btnGetTable.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
@@ -184,20 +195,19 @@ public class MainActivity extends AppCompatActivity {
             timer=null;
         }
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
-//        String visible=preferences.getString("1","login");
-//        if (visible.equals("logout")){
-//            mainLogin.setVisibility(View.VISIBLE);
-//            imageButton.setVisibility(View.INVISIBLE);
-//            btnNotHaveAccount.setVisibility(View.INVISIBLE);
-//        }
-//        else
-//            return;
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
+        String visible=preferences.getString("1","login");
+        if (visible.equals("logout")){
+            mainLogin.setVisibility(View.VISIBLE);
+            imageButton.setVisibility(View.INVISIBLE);
+            btnNotHaveAccount.setVisibility(View.INVISIBLE);
+        }
+        else
+            return;
+    }
 
 //    @Override
 //    protected void onRestart() {

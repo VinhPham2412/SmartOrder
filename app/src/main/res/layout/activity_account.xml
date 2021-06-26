@@ -22,6 +22,7 @@
         <TextView
             android:id="@+id/fragment_phoneAccount"
             android:layout_width="351dp"
+            android:textColor="@color/red"
             android:layout_height="29dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -40,6 +41,13 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
+        <View android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
         <TextView
             android:id="@+id/txtTableHistory"
             android:layout_width="376dp"
@@ -51,6 +59,13 @@
             android:text="Lịch sử đặt bàn"
             android:textSize="20dp"
             android:textStyle="bold" />
+        <View android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
 
         <TextView
             android:id="@+id/txtTransactionHistory"
@@ -63,6 +78,13 @@
             android:text="Lịch sử giao dịch"
             android:textSize="20dp"
             android:textStyle="bold" />
+        <View android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
 
         <TextView
             android:id="@+id/txtLogout"
@@ -75,6 +97,13 @@
             android:text="Đăng xuất"
             android:textSize="20dp"
             android:textStyle="bold" />
+        <View android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation1"

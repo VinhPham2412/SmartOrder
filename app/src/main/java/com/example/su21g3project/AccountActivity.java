@@ -32,26 +32,30 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtName=findViewById(R.id.fragment_nameAccount);
         user=FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user =snapshot.getValue(User.class);
-                txtName.setText(user.getName());
-            }
+        if (user!=null) {
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    txtName.setText(user.getName());
+                    txtPhone.setText(user.getPhone());
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
         txtLogout=findViewById(R.id.txtLogout);
         txtChange = findViewById(R.id.txtChangeInfo);
         txtLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(AccountActivity.this,MainActivity.class);
+            Intent intent=new Intent(AccountActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=pref.edit();
             editor.putString("1","logout");
@@ -59,10 +63,6 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        txtPhone=findViewById(R.id.fragment_phoneAccount);
-        if(user!=null){
-            txtPhone.setText(user.getPhoneNumber());
-        }
         mNavigationView=findViewById(R.id.navigation1);
         mNavigationView.setSelectedItemId(R.id.navigation_account);
         mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -43,8 +43,7 @@ public class FoodDAO {
      */
     public List<Food> getFoodsOfBuffet(int buffetId) throws SQLException {
         List<Food> foodList=new ArrayList<>();
-        String sql="select Foods.Id,Foods.Name,Foods.Price,Foods.Description,Foods.Calories,Foods.Category_Id from Foods" +
-                " JOIN Buffets_Foods ON Foods.Id=Buffets_Foods.Food_Id JOIN Buffets ON ?=Buffets_Foods.Buffet_Id";
+        String sql="select distinct f.Id,f.Name,f.Price,f.Description,f.Calories,f.Category_Id from Foods f,Buffets b, Buffets_Foods bf where f.Id=bf.Food_Id and bf.Buffet_Id=?";
         try {
             connection = db.getConnection();
             ps = connection.prepareStatement(sql);
