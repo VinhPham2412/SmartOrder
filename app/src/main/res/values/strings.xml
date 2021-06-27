@@ -9,4 +9,8 @@
     <string name="selectTime">Chọn giờ</string>
     <string name="sl_nopeople">Số người</string>
     <string name="btnNext">Next</string>
+    <string name="sodienthoai">Số điện thoại</string>
+    <string name="tennguoidat">Tên người đặt</string>
+    <string name="ghichu">Ghi chú</string>
+    <string name="thongtinkhachhang">Thông tin khách hàng</string>
 </resources>

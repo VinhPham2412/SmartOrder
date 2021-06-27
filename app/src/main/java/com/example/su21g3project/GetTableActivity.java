@@ -1,16 +1,18 @@
 package com.example.su21g3project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class GetTableActivity extends AppCompatActivity {
@@ -19,7 +21,8 @@ public class GetTableActivity extends AppCompatActivity {
     private TextView prTime;
     private SeekBar slTime;
     private Button today,today1,today2,today3;
-    private int fDay;
+    private Calendar finalDate,d,d1,d2,d3;
+    private int hour,minute;
 
     private String getTime(Calendar date){
         int day = date.get(Calendar.DATE);
@@ -37,33 +40,38 @@ public class GetTableActivity extends AppCompatActivity {
         today2 = findViewById(R.id.btnAfterTomorrow);
         today3 = findViewById(R.id.btnNextAfterTomorrow);
 
+        today.setBackgroundColor(Color.LTGRAY);
+        today1.setBackgroundColor(Color.LTGRAY);
+        today2.setBackgroundColor(Color.LTGRAY);
+        today3.setBackgroundColor(Color.LTGRAY);
+
         today.setOnClickListener(v -> {
             today.setBackgroundColor(Color.GRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            fDay = 1;
+            finalDate = d;
         });
         today1.setOnClickListener(v -> {
             today1.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            fDay = 2;
+            finalDate = d1;
         });
         today2.setOnClickListener(v -> {
             today2.setBackgroundColor(Color.GRAY);
             today3.setBackgroundColor(Color.LTGRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
-            fDay = 3;
+            finalDate = d2;
         });
         today3.setOnClickListener(v -> {
             today3.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
-            fDay = 4;
+            finalDate = d3;
         });
         Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
 
@@ -72,15 +80,19 @@ public class GetTableActivity extends AppCompatActivity {
         currentHour+=7;
         today.setText("Hôm nay"+
                 "\n"+getTime(date));
+        d = date;
         date.add(Calendar.DATE,1);
         today1.setText("Ngày mai"+
                 "\n"+getTime(date));
+        d1 = date;
         date.add(Calendar.DATE,1);
         today2.setText("Ngày kia"+
                 "\n"+getTime(date));
+        d2 = date;
         date.add(Calendar.DATE,1);
         today3.setText("Ngày kìa"+
                 "\n"+getTime(date));
+        d3 = date;
 
 
         btnNext = findViewById(R.id.btnNext);
@@ -91,12 +103,11 @@ public class GetTableActivity extends AppCompatActivity {
         slTime.setMax(1440);
         slTime.setMin(now);
 
-        slTime.setKeyProgressIncrement(10);
         slTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int hour = progress / 60;
-                int minute = progress - (hour*60);
+                hour = progress / 60;
+                minute = progress - (hour*60);
                 prTime.setText(hour+" : "+minute);
             }
 
@@ -109,6 +120,19 @@ public class GetTableActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
+        });
+        btnNext.setOnClickListener(v -> {
+            Intent intent = new Intent(GetTableActivity.this,GetTableActivity2.class);
+
+            //transfer date,time,number of people to next view
+            //combine date and time to date type
+            int tMonth = finalDate.get(Calendar.MONTH);
+            GregorianCalendar gregorianCalendar = new GregorianCalendar(finalDate.get(Calendar.YEAR),tMonth,finalDate.get(Calendar.DATE),hour,minute,0);
+            Date finalDateAndTime = gregorianCalendar.getTime();
+            intent.putExtra("date",finalDateAndTime.getTime());
+            intent.putExtra("noPP",noPp.getText().toString());
+
+            startActivity(intent);
         });
     }
 }

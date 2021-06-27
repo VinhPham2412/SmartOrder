@@ -32,15 +32,15 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtName=findViewById(R.id.fragment_nameAccount);
+        txtPhone=findViewById(R.id.fragment_phoneAccount);
         user=FirebaseAuth.getInstance().getCurrentUser();
-        if (user!=null) {
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        if(user!=null){
+            reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
+                    User user =snapshot.getValue(User.class);
                     txtName.setText(user.getName());
                     txtPhone.setText(user.getPhone());
                 }
@@ -55,7 +55,7 @@ public class AccountActivity extends AppCompatActivity {
         txtChange = findViewById(R.id.txtChangeInfo);
         txtLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(AccountActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Intent intent=new Intent(AccountActivity.this,MainActivity.class);
             SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=pref.edit();
             editor.putString("1","logout");
