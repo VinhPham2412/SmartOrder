@@ -41,7 +41,7 @@ public class FoodDAO {
      * @return foodList
      * @throws SQLException
      */
-    public List<Food> getFoodsOfBuffet(int buffetId) throws SQLException {
+    public List<Food> getFoodsOfBuffet(int buffetId) {
         List<Food> foodList=new ArrayList<>();
         String sql="select distinct f.Id,f.Name,f.Price,f.Description,f.Calories,f.Category_Id from Foods f,Buffets b, Buffets_Foods bf where f.Id=bf.Food_Id and bf.Buffet_Id=?";
         try {
@@ -61,7 +61,39 @@ public class FoodDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            db.closeConnection(rs,ps,connection);
+            try {
+                db.closeConnection(rs,ps,connection);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return foodList;
+    }
+
+    public List<Food> getFoodMoney() {
+        List<Food> foodList=new ArrayList<>();
+        String sql="select * from Foods where Price !=0";
+        try {
+            connection = db.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while (rs.next()){
+                Food food=new Food(rs.getInt("Id"),
+                        rs.getString("Name"),
+                        rs.getFloat("Price"),
+                        rs.getString("Description"),
+                        rs.getInt("Calories"),
+                        rs.getInt("Category_Id"));
+                foodList.add(food);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                db.closeConnection(rs,ps,connection);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return foodList;
     }

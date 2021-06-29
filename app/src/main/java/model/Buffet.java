@@ -1,6 +1,8 @@
 package model;
 
-public class Buffet {
+import java.io.Serializable;
+
+public class Buffet implements Serializable {
     private int id;
     private String name;
     private float price;

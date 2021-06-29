@@ -1,9 +1,16 @@
 package dao;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.View;
+import android.widget.ImageView;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,5 +71,22 @@ public class BuffetDAO {
             }
         }
         return buffetList;
+    }
+    public Bitmap getImage(int buffet_Id){
+        String sql="Select Image from Images where Type like ";
+        try {
+            connection = db.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while (rs.next()){
+                 byte [] bytesImage=rs.getBytes(1);
+                Bitmap bitmapImage= BitmapFactory.decodeByteArray(bytesImage,0,bytesImage.length);
+                return bitmapImage;
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 }

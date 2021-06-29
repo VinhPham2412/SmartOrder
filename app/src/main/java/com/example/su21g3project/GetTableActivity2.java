@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.sourceforge.jtds.jdbc.UniqueIdentifier;
 
 import org.jetbrains.annotations.NotNull;
 

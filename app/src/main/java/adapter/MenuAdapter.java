@@ -54,15 +54,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         final Buffet buffet=buffetList.get(position);
         holder.buffet_name.setText("SET "+(int)buffet.getPrice()+" K");
         holder.buffet_description.setText(buffet.getDescription());
-        try {
-            foodList= new FoodDAO().getFoodsOfBuffet(buffet.getId());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        foodList= new FoodDAO().getFoodsOfBuffet(buffet.getId());
         for (Food fod: foodList) {
             TextView textView=new TextView(mContext);
             textView.setText(". "+fod.getName());
             textView.setTypeface(Typeface.DEFAULT_BOLD);
+            textView.setTextSize(15);
             holder.gridLayout.addView(textView);
         }
 
