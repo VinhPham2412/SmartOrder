@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
+        <activity android:name=".NotificationActivity" />
         <activity android:name=".GetBuffetActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +28,7 @@
         <activity android:name=".VerifySMSToken" />
         <activity android:name=".ResisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
