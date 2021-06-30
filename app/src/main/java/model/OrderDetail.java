@@ -16,6 +16,7 @@ public class OrderDetail {
     private int foodId;
     private int quantity;
     private Date time;
+    private boolean isVerify = false;
 
     public OrderDetail() {
     }
@@ -26,6 +27,14 @@ public class OrderDetail {
         this.foodId = foodId;
         this.quantity = quantity;
         this.time = time;
+    }
+
+    public boolean isVerify() {
+        return isVerify;
+    }
+
+    public void setVerify(boolean verify) {
+        isVerify = verify;
     }
 
     public String getId() {
@@ -76,6 +85,7 @@ public class OrderDetail {
         DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
         String d = format.format(time);
         result.put("time", d);
+        result.put("isVerify",isVerify);
         return result;
     }
 }
