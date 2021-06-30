@@ -23,6 +23,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
 
     private Context mContext;
     private List<Food> foodList;
+    private  List<ViewHolder> allViews;
 
     public OrdersFoodAdapter(Context mContext, List<Food> foodList) {
         this.mContext = mContext;
@@ -47,33 +48,27 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Food food=foodList.get(position);
 //        holder.imageView.setImageResource(R.drawable.bf2);
+        holder.foodId = food.getId();
         holder.tvFoodName.setText(food.getName());
-        holder.add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int number=0;
-                try {
-                    number=Integer.parseInt(holder.numberFood.getText().toString());
-                }catch (NumberFormatException e){
-                    System.out.println("Could not parse " + e);
-                }
-                holder.numberFood.setText(String.valueOf(number+1));
+        holder.add.setOnClickListener(v -> {
+            int number=0;
+            try {
+                number=Integer.parseInt(holder.numberFood.getText().toString());
+            }catch (NumberFormatException e){
+                System.out.println("Could not parse " + e);
             }
+            holder.numberFood.setText(String.valueOf(number+1));
         });
-        holder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int number=0;
-                try {
-                    number=Integer.parseInt(holder.numberFood.getText().toString());
-                }catch (NumberFormatException e){
-                    System.out.println("Could not parse " + e);
-                }
-                holder.numberFood.setText(String.valueOf(number-1));
+        holder.remove.setOnClickListener(v -> {
+            int number=0;
+            try {
+                number=Integer.parseInt(holder.numberFood.getText().toString());
+            }catch (NumberFormatException e){
+                System.out.println("Could not parse " + e);
             }
+            holder.numberFood.setText(String.valueOf(number-1));
         });
-
-
+        allViews.add(holder);
     }
 
     @Override
@@ -82,6 +77,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
+        public int foodId;
        public ImageView imageView;
        public TextView tvFoodName;
        public EditText numberFood;
@@ -93,8 +89,10 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
            numberFood=itemView.findViewById(R.id.txtNumberFood);
            add=itemView.findViewById(R.id.btnAdd);
            remove=itemView.findViewById(R.id.btnRemove);
-
         }
+    }
+    public List<ViewHolder> getAllHolder(){
+        return allViews;
     }
 
 
