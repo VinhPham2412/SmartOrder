@@ -33,8 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
+import dao.UserDAO;
 import model.User;
 
 import static android.content.ContentValues.TAG;
@@ -82,6 +84,12 @@ public class VerifySMSToken extends AppCompatActivity {
 //                                                SharedPreferences preferences = getSharedPreferences("main", 0);
 //                                                preferences.edit().clear().commit();
                                                 finish();
+                                            }
+                                            UserDAO userDAO=new UserDAO();
+                                            try {
+                                                userDAO.insertUser(userId,FName,LName,phone,1);
+                                            } catch (SQLException throwables) {
+                                                throwables.printStackTrace();
                                             }
                                         }).addOnFailureListener(e -> e.printStackTrace());
                                     }
