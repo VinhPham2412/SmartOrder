@@ -22,6 +22,7 @@ import model.Food;
 public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoneyAdapter.ViewHolder>{
     private Context mContext;
     private List<Food> foodList;
+    private  List<ViewHolder> allViews;
 
     public OrdersFoodMoneyAdapter(Context mContext, List<Food> foodList) {
         this.mContext = mContext;
@@ -46,31 +47,27 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Food foodMoney=foodList.get(position);
         holder.tvFoodNameMoney.setText(foodMoney.getName());
+        holder.foodId = foodMoney.getId();
         holder.tvPrice.setText((int)(foodMoney.getPrice())+"đ");
-        holder.addMoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int number=0;
-                try {
-                    number=Integer.parseInt(holder.numberFoodMoney.getText().toString());
-                }catch (NumberFormatException e){
-                    System.out.println("Could not parse " + e);
-                }
-                holder.numberFoodMoney.setText(String.valueOf(number+1));
+        holder.addMoney.setOnClickListener(v -> {
+            int number=0;
+            try {
+                number=Integer.parseInt(holder.numberFoodMoney.getText().toString());
+            }catch (NumberFormatException e){
+                System.out.println("Could not parse " + e);
             }
+            holder.numberFoodMoney.setText(String.valueOf(number+1));
         });
-        holder.removeMoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int number=0;
-                try {
-                    number=Integer.parseInt(holder.numberFoodMoney.getText().toString());
-                }catch (NumberFormatException e){
-                    System.out.println("Could not parse " + e);
-                }
-                holder.numberFoodMoney.setText(String.valueOf(number-1));
+        holder.removeMoney.setOnClickListener(v -> {
+            int number=0;
+            try {
+                number=Integer.parseInt(holder.numberFoodMoney.getText().toString());
+            }catch (NumberFormatException e){
+                System.out.println("Could not parse " + e);
             }
+            holder.numberFoodMoney.setText(String.valueOf(number-1));
         });
+        allViews.add(holder);
     }
 
     @Override
@@ -78,7 +75,12 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
         return foodList.size();
     }
 
+    public List<ViewHolder> getAllHolder() {
+        return allViews;
+    }
+
     public  class ViewHolder extends RecyclerView.ViewHolder{
+        public int foodId;
         public ImageView imageViewMoney;
         public TextView tvFoodNameMoney,tvPrice;
         public EditText numberFoodMoney;

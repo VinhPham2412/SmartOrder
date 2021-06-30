@@ -40,10 +40,12 @@ public class GetTableActivity extends AppCompatActivity {
         today2 = findViewById(R.id.btnAfterTomorrow);
         today3 = findViewById(R.id.btnNextAfterTomorrow);
 
-        today.setBackgroundColor(Color.LTGRAY);
+        today.setSelected(true);
+        today.setBackgroundColor(Color.GRAY);
         today1.setBackgroundColor(Color.LTGRAY);
         today2.setBackgroundColor(Color.LTGRAY);
         today3.setBackgroundColor(Color.LTGRAY);
+        finalDate = d;
 
         today.setOnClickListener(v -> {
             today.setBackgroundColor(Color.GRAY);
