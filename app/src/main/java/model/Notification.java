@@ -8,6 +8,15 @@ public class Notification {
     private String message;
     private LocalDateTime time;
     private int type;
+    private boolean isSeen;
+
+    public boolean isSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(boolean seen) {
+        isSeen = seen;
+    }
 
     public String getSenderId() {
         return senderId;
@@ -49,12 +58,13 @@ public class Notification {
         this.type = type;
     }
 
-    public Notification(String senderId, String receiverId, String message, LocalDateTime time, int type) {
+    public Notification(String senderId, String receiverId, String message, LocalDateTime time, int type,boolean isSeen) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.message = message;
         this.time = time;
         this.type = type;
+        this.isSeen=isSeen;
     }
 
     public Notification() {

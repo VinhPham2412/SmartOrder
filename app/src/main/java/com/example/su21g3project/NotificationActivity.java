@@ -39,7 +39,7 @@ public class NotificationActivity extends AppCompatActivity {
                 notificationList.clear();
                 for (DataSnapshot dataSnapshot :snapshot.getChildren()){
                     Notification notification=dataSnapshot.getValue(Notification.class);
-                    if(notification.getReceiverId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    if(notification.getReceiverId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && !notification.isSeen()){
                         notificationList.add(notification);
                     }
                     notificationAdapter=new NotificationAdapter(NotificationActivity.this,notificationList);
