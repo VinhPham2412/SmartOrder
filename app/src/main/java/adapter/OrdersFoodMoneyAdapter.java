@@ -22,7 +22,7 @@ import model.Food;
 public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoneyAdapter.ViewHolder>{
     private Context mContext;
     private List<Food> foodList;
-    private  List<ViewHolder> allViews;
+    private List<ViewHolder> allViews;
 
     public OrdersFoodMoneyAdapter(Context mContext, List<Food> foodList) {
         this.mContext = mContext;

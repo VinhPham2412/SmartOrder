@@ -23,7 +23,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
 
     private Context mContext;
     private List<Food> foodList;
-    private  List<ViewHolder> allViews;
+    private List<ViewHolder> allViews;
 
     public OrdersFoodAdapter(Context mContext, List<Food> foodList) {
         this.mContext = mContext;

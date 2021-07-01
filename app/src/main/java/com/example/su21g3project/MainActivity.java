@@ -37,7 +37,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnNotHaveAccount,mainLogin;
-    private ImageButton btnGetTable,btnMenu;
+    private ImageButton btnGetTable,btnMenu,btnVoucher;
     private CircleIndicator circleIndicator;
     private Timer timer;
     ViewPager viewPager;
@@ -157,6 +157,13 @@ public class MainActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+        btnVoucher=findViewById(R.id.btnVoucher);
+        btnVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,GetBuffetActivity.class));
+            }
+        });
 
     }
     private void autoSlideImage(){
@@ -207,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             return;
+        mNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 
 //    @Override

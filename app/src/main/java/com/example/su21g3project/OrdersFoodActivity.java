@@ -77,8 +77,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             //get food and quantity from food in buffet
-            for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()
-                 ) {
+            for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
@@ -92,8 +91,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 }
             }
             //get food and quantity from food out of buffet
-            for (OrdersFoodMoneyAdapter.ViewHolder food : ordersFoodMoneyAdapter.getAllHolder()
-            ) {
+            for (OrdersFoodMoneyAdapter.ViewHolder food : ordersFoodMoneyAdapter.getAllHolder()) {
                 int quantity  = Integer.parseInt(food.numberFoodMoney.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
