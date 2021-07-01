@@ -6,19 +6,14 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import adapter.OrdersFoodAdapter;
 import adapter.OrdersFoodMoneyAdapter;
@@ -83,12 +77,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail = new OrderDetail(id,userId,food.foodId,quantity,time);
-                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            Log.println(Log.INFO,"addOk","Add ok");
-                        }
-                    });
+                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                            Log.println(Log.INFO,"addOk","Add ok"));
                 }
             }
             //get food and quantity from food out of buffet
@@ -98,12 +88,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail = new OrderDetail(id,userId,food.foodId,quantity,time);
-                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            Log.println(Log.INFO,"addOk","Add ok");
-                        }
-                    });
+                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                            Log.println(Log.INFO,"addOk","Add ok"));
                 }
             }
         });
