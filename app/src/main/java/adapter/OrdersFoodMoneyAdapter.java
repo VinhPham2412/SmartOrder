@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Food;
@@ -27,6 +28,7 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
     public OrdersFoodMoneyAdapter(Context mContext, List<Food> foodList) {
         this.mContext = mContext;
         this.foodList = foodList;
+        allViews = new ArrayList<>();
     }
 
     @NonNull
