@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
     private void autoSlideImage(){
         if(timer==null){

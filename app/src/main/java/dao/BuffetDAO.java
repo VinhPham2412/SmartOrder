@@ -79,7 +79,7 @@ public class BuffetDAO {
             ps = connection.prepareStatement(sql);
             rs=ps.executeQuery();
             while (rs.next()){
-                 byte [] bytesImage=rs.getBytes(1);
+                byte [] bytesImage=rs.getBytes(1);
                 Bitmap bitmapImage= BitmapFactory.decodeByteArray(bytesImage,0,bytesImage.length);
                 return bitmapImage;
 

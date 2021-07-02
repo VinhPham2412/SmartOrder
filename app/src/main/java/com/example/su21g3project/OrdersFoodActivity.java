@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +40,6 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private Button btnOrder;
     private FirebaseUser user;
     private String userId;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +90,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }
             }
+            Toast.makeText(this,"Gọi món thành công",Toast.LENGTH_SHORT).show();
         });
 
 

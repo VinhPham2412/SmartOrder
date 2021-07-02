@@ -1,14 +1,22 @@
 package model;
 
+import com.google.firebase.database.Exclude;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Notification {
     private String senderId;
     private String receiverId;
     private String message;
-    private LocalDateTime time;
+    private Date time;
     private int type;
-    private boolean isSeen;
+    private boolean isSeen=false;
 
     public boolean isSeen() {
         return isSeen;
@@ -42,11 +50,11 @@ public class Notification {
         this.message = message;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -58,15 +66,29 @@ public class Notification {
         this.type = type;
     }
 
-    public Notification(String senderId, String receiverId, String message, LocalDateTime time, int type,boolean isSeen) {
+    public Notification(String senderId, String receiverId, String message, Date time, int type) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.message = message;
         this.time = time;
         this.type = type;
-        this.isSeen=isSeen;
     }
 
     public Notification() {
+    }
+    public Date getDate(){
+       time = Calendar.getInstance().getTime();
+       return time;
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("senderId", senderId);
+        result.put("receiverId", receiverId);
+        result.put("message", message);
+        result.put("datetime", getDate());
+        result.put("type",1 );
+        result.put("isVerify",isSeen);
+        return result;
     }
 }
