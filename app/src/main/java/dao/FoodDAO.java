@@ -97,4 +97,22 @@ public class FoodDAO {
         }
         return foodList;
     }
+
+    public String getFoodNameById(int id){
+        String sql="select Name from Foods where Id=?";
+        try {
+            connection = db.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1,id);
+            rs=ps.executeQuery();
+            while (rs.next()){
+                String name=rs.getString("Name");
+                return name;
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 }
