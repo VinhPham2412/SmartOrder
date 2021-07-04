@@ -56,60 +56,57 @@ public class VerifySMSToken extends AppCompatActivity {
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
-                            preferences.edit().clear().commit();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
+                        preferences.edit().clear().commit();
 
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                        Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                            // Update UI
-                             startActivity(intent);
-                           FirebaseUser firebaseUser=mAuth.getCurrentUser();
-                           assert firebaseUser != null;
-                           String userId=firebaseUser.getUid();
-                            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                            ValueEventListener eventListener=new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(!snapshot.exists()){
-                                        User user = new User(FName+LName,phone,"");
-                                        databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
-                                            if(task1.isSuccessful()){
+                        // Update UI
+                         startActivity(intent);
+                       FirebaseUser firebaseUser=mAuth.getCurrentUser();
+                       assert firebaseUser != null;
+                       String userId=firebaseUser.getUid();
+                        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                        ValueEventListener eventListener=new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(!snapshot.exists()){
+                                    User user = new User(FName+LName,phone,"");
+                                    databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
+                                        if(task1.isSuccessful()){
 //                                                SharedPreferences preferences = getSharedPreferences("main", 0);
 //                                                preferences.edit().clear().commit();
-                                                finish();
-                                            }
-                                            UserDAO userDAO=new UserDAO();
-                                            try {
-                                                userDAO.insertUser(userId,FName,LName,phone,1);
-                                            } catch (SQLException throwables) {
-                                                throwables.printStackTrace();
-                                            }
-                                        }).addOnFailureListener(e -> e.printStackTrace());
-                                    }
+                                            finish();
+                                        }
+                                        UserDAO userDAO=new UserDAO();
+                                        try {
+                                            userDAO.insertUser(userId,FName,LName,phone,1);
+                                        } catch (SQLException throwables) {
+                                            throwables.printStackTrace();
+                                        }
+                                    }).addOnFailureListener(e -> e.printStackTrace());
                                 }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-//
-                                }
-                            };
-                            databaseReference.addListenerForSingleValueEvent(eventListener);
-                        } else {
-                            // Sign in failed, display a message and update the UI
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                progressBar.setVisibility(View.GONE);
-                                btnVerify.setVisibility(View.VISIBLE);
-                                // The verification code entered was invalid
-                                Toast.makeText(VerifySMSToken.this,"Invalid verification code",Toast.LENGTH_SHORT).show();
                             }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+//
+                            }
+                        };
+                        databaseReference.addListenerForSingleValueEvent(eventListener);
+                    } else {
+                        // Sign in failed, display a message and update the UI
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            progressBar.setVisibility(View.GONE);
+                            btnVerify.setVisibility(View.VISIBLE);
+                            // The verification code entered was invalid
+                            Toast.makeText(VerifySMSToken.this,"Invalid verification code",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

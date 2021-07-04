@@ -70,12 +70,14 @@ public class OrdersFoodActivity extends AppCompatActivity {
             //insert into rtdb
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
+            // get orderId
+            String orderId = getIntent().getStringExtra("orderId");
             //get food and quantity from food in buffet
             for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,userId,food.foodId,quantity,time);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }
@@ -85,7 +87,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity  = Integer.parseInt(food.numberFoodMoney.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,userId,food.foodId,quantity,time);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }

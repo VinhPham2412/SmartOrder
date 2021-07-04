@@ -65,23 +65,20 @@ public class AccountActivity extends AppCompatActivity {
         });
         mNavigationView=findViewById(R.id.navigation1);
         mNavigationView.setSelectedItemId(R.id.navigation_account);
-        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.navigation_home:
-                        Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.navigation_account:
-                        return true;
-                    case R.id.navigation_address:
-                        return true;
-                }
-                return false;
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.navigation_home:
+                    Intent intent=new Intent(AccountActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.navigation_account:
+                    return true;
+                case R.id.navigation_address:
+                    return true;
             }
+            return false;
         });
         txtChange.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this,UpdateProfile.class);

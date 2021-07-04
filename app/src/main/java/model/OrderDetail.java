@@ -13,6 +13,7 @@ import java.util.Map;
 public class OrderDetail {
     private String id;
     private String userId;
+    private String orderId;
     private int foodId;
     private int quantity;
     private Date time;
@@ -21,12 +22,21 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(String id, String userId, int foodId, int quantity, Date time) {
+    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time) {
         this.id = id;
         this.userId = userId;
+        this.orderId = orderId;
         this.foodId = foodId;
         this.quantity = quantity;
         this.time = time;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public boolean isVerify() {
@@ -79,6 +89,7 @@ public class OrderDetail {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("orderId",orderId);
         result.put("userId", userId);
         result.put("foodId", foodId);
         result.put("quantity", quantity);
