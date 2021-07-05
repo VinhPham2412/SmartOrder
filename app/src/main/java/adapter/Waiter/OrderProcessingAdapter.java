@@ -1,12 +1,12 @@
 package adapter.Waiter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -14,23 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import adapter.BuffetAdapter;
 import dao.FoodDAO;
-import model.Food;
 import model.OrderDetail;
 
-public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessingAdapter.ViewHolder> {
+public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.OrderProcessingAdapter.ViewHolder> {
     List<List<OrderDetail>> orderDetailList;
     Context mContext;
     FoodDAO foodDAO;
@@ -40,7 +33,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
     public OrderProcessingAdapter(List<List<OrderDetail>> orderDetailList, Context mContext) {
         this.orderDetailList = orderDetailList;
         this.mContext = mContext;
-        foodDAO=new FoodDAO();
+        foodDAO = new FoodDAO();
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
     }
 
@@ -49,12 +42,9 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
-
         View uView =
-                inflater.inflate(R.layout.custom_getbuffet, parent, false);
-
-        ViewHolder viewHolder =new ViewHolder(uView);
+                inflater.inflate(R.layout.custom_order_waiter, parent, false);
+        ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;
     }
 
@@ -63,33 +53,32 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
 
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
-//        holder.btnReject.setBackgroundColor(500061);
-//        holder.btnAccept.setBackgroundColor(500106);
-        for (OrderDetail od: details) {
-            String foodName=foodDAO.getFoodNameById(od.getFoodId());
-            TextView textView=new TextView(mContext);
-            textView.setText(foodName+ " : "+od.getQuantity());
+        for (OrderDetail od : details) {
+            String foodName = foodDAO.getFoodNameById(od.getFoodId());
+            TextView textView = new TextView(mContext);
+            textView.setText(foodName + " : " + od.getQuantity());
+
             holder.gridView.addView(textView);
             ids.add(od.getId());
         }
         holder.btnAccept.setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
-            for (String id:ids
-                 ) {
+            for (String id : ids
+            ) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
-                        task -> Log.println(Log.INFO,"Update to rtdb","Set seen ok"));
+                        task -> Log.println(Log.INFO, "Update to rtdb", "Set seen ok"));
                 reference.child(id).child("isAccepted").setValue(true).addOnCompleteListener(
-                        task -> Log.println(Log.INFO,"Update to rtdb","Set accepted ok"));
+                        task -> Log.println(Log.INFO, "Update to rtdb", "Set accepted ok"));
             }
         });
         holder.btnReject.setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
-            for (String id:ids
+            for (String id : ids
             ) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
-                        task -> Log.println(Log.INFO,"Update to rtdb","Set reject ok"));
+                        task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
             }
         });
     }
@@ -99,15 +88,15 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
         return orderDetailList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public GridView gridView;
-        public Button btnReject,btnAccept;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public GridLayout gridView;
+        public Button btnReject, btnAccept;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            gridView=itemView.findViewById(R.id.gridview);
-            btnAccept=itemView.findViewById(R.id.btnAccept);
-            btnReject=itemView.findViewById(R.id.btnReject);
-
+            gridView = itemView.findViewById(R.id.gridview);
+            btnAccept = itemView.findViewById(R.id.btnAccept);
+            btnReject = itemView.findViewById(R.id.btnReject);
         }
     }
 }
