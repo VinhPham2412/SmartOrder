@@ -12,7 +12,6 @@
         android:id="@+id/foodOrderView"
         android:layout_width="60dp"
         android:layout_height="match_parent"/>
-
     <TextView
         android:paddingTop="15dp"
         android:id="@+id/tvFoodName"
@@ -20,7 +19,6 @@
         android:layout_height="match_parent"
         android:textSize="16dp"
         android:textStyle="bold" />
-
     <EditText
 
         android:id="@+id/txtNumberFood"

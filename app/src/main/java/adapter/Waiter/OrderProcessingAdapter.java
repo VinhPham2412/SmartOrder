@@ -60,10 +60,11 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
-        holder.btnReject.setBackgroundColor(Color.RED);
-        holder.btnAccept.setBackgroundColor(Color.GREEN);
+//        holder.btnReject.setBackgroundColor(500061);
+//        holder.btnAccept.setBackgroundColor(500106);
         for (OrderDetail od: details) {
             String foodName=foodDAO.getFoodNameById(od.getFoodId());
             TextView textView=new TextView(mContext);
@@ -106,6 +107,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
             gridView=itemView.findViewById(R.id.gridview);
             btnAccept=itemView.findViewById(R.id.btnAccept);
             btnReject=itemView.findViewById(R.id.btnReject);
+
         }
     }
 }

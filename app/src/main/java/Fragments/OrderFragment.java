@@ -36,7 +36,6 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<List<OrderDetail>> list;
     private DatabaseReference reference;
-    List<List<OrderDetail>> allDetail;
     private OrderProcessingAdapter orderProcessingAdapter;
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
@@ -46,13 +45,53 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
+//        list=new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
+
         recyclerView = view.findViewById(R.id.recycleViewOrder);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
-        list = getAllOrderDetails();
-        orderProcessingAdapter = new OrderProcessingAdapter(list, getContext());
-        recyclerView.setAdapter(orderProcessingAdapter);
+//        getAllOrderDetails();
+//        getAllOrderDetails();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                //orderDetails from rtdb
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
+                    //if not seen
+                    if(!orderDetail.isSeen()){
+                        String orderId = orderDetail.getOrderId();
+                        boolean isFoundPlace = false;
+
+                        //go through all exist subResult
+                        for (int i = 0; i < result.size(); i++) {
+
+                            //get list contain elements with same orderId
+                            subResult = result.get(i);
+                            if (isBelong(subResult, orderId)) {
+                                subResult.add(orderDetail);
+                                isFoundPlace = true;
+                            }
+                        }
+                        //if not found any existed list belong to then make new list
+                        if (!isFoundPlace) {
+                            subResult = new ArrayList<>();
+                            subResult.add(orderDetail);
+                            //add new list to result
+                            result.add(subResult);
+                        }
+                    }
+                }
+                orderProcessingAdapter = new OrderProcessingAdapter(result, getContext());
+                recyclerView.setAdapter(orderProcessingAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
+        });
+
         return view;
     }
 
@@ -87,6 +126,8 @@ public class OrderFragment extends Fragment {
                         }
                     }
                 }
+
+
             }
 
             @Override
