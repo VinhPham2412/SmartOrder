@@ -71,7 +71,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             // get orderId
-            String orderId = getIntent().getStringExtra("orderId");
+            // not done, need update
+            String orderId = "od2";
             //get food and quantity from food in buffet
             for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());

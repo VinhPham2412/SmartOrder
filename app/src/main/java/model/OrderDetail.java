@@ -4,7 +4,9 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +19,27 @@ public class OrderDetail {
     private int foodId;
     private int quantity;
     private Date time;
-    private boolean isVerify = false;
+    private boolean isSeen = false;
+    private boolean isAccepted = false;
 
     public OrderDetail() {
     }
 
     public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time) {
         this.id = id;
-        this.userId = userId;
         this.orderId = orderId;
+        this.userId = userId;
         this.foodId = foodId;
         this.quantity = quantity;
         this.time = time;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
     }
 
     public String getOrderId() {
@@ -39,12 +50,12 @@ public class OrderDetail {
         this.orderId = orderId;
     }
 
-    public boolean isVerify() {
-        return isVerify;
+    public boolean isSeen() {
+        return isSeen;
     }
 
-    public void setVerify(boolean verify) {
-        isVerify = verify;
+    public void setSeen(boolean seen) {
+        isSeen = seen;
     }
 
     public String getId() {
@@ -83,8 +94,14 @@ public class OrderDetail {
         return time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTime(String time) {
+
+        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        try{
+            this.time = format.parse(time);
+        }catch (ParseException e){
+
+        }
     }
     @Exclude
     public Map<String, Object> toMap() {
@@ -96,7 +113,8 @@ public class OrderDetail {
         DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
         String d = format.format(time);
         result.put("time", d);
-        result.put("isVerify",isVerify);
+        result.put("isSeen",isSeen);
+        result.put("isAccepted",isAccepted);
         return result;
     }
 }

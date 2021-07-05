@@ -72,7 +72,7 @@ public class GetTableActivity2 extends AppCompatActivity {
         btnNext.setOnClickListener(v -> {
             btnNext.setVisibility(View.INVISIBLE);
             bar.setVisibility(View.VISIBLE);
-            String uniqueID = UUID.randomUUID().toString();
+            String orderId = UUID.randomUUID().toString();
             String name;
             String phone;
             String note;
@@ -84,8 +84,8 @@ public class GetTableActivity2 extends AppCompatActivity {
             Date date = new Date();
             date.setTime(getIntent().getLongExtra("date",-1));
             int noPP = Integer.parseInt(getIntent().getStringExtra("noPP"));
-            ProcessOrder order = new ProcessOrder(uniqueID,userId,name,phone,date,noPP,note,false);
-            reference.child(uniqueID).setValue(order.toMap()).addOnCompleteListener(task -> {
+            ProcessOrder order = new ProcessOrder(orderId,userId,name,phone,date,noPP,note,false);
+            reference.child(orderId).setValue(order.toMap()).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(GetTableActivity2.this,
                             "Your order have been received.",Toast.LENGTH_SHORT).show();

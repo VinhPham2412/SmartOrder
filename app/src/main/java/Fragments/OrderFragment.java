@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import Waiter.ApproveOrderActivity;
 import adapter.Waiter.OrderProcessingAdapter;
+import model.ListOrderDetail;
 import model.OrderDetail;
 
 
@@ -36,57 +36,55 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<List<OrderDetail>> list;
     private DatabaseReference reference;
-    List<List<OrderDetail>> result;
-    Map<String, Object> allDetails;
+    List<List<OrderDetail>> allDetail;
     private OrderProcessingAdapter orderProcessingAdapter;
+    private List<List<OrderDetail>> result = new ArrayList<>();
+    private List<OrderDetail> subResult = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_order, container, false);
-        recyclerView=view.findViewById(R.id.recycleViewOrder);
+        View view = inflater.inflate(R.layout.fragment_order, container, false);
+        recyclerView = view.findViewById(R.id.recycleViewOrder);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
         list = getAllOrderDetails();
-        orderProcessingAdapter=new OrderProcessingAdapter(list,getContext());
+        orderProcessingAdapter = new OrderProcessingAdapter(list, getContext());
         recyclerView.setAdapter(orderProcessingAdapter);
         return view;
     }
 
     private List<List<OrderDetail>> getAllOrderDetails() {
-        result = new ArrayList<>();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                //list of orderdetails
-                allDetails = (Map<String, Object>) snapshot.getValue();
+                //orderDetails from rtdb
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
+                    //if not seen
+                    if(!orderDetail.isSeen()){
+                        String orderId = orderDetail.getOrderId();
+                        boolean isFoundPlace = false;
 
-                //key of orderDetails
-                Set<String> keys = allDetails.keySet();
-                String currentId;
+                        //go through all exist subResult
+                        for (int i = 0; i < result.size(); i++) {
 
-                for (String key: keys
-                ) {
-                    OrderDetail orderDetail = (OrderDetail) allDetails.get(key);
-                    boolean isAdded = false;
-                    //put same orderId together
-                    String orderId = orderDetail.getOrderId();
-                    List<OrderDetail> list1 = new ArrayList<>();
-
-                    //if had this orderID then add to list
-                    for(int i=0 ; i< result.size();i++){
-                        list1 = result.get(i);
-                        if(isExist(list1,orderId)){
-                            list1.add(orderDetail);
-                            isAdded = true;
+                            //get list contain elements with same orderId
+                            subResult = result.get(i);
+                            if (isBelong(subResult, orderId)) {
+                                subResult.add(orderDetail);
+                                isFoundPlace = true;
+                            }
                         }
-                    }
-                    if(!isAdded){
-                        list1 = new ArrayList<>();
-                        list1.add(orderDetail);
-                        result.add(list1);
+                        //if not found any existed list belong to then make new list
+                        if (!isFoundPlace) {
+                            subResult = new ArrayList<>();
+                            subResult.add(orderDetail);
+                            //add new list to result
+                            result.add(subResult);
+                        }
                     }
                 }
             }
@@ -98,11 +96,10 @@ public class OrderFragment extends Fragment {
         });
         return result;
     }
-    private boolean isExist(List<OrderDetail> list,String orderId){
-        for(OrderDetail d:list){
-            if(d.getOrderId().equals(orderId)){
-                return true;
-            }
+
+    private boolean isBelong(List<OrderDetail> list, String orderId) {
+        if (!list.isEmpty()&&list.get(0)!=null) {
+            return list.get(0).getOrderId().equals(orderId);
         }
         return false;
     }

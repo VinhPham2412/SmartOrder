@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
-        <activity android:name="Waiter.ApproveOrderActivity"></activity>
         <activity android:name="Waiter.MainWaiterActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".CommunicationCustomer"></activity>
         <activity android:name=".NotificationActivity" />
@@ -21,6 +23,7 @@
         <activity android:name=".OrdersFoodActivity" />
         <activity android:name=".GetTableActivity2" />
         <activity android:name=".MenuActivity" />
+
         <activity android:name=".GetTableActivity" />
         <activity android:name=".UpdateProfile" />
         <activity android:name=".AccountActivity" />
@@ -28,10 +31,7 @@
         <activity android:name=".ResisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" >
-            <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+
         </activity>
     </application>
 
