@@ -3,9 +3,12 @@ package dao;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,21 +75,29 @@ public class BuffetDAO {
         }
         return buffetList;
     }
-    public Bitmap getImage(int buffet_Id){
-        String sql="Select Image from Images where Type like ";
-        try {
-            connection = db.getConnection();
-            ps = connection.prepareStatement(sql);
-            rs=ps.executeQuery();
-            while (rs.next()){
-                byte [] bytesImage=rs.getBytes(1);
-                Bitmap bitmapImage= BitmapFactory.decodeByteArray(bytesImage,0,bytesImage.length);
-                return bitmapImage;
 
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
         }
-        return null;
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

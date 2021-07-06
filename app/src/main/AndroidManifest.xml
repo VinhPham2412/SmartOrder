@@ -20,7 +20,6 @@
         <activity android:name=".OrdersFoodActivity" />
         <activity android:name=".GetTableActivity2" />
         <activity android:name=".MenuActivity" />
-
         <activity android:name=".GetTableActivity" />
         <activity android:name=".UpdateProfile" />
         <activity android:name=".AccountActivity" />
@@ -32,6 +31,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
