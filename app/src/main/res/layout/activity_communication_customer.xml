@@ -5,17 +5,19 @@
     tools:context=".CommunicationCustomer"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <TextView
         android:id="@+id/communication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="@color/red"
+        android:gravity="center"
+        android:singleLine="false"
         android:text="Giao tiếp với Quản lí"
-        android:gravity="center"/>
+        android:textColor="@color/red"
+        android:textSize="20dp" />
     <EditText
         android:hint="Nhập nội dung"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:layout_below="@+id/communication"
         android:textSize="14dp"
         android:layout_width="match_parent"

@@ -19,19 +19,21 @@ public class OrderDetail {
     private int foodId;
     private int quantity;
     private Date time;
-    private boolean isSeen = false;
-    private boolean isAccepted = false;
+    private boolean isSeen ;
+    private boolean isAccepted ;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time) {
+    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time,boolean isSeen,boolean isAccepted) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
         this.foodId = foodId;
         this.quantity = quantity;
         this.time = time;
+        this.isSeen=isSeen;
+        this.isAccepted=isAccepted;
     }
 
     public boolean isAccepted() {
@@ -50,7 +52,7 @@ public class OrderDetail {
         this.orderId = orderId;
     }
 
-    public boolean isSeen() {
+    public boolean getIsSeen() {
         return isSeen;
     }
 
@@ -106,6 +108,7 @@ public class OrderDetail {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("id",id);
         result.put("orderId",orderId);
         result.put("userId", userId);
         result.put("foodId", foodId);

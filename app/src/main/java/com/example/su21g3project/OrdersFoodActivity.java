@@ -3,6 +3,7 @@ package com.example.su21g3project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private List<Food> list;
     private List<Food> foodListMoney;
     private TextView buffetName;
-    private Button btnOrder;
+    private Button btnOrder,btnC;
     private FirebaseUser user;
     private String userId;
     @Override
@@ -78,7 +79,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }
@@ -88,14 +89,20 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity  = Integer.parseInt(food.numberFoodMoney.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }
             }
             Toast.makeText(this,"Gọi món thành công",Toast.LENGTH_SHORT).show();
         });
-
+        btnC=findViewById(R.id.btnCommunication);
+        btnC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrdersFoodActivity.this,CommunicationCustomer.class));
+            }
+        });
 
     }
 }

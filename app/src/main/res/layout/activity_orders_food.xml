@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".OrdersFoodActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:gravity="center"
         android:id="@+id/buffetName"
@@ -18,28 +16,30 @@
         android:textStyle="italic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_height="1dp"
-        android:background="@color/black" />
-    <TextView
-        android:text="Đồ Uống + Đồ ăn "
-        android:textSize="20dp"
-        android:textStyle="italic"
-        android:textColor="@color/red"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewMoney"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+        <TextView
+            android:text="Đồ Uống + Đồ ăn "
+            android:textSize="20dp"
+            android:textStyle="italic"
+            android:textColor="@color/red"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewMoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,10 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
-            android:text="Lich su" />
+            android:text="Lịch Sử" />
 
     </LinearLayout>
-
 
 </LinearLayout>
 </ScrollView>

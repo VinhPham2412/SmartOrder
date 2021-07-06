@@ -17,6 +17,8 @@ import com.example.su21g3project.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +44,13 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View uView =
-                inflater.inflate(R.layout.custom_order_waiter, parent, false);
+        View uView = inflater.inflate(R.layout.custom_order_waiter, parent, false);
         ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
         for (OrderDetail od : details) {
@@ -61,6 +61,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
             holder.gridView.addView(textView);
             ids.add(od.getId());
         }
+        OrderDetail orderDetail=details.get(1);
         holder.btnAccept.setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
@@ -75,12 +76,13 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
         holder.btnReject.setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
-            for (String id : ids
-            ) {
+            for (String id : ids) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
             }
         });
+        holder.txtTime.setText(orderDetail.getTime().toString());
+
     }
 
     @Override
@@ -89,6 +91,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView txtTableName,txtTime;
         public GridLayout gridView;
         public Button btnReject, btnAccept;
 
@@ -97,6 +100,8 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
             gridView = itemView.findViewById(R.id.gridview);
             btnAccept = itemView.findViewById(R.id.btnAccept);
             btnReject = itemView.findViewById(R.id.btnReject);
+            txtTableName=itemView.findViewById(R.id.txtTable);
+            txtTime=itemView.findViewById(R.id.txtTime);
         }
     }
 }

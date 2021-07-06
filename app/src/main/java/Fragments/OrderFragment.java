@@ -46,20 +46,17 @@ public class OrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
-
         recyclerView = view.findViewById(R.id.recycleViewOrder);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 //orderDetails from rtdb
+                result.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
                     //if not seen
-                    if(!orderDetail.isSeen()){
+                    if(!orderDetail.getIsSeen()){
                         String orderId = orderDetail.getOrderId();
                         boolean isFoundPlace = false;
 
