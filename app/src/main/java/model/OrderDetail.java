@@ -56,7 +56,7 @@ public class OrderDetail {
         return isSeen;
     }
 
-    public void setSeen(boolean seen) {
+    public void setISSeen(boolean seen) {
         isSeen = seen;
     }
 

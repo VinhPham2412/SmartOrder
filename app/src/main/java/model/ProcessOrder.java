@@ -53,7 +53,7 @@ public class ProcessOrder {
         this.phone = phone;
     }
 
-    public boolean isVerify() {
+    public boolean getIsVerify() {
         return isVerify;
     }
 

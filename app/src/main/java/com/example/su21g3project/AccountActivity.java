@@ -2,12 +2,19 @@ package com.example.su21g3project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,11 +26,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Fragments.HistoryOrderFragment;
+import adapter.BookedHistoryAdapter;
+import model.ProcessOrder;
 import model.User;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView txtLogout,txtPhone,txtChange,txtName;
+    private TextView txtLogout,txtPhone,txtChange,txtName,txtOrderHistory,txtBookedHistory;
     private BottomNavigationView mNavigationView;
     FirebaseUser user;
     private DatabaseReference reference;
@@ -34,6 +49,9 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
         txtName=findViewById(R.id.fragment_nameAccount);
         txtPhone=findViewById(R.id.fragment_phoneAccount);
+        txtBookedHistory = findViewById(R.id.txtTableHistory);
+        txtOrderHistory =findViewById(R.id.txtTransactionHistory);
+
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
             reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
@@ -84,6 +102,35 @@ public class AccountActivity extends AppCompatActivity {
             Intent intent = new Intent(AccountActivity.this,UpdateProfile.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+        });
+        txtOrderHistory.setOnClickListener(v -> {
+            List<ProcessOrder> list = new ArrayList<>();
+            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    for (DataSnapshot post: snapshot.getChildren()){
+                        ProcessOrder processOrder = post.getValue(ProcessOrder.class);
+                        if(processOrder.getUserId().equals(user.getUid())){
+                            list.add(processOrder);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+            BookedHistoryAdapter adapter = new BookedHistoryAdapter(list);
+            RecyclerView view = findViewById(R.id.fragment_container_view);
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
+            view.setLayoutManager(manager);
+            view.setAdapter(adapter);
+        });
+        txtBookedHistory.setOnClickListener(v -> {
+
         });
     }
 }

@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,14 +62,11 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
                 holder.imageView.setVisibility(View.GONE);
             }
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.imageView.setVisibility(View.VISIBLE);
-                if(checkedPosition!=holder.getAdapterPosition()){
-                    notifyItemChanged(checkedPosition);
-                    checkedPosition=holder.getAdapterPosition();
-                }
+        holder.itemView.setOnClickListener(v -> {
+            holder.imageView.setVisibility(View.VISIBLE);
+            if(checkedPosition!=holder.getAdapterPosition()){
+                notifyItemChanged(checkedPosition);
+                checkedPosition=holder.getAdapterPosition();
             }
         });
 
