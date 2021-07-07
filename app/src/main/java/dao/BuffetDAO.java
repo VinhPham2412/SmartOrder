@@ -61,7 +61,8 @@ public class BuffetDAO {
                 Buffet buffet=new Buffet(rs.getInt("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Price"),
-                        rs.getString("Description"));
+                        rs.getString("Description"),
+                        rs.getString("Image"));
                 buffetList.add(buffet);
             }
         } catch (SQLException e) {

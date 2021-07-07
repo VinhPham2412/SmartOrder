@@ -76,7 +76,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         });
 
         new DownloadImageTask((ImageView) (holder.imageViewBuffet))
-                .execute("https://i.im.ge/2021/07/06/FaRVW.png");
+                .execute(buffet.getImage());
     }
 
 
@@ -104,7 +104,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         }
         return null;
     }
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private   class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {

@@ -1,7 +1,11 @@
 package adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +55,7 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
         final Food foodMoney=foodList.get(position);
         holder.tvFoodNameMoney.setText(foodMoney.getName());
         holder.foodId = foodMoney.getId();
-        holder.tvPrice.setText((int)(foodMoney.getPrice())+"đ");
+        holder.tvPrice.setText((int)(foodMoney.getPrice())+"K");
         holder.addMoney.setOnClickListener(v -> {
             int number=0;
             try {
@@ -67,8 +72,12 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
             }catch (NumberFormatException e){
                 System.out.println("Could not parse " + e);
             }
-            holder.numberFoodMoney.setText(String.valueOf(number-1));
+            if(number>0) {
+                holder.numberFoodMoney.setText(String.valueOf(number - 1));
+            }
         });
+        new DownloadImageTask((ImageView) (holder.imageViewMoney))
+                .execute(foodMoney.getImage());
         allViews.add(holder);
     }
 
@@ -95,6 +104,30 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
             addMoney=itemView.findViewById(R.id.btnAddMoney);
             removeMoney=itemView.findViewById(R.id.btnRemoveMoney);
             tvPrice=itemView.findViewById(R.id.tvMoney);
+        }
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }

@@ -43,7 +43,7 @@ public class FoodDAO {
      */
     public List<Food> getFoodsOfBuffet(int buffetId) {
         List<Food> foodList=new ArrayList<>();
-        String sql="select distinct f.Id,f.Name,f.Price,f.Description,f.Calories,f.Category_Id from Foods f,Buffets b, Buffets_Foods bf where f.Id=bf.Food_Id and bf.Buffet_Id=?";
+        String sql="select distinct f.Id,f.Name,f.Price,f.Description,f.Calories,f.Category_Id,f.Image from Foods f,Buffets b, Buffets_Foods bf where f.Id=bf.Food_Id and bf.Buffet_Id=?";
         try {
             connection = db.getConnection();
             ps = connection.prepareStatement(sql);
@@ -55,7 +55,8 @@ public class FoodDAO {
                         rs.getFloat("Price"),
                         rs.getString("Description"),
                          rs.getInt("Calories"),
-                         rs.getInt("Category_Id"));
+                         rs.getInt("Category_Id"),
+                         rs.getString("Image"));
                 foodList.add(food);
             }
         } catch (SQLException e) {
@@ -83,7 +84,38 @@ public class FoodDAO {
                         rs.getFloat("Price"),
                         rs.getString("Description"),
                         rs.getInt("Calories"),
-                        rs.getInt("Category_Id"));
+                        rs.getInt("Category_Id"),
+                        rs.getString("Image"));
+                foodList.add(food);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                db.closeConnection(rs,ps,connection);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return foodList;
+    }
+
+    public List<Food> getFoodMoneyByCategory(int categgoryId) {
+        List<Food> foodList=new ArrayList<>();
+        String sql="select * from Foods where Price !=0 and Category_Id=?";
+        try {
+            connection = db.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1,categgoryId);
+            rs=ps.executeQuery();
+            while (rs.next()){
+                Food food=new Food(rs.getInt("Id"),
+                        rs.getString("Name"),
+                        rs.getFloat("Price"),
+                        rs.getString("Description"),
+                        rs.getInt("Calories"),
+                        rs.getInt("Category_Id"),
+                        rs.getString("Image"));
                 foodList.add(food);
             }
         } catch (SQLException e) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private Button btnOrder,btnC;
     private FirebaseUser user;
     private String userId;
+    private ImageButton btnNuocngot,btnRuou,btnDoan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,11 @@ public class OrdersFoodActivity extends AppCompatActivity {
             userId = user.getUid();
         }
         setContentView(R.layout.activity_orders_food);
+        btnNuocngot=findViewById(R.id.nuocngot);
+        btnRuou=findViewById(R.id.ruou);
+        btnDoan=findViewById(R.id.doan);
+
+
         btnOrder = findViewById(R.id.btnOrder);
         Intent intent=getIntent();
         Buffet buffet=(Buffet)intent.getSerializableExtra("buffet");
@@ -64,8 +71,31 @@ public class OrdersFoodActivity extends AppCompatActivity {
         recycler1.setAdapter(ordersFoodMoneyAdapter);
         recycler1.setLayoutManager(new LinearLayoutManager(this));
         buffetName=findViewById(R.id.buffetName);
-        buffetName.setText(buffet.getName()+" " +String.valueOf(buffet.getPrice()));
-
+        buffetName.setText(buffet.getName()+" " +(int)(buffet.getPrice())+"K");
+        btnNuocngot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodListMoney=new FoodDAO().getFoodMoneyByCategory(3);
+                ordersFoodMoneyAdapter=new OrdersFoodMoneyAdapter(getApplicationContext(),foodListMoney);
+                recycler1.setAdapter(ordersFoodMoneyAdapter);
+            }
+        });
+        btnRuou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodListMoney=new FoodDAO().getFoodMoneyByCategory(4);
+                ordersFoodMoneyAdapter=new OrdersFoodMoneyAdapter(getApplicationContext(),foodListMoney);
+                recycler1.setAdapter(ordersFoodMoneyAdapter);
+            }
+        });
+        btnDoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodListMoney=new FoodDAO().getFoodMoneyByCategory(5);
+                ordersFoodMoneyAdapter=new OrdersFoodMoneyAdapter(getApplicationContext(),foodListMoney);
+                recycler1.setAdapter(ordersFoodMoneyAdapter);
+            }
+        });
         btnOrder.setOnClickListener(v -> {
             //get data and make new detail
             //insert into rtdb

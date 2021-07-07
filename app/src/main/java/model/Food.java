@@ -7,6 +7,7 @@ public class Food {
     private String description;
     private int calories;
     private int categoryId;
+    private String image;
 
     public int getId() {
         return id;
@@ -56,13 +57,22 @@ public class Food {
         this.categoryId = categoryId;
     }
 
-    public Food(int id, String name, float price, String description, int calories, int categoryId) {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Food(int id, String name, float price, String description, int calories, int categoryId, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.calories = calories;
         this.categoryId = categoryId;
+        this.image=image;
     }
 
     public Food() {

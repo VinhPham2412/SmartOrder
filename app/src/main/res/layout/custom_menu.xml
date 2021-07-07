@@ -37,5 +37,5 @@
         android:id="@+id/imageViewMenu"
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:src="@drawable/buffet" />
+         />
 </LinearLayout>

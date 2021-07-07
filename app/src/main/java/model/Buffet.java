@@ -7,6 +7,7 @@ public class Buffet implements Serializable {
     private String name;
     private float price;
     private String description;
+    private String image;
 
     public int getId() {
         return id;
@@ -28,6 +29,14 @@ public class Buffet implements Serializable {
         return price;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public void setPrice(float price) {
         this.price = price;
     }
@@ -40,11 +49,12 @@ public class Buffet implements Serializable {
         this.description = description;
     }
 
-    public Buffet(int id, String name, float price, String description) {
+    public Buffet(int id, String name, float price, String description,String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.image=image;
     }
 
     public Buffet() {

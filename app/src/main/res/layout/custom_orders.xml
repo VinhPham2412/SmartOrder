@@ -9,10 +9,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <ImageView
+        android:background="@drawable/custompager"
         android:id="@+id/foodOrderView"
         android:layout_width="60dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="60dp"/>
     <TextView
+        android:paddingStart="10dp"
         android:paddingTop="15dp"
         android:id="@+id/tvFoodName"
         android:layout_width="200dp"
