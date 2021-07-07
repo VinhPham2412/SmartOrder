@@ -39,18 +39,16 @@ public class GetBuffetActivity extends AppCompatActivity {
         buffetAdapter=new BuffetAdapter(this,list);
         recyclerView.setAdapter(buffetAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (buffetAdapter.getSelected()!=null){
-                    Buffet buffet=buffetAdapter.getSelected();
-                    Intent intent =new Intent(GetBuffetActivity.this,OrdersFoodActivity.class);
-                    intent.putExtra("buffet",buffet);
-                    startActivity(intent);
-                }
-                else{
-                    ShowToast("No buffet is choose!");
-                }
+        btnConfirm.setOnClickListener(v -> {
+            if (buffetAdapter.getSelected()!=null){
+                Buffet buffet=buffetAdapter.getSelected();
+                Intent intent =new Intent(GetBuffetActivity.this,OrdersFoodActivity.class);
+                intent.putExtra("buffet",buffet);
+                intent.putExtra("orderId",getIntent().getStringExtra("orderId"));
+                startActivity(intent);
+            }
+            else{
+                ShowToast("No buffet is choose!");
             }
         });
         foodList=new ArrayList<>();

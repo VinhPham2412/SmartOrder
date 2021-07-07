@@ -72,12 +72,9 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
         btnMenu=findViewById(R.id.btnMenu);
-        btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,MenuActivity.class));
-                finish();
-            }
+        btnMenu.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this,MenuActivity.class));
+            finish();
         });
         txtUsername = findViewById(R.id.txtUseName);
 
@@ -119,38 +116,23 @@ public class MainActivity extends AppCompatActivity {
         btnNotHaveAccount=findViewById(R.id.btnNotHaveAccount);
         imageButton=findViewById(R.id.imageButton);
         user = FirebaseAuth.getInstance().getCurrentUser();
-//        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
-//        String visible=preferences.getString("1","login");
-//        if (visible.equals("logout")){
-//            mainLogin.setVisibility(View.VISIBLE);
-//            imageButton.setVisibility(View.INVISIBLE);
-//            btnNotHaveAccount.setVisibility(View.INVISIBLE);
-//        }
          if(user==null){
             btnNotHaveAccount.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.INVISIBLE);
             mainLogin.setVisibility(View.INVISIBLE);
-            btnNotHaveAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this,ResisterActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
+            btnNotHaveAccount.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this,ResisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             });
 
         }else{
             btnNotHaveAccount.setVisibility(View.INVISIBLE);
             imageButton.setVisibility(View.VISIBLE);
             mainLogin.setVisibility(View.INVISIBLE);
-//            String welcome = "Welcome ";
-//            welcome+= user.getDisplayName();
-//            txtUsername.setText(welcome);
-
 
             toolbar.setTitle("Trang chủ");
         }
-//        view_pager=findViewById(R.id.view_pager);
         btnGetTable = findViewById(R.id.btnGetTable);
         btnGetTable.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
@@ -217,10 +199,4 @@ public class MainActivity extends AppCompatActivity {
             return;
         mNavigationView.setSelectedItemId(R.id.navigation_home);
     }
-
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//
-//    }
 }

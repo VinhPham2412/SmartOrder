@@ -42,23 +42,17 @@ public class CommunicationCustomer extends AppCompatActivity {
         listviewdata=findViewById(R.id.listview_data);
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,arrayPeliculas);
         listviewdata.setAdapter(adapter);
-        btnSenReason.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String communicationId = UUID.randomUUID().toString();
-                reference = FirebaseDatabase.getInstance().getReference("Communications").child("Customer");
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("id", communicationId);
-                hashMap.put("userId", userId);
-                hashMap.put("message", txtReason.getText().toString());
-                hashMap.put("isSeen", false);
-                reference.child(communicationId).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(CommunicationCustomer.this,"Gửi ý kiến thành công",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+        btnSenReason.setOnClickListener(v -> {
+            String communicationId = UUID.randomUUID().toString();
+            reference = FirebaseDatabase.getInstance().getReference("Communications").child("Customer");
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id", communicationId);
+            hashMap.put("userId", userId);
+            hashMap.put("message", txtReason.getText().toString());
+            hashMap.put("isSeen", false);
+            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
+                    task -> Toast.makeText(CommunicationCustomer.this,"Gửi ý kiến thành công",
+                            Toast.LENGTH_SHORT).show());
         });
     }
 

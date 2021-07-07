@@ -2,15 +2,21 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+
+        android:id="@+id/screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <androidx.recyclerview.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fragment_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <TextView
             android:id="@+id/fragment_nameAccount"
             android:layout_width="353dp"
@@ -22,10 +28,10 @@
         <TextView
             android:id="@+id/fragment_phoneAccount"
             android:layout_width="351dp"
-            android:textColor="@color/red"
             android:layout_height="29dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:textColor="@color/red"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -41,11 +47,12 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <View android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+        <View
+            android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
             android:background="@color/black" />
 
         <TextView
@@ -59,11 +66,13 @@
             android:text="Lịch sử đặt bàn"
             android:textSize="20dp"
             android:textStyle="bold" />
-        <View android:layout_width="match_parent"
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
-            android:layout_height="1dp"
             android:background="@color/black" />
 
 
@@ -78,11 +87,13 @@
             android:text="Lịch sử giao dịch"
             android:textSize="20dp"
             android:textStyle="bold" />
-        <View android:layout_width="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="5dp"
+
+        <View
+            android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
             android:background="@color/black" />
 
 
@@ -97,14 +108,17 @@
             android:text="Đăng xuất"
             android:textSize="20dp"
             android:textStyle="bold" />
-        <View android:layout_width="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_height="1dp"
-            android:background="@color/black" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/black" />
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation1"
         android:layout_width="wrap_content"

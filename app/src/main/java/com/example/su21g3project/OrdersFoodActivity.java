@@ -72,8 +72,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             // get orderId
-            // not done, need update
-            String orderId = "od2";
+            String orderId = getIntent().getStringExtra("orderId");
             //get food and quantity from food in buffet
             for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());
@@ -97,12 +96,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
             Toast.makeText(this,"Gọi món thành công",Toast.LENGTH_SHORT).show();
         });
         btnC=findViewById(R.id.btnCommunication);
-        btnC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(OrdersFoodActivity.this,CommunicationCustomer.class));
-            }
-        });
+        btnC.setOnClickListener(v -> startActivity(new Intent(OrdersFoodActivity.this,CommunicationCustomer.class)));
 
     }
 }
