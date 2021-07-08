@@ -6,6 +6,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -81,16 +82,21 @@ public class ProcessOrder {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        try{
+            this.date = format.parse(date);
+        }catch (ParseException e){
+
+        }
     }
 
     public int getNoPp() {
         return noPp;
     }
 
-    public void setNoPp(int noPp) {
-        this.noPp = noPp;
+    public void setNoPp(String noPp) {
+        this.noPp = Integer.parseInt(noPp);
     }
 
     public String getNote() {

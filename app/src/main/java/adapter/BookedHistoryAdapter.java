@@ -73,6 +73,9 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             holder.getTxtStatus().setText("Chưa xác nhận");
             holder.getTxtStatus().setTextColor(Color.RED);
         }
+        if(!order.getIsVerify()){
+            holder.getBtngetFood().setVisibility(View.INVISIBLE);
+        }
         holder.getBtngetFood().setOnClickListener(v -> {
             Intent intent = new Intent(context, GetBuffetActivity.class);
             intent.putExtra("orderId",order.getId());

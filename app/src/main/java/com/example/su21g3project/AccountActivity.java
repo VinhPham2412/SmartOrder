@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.su21g3project.Customer.BookedHistory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -104,33 +105,11 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(intent);
         });
         txtOrderHistory.setOnClickListener(v -> {
-            List<ProcessOrder> list = new ArrayList<>();
-            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    for (DataSnapshot post: snapshot.getChildren()){
-                        ProcessOrder processOrder = post.getValue(ProcessOrder.class);
-                        if(processOrder.getUserId().equals(user.getUid())){
-                            list.add(processOrder);
-                        }
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-            BookedHistoryAdapter adapter = new BookedHistoryAdapter(list);
-            RecyclerView view = findViewById(R.id.fragment_container_view);
-            LinearLayoutManager manager = new LinearLayoutManager(this);
-            manager.setOrientation(LinearLayoutManager.VERTICAL);
-            view.setLayoutManager(manager);
-            view.setAdapter(adapter);
         });
         txtBookedHistory.setOnClickListener(v -> {
-
+            Intent intent = new Intent(AccountActivity.this, BookedHistory.class);
+            startActivity(intent);
         });
     }
 }

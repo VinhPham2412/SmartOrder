@@ -11,12 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_container_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
         <TextView
             android:id="@+id/fragment_nameAccount"
             android:layout_width="353dp"
@@ -116,7 +110,6 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
             android:background="@color/black" />
-        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

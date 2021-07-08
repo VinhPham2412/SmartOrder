@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
-        <activity android:name="Waiter.MainWaiterActivity">
-
-        </activity>
-        <activity android:name=".CommunicationCustomer"></activity>
+        <activity android:name=".Customer.BookedHistory"></activity>
+        <activity android:name=".Customer.OrderHistory" />
+        <activity android:name="Waiter.MainWaiterActivity" />
+        <activity android:name=".CommunicationCustomer" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".GetBuffetActivity" />
         <activity android:name=".OrdersFoodActivity" />
@@ -26,12 +26,12 @@
         <activity android:name=".VerifySMSToken" />
         <activity android:name=".ResisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
