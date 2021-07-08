@@ -19,7 +19,7 @@ public class ProcessOrder {
     private String name;
     private String phone;
     private Date date;
-    private int noPp;
+    private int numberOfPeople;
     private String note;
     private boolean isVerify = false;
 
@@ -27,13 +27,13 @@ public class ProcessOrder {
     }
 
     public ProcessOrder(String id,@Nullable String userId, String name, String phone,
-                        Date date, int noPp, String note, boolean isVerify) {
+                        Date date, int numberOfPeople, String note, boolean isVerify) {
         this.id = id;
         this.userId = userId;
         this.name = name;
         this.phone = phone;
         this.date = date;
-        this.noPp = noPp;
+        this.numberOfPeople = numberOfPeople;
         this.note = note;
         this.isVerify = isVerify;
     }
@@ -91,12 +91,12 @@ public class ProcessOrder {
         }
     }
 
-    public int getNoPp() {
-        return noPp;
+    public int getNumberOfPeople() {
+        return numberOfPeople;
     }
 
-    public void setNoPp(String noPp) {
-        this.noPp = Integer.parseInt(noPp);
+    public void setNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
     }
 
     public String getNote() {
@@ -115,7 +115,7 @@ public class ProcessOrder {
         DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
         String d = format.format(date);
         result.put("date",d);
-        result.put("numberOfPeople", noPp);
+        result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
         result.put("isVerify", isVerify);
 

@@ -34,29 +34,47 @@ public class BookedHistory extends AppCompatActivity {
         setContentView(R.layout.activity_customer_booked_history);
         user = FirebaseAuth.getInstance().getCurrentUser();
         list = new ArrayList<>();
+        RecyclerView view = findViewById(R.id.container_customer_booked_history);
+        view.setLayoutManager(new LinearLayoutManager(this));
         reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                for (DataSnapshot post: snapshot.getChildren()){
+//                        ProcessOrder processOrder = post.getValue(ProcessOrder.class);
+//                        if(processOrder.getUserId().equals(user.getUid())){
+//                            list.add(processOrder);
+//                        }
+//                }
+//                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list,BookedHistory.this);
+//                view.setAdapter(adapter);
+//                view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//            }
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot post: snapshot.getChildren()){
-                    if(post.exists()){
-                        ProcessOrder processOrder = post.getValue(ProcessOrder.class);
-                        if(processOrder.getUserId().equals(user.getUid())){
-                            list.add(processOrder);
-                        }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
+                    if(processOrder.getUserId().equals(user.getUid())){
+                        list.add(processOrder);
                     }
+
                 }
+                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list,BookedHistory.this);
+                view.setAdapter(adapter);
+
             }
+
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        BookedHistoryAdapter adapter = new BookedHistoryAdapter(list);
-        RecyclerView view = findViewById(R.id.container_customer_booked_history);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        view.setLayoutManager(manager);
-        view.setAdapter(adapter);
+
     }
 }

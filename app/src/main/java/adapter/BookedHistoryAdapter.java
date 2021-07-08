@@ -44,8 +44,9 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             return btngetFood;
         }
     }
-    public BookedHistoryAdapter(List<ProcessOrder> list){
+    public BookedHistoryAdapter(List<ProcessOrder> list,Context context){
         this.list = list;
+        this.context=context;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -64,7 +65,7 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         holder.getTxtText().setText("Người đặt : "+order.getName()+
                 "\nSố điện thoại : "+order.getPhone()+
                 "\nGiờ ăn : "+order.getDate().toString()+
-                "\nSố người ăn : "+order.getNoPp()+
+                "\nSố người ăn : "+order.getNumberOfPeople()+
                 "\nGhi chú : "+order.getNote());
         if (order.getIsVerify()) {
             holder.getTxtStatus().setText("Đã xác nhận");

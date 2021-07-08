@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         mNavigationView=findViewById(R.id.navigation);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
@@ -188,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mNavigationView.setSelectedItemId(R.id.navigation_home);
         SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
         String visible=preferences.getString("1","login");
         if (visible.equals("logout")){
@@ -195,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
             imageButton.setVisibility(View.INVISIBLE);
             btnNotHaveAccount.setVisibility(View.INVISIBLE);
         }
-        else
+        else {
             return;
-        mNavigationView.setSelectedItemId(R.id.navigation_home);
+        }
     }
 }

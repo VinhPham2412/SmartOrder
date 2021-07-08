@@ -51,7 +51,7 @@ public class AccountActivity extends AppCompatActivity {
         txtName=findViewById(R.id.fragment_nameAccount);
         txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
-        txtOrderHistory =findViewById(R.id.txtTransactionHistory);
+//        txtOrderHistory =findViewById(R.id.txtTransactionHistory);
 
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
@@ -104,9 +104,7 @@ public class AccountActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-        txtOrderHistory.setOnClickListener(v -> {
 
-        });
         txtBookedHistory.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, BookedHistory.class);
             startActivity(intent);

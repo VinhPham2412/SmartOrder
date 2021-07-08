@@ -88,7 +88,7 @@ public class GetTableActivity2 extends AppCompatActivity {
             reference.child(orderId).setValue(order.toMap()).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(GetTableActivity2.this,
-                            "Your order have been received.",Toast.LENGTH_SHORT).show();
+                            "Gửi yêu cầu đặt bàn thành công!",Toast.LENGTH_SHORT).show();
                     btnNext.setVisibility(View.VISIBLE);
                     bar.setVisibility(View.GONE);
                     finish();
