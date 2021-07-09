@@ -109,6 +109,7 @@ public class ProcessOrder {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("id",id);
         result.put("userId", userId);
         result.put("name", name);
         result.put("phone", phone);

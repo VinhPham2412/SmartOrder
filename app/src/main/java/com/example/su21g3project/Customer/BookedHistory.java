@@ -37,24 +37,6 @@ public class BookedHistory extends AppCompatActivity {
         RecyclerView view = findViewById(R.id.container_customer_booked_history);
         view.setLayoutManager(new LinearLayoutManager(this));
         reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                for (DataSnapshot post: snapshot.getChildren()){
-//                        ProcessOrder processOrder = post.getValue(ProcessOrder.class);
-//                        if(processOrder.getUserId().equals(user.getUid())){
-//                            list.add(processOrder);
-//                        }
-//                }
-//                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list,BookedHistory.this);
-//                view.setAdapter(adapter);
-//                view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//            }
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/fragment_nameAccount"
             android:layout_width="353dp"
@@ -41,14 +42,6 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/black" />
-
         <TextView
             android:id="@+id/txtTableHistory"
             android:layout_width="376dp"
@@ -61,24 +54,18 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <View
+
+        <TextView
+            android:id="@+id/txtOrderhistory"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="39dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/black" />
-
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/black" />
-
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_baseline_access_alarm_24"
+            android:drawablePadding="25dp"
+            android:text="Lịch sử gọi món"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtLogout"
@@ -92,13 +79,6 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/black" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

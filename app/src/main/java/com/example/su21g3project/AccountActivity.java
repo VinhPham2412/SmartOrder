@@ -18,6 +18,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.su21g3project.Customer.BookedHistory;
+import com.example.su21g3project.Customer.OrderHistory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,7 +52,7 @@ public class AccountActivity extends AppCompatActivity {
         txtName=findViewById(R.id.fragment_nameAccount);
         txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
-//        txtOrderHistory =findViewById(R.id.txtTransactionHistory);
+        txtOrderHistory =findViewById(R.id.txtOrderhistory);
 
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
@@ -107,6 +108,11 @@ public class AccountActivity extends AppCompatActivity {
 
         txtBookedHistory.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, BookedHistory.class);
+            startActivity(intent);
+        });
+
+        txtOrderHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, OrderHistory.class);
             startActivity(intent);
         });
     }
