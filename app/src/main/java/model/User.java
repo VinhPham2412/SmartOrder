@@ -56,10 +56,10 @@ public class User {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("id",id);
         result.put("name", name);
         result.put("phone", phone);
         result.put("address", address);
-
         return result;
     }
 

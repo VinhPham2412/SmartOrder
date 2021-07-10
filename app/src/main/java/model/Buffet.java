@@ -1,19 +1,24 @@
 package model;
 
-import java.io.Serializable;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+@IgnoreExtraProperties
 public class Buffet implements Serializable {
-    private int id;
+    private String id;
     private String name;
     private float price;
     private String description;
     private String image;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,7 +54,7 @@ public class Buffet implements Serializable {
         this.description = description;
     }
 
-    public Buffet(int id, String name, float price, String description,String image) {
+    public Buffet(String id, String name, float price, String description,String image) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -58,5 +63,15 @@ public class Buffet implements Serializable {
     }
 
     public Buffet() {
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("price", price);
+        result.put("description", description);
+        result.put("image", image);
+        return result;
     }
 }

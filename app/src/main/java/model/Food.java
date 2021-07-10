@@ -1,19 +1,23 @@
 package model;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Food {
-    private int id;
+    private String id;
     private String name;
     private float price;
     private String description;
     private int calories;
-    private int categoryId;
     private String image;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,14 +53,6 @@ public class Food {
         this.calories = calories;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public String getImage() {
         return image;
     }
@@ -65,14 +61,24 @@ public class Food {
         this.image = image;
     }
 
-    public Food(int id, String name, float price, String description, int calories, int categoryId, String image) {
+    public Food(String id, String name, float price, String description, int calories, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.calories = calories;
-        this.categoryId = categoryId;
         this.image=image;
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id",id);
+        result.put("name", name);
+        result.put("price", price);
+        result.put("description", description);
+        result.put("calories", calories);
+        result.put("image", image);
+        return result;
     }
 
     public Food() {

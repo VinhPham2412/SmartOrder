@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import model.Buffet;
 import model.Food;
 
 public class GetBuffetActivity extends AppCompatActivity {
+    private RecyclerView.RecycledViewPool sharedPool = new RecyclerView.RecycledViewPool();
     private RecyclerView recyclerView,recyclerViewMoney;
     private List<Buffet> list;
     private List<Food> foodList;
@@ -54,10 +56,11 @@ public class GetBuffetActivity extends AppCompatActivity {
         foodList=new ArrayList<>();
         foodList=new FoodDAO().getFoodMoney();
         ordersFoodMoneyAdapter=new OrdersFoodMoneyAdapter(this,foodList);
+        recyclerViewMoney.setRecycledViewPool(sharedPool);
         recyclerViewMoney.setAdapter(ordersFoodMoneyAdapter);
-        recyclerViewMoney.setLayoutManager(new LinearLayoutManager(this));
-
-
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setInitialPrefetchItemCount(4);
+        recyclerViewMoney.setLayoutManager(manager);
     }
 
     private void ShowToast(String s) {

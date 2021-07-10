@@ -50,12 +50,11 @@ public class FoodDAO {
             ps.setInt(1,buffetId);
             rs=ps.executeQuery();
             while (rs.next()){
-                 Food food=new Food(rs.getInt("Id"),
+                 Food food=new Food(rs.getString("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Price"),
                         rs.getString("Description"),
                          rs.getInt("Calories"),
-                         rs.getInt("Category_Id"),
                          rs.getString("Image"));
                 foodList.add(food);
             }
@@ -79,12 +78,11 @@ public class FoodDAO {
             ps = connection.prepareStatement(sql);
             rs=ps.executeQuery();
             while (rs.next()){
-                Food food=new Food(rs.getInt("Id"),
+                Food food=new Food(rs.getString("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Price"),
                         rs.getString("Description"),
                         rs.getInt("Calories"),
-                        rs.getInt("Category_Id"),
                         rs.getString("Image"));
                 foodList.add(food);
             }
@@ -109,12 +107,11 @@ public class FoodDAO {
             ps.setInt(1,categgoryId);
             rs=ps.executeQuery();
             while (rs.next()){
-                Food food=new Food(rs.getInt("Id"),
+                Food food=new Food(rs.getString("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Price"),
                         rs.getString("Description"),
                         rs.getInt("Calories"),
-                        rs.getInt("Category_Id"),
                         rs.getString("Image"));
                 foodList.add(food);
             }

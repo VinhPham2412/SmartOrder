@@ -103,7 +103,9 @@ public class GetTableActivity extends AppCompatActivity {
         slTime = findViewById(R.id.seekBar_slTime);
         int now = currentHour*60 + currentMinute;
         slTime.setMax(1440);
-        slTime.setMin(now);
+        if(date!=d){
+
+        }
 
         slTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

@@ -64,12 +64,16 @@ public class OrdersFoodActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycleView);
         ordersFoodAdapter=new OrdersFoodAdapter(this,list);
         recyclerView.setAdapter(ordersFoodAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setInitialPrefetchItemCount(4);
+        recyclerView.setLayoutManager(manager);
         recycler1=findViewById(R.id.recycleViewMoney);
         foodListMoney=new FoodDAO().getFoodMoney();
         ordersFoodMoneyAdapter=new OrdersFoodMoneyAdapter(this,foodListMoney);
         recycler1.setAdapter(ordersFoodMoneyAdapter);
-        recycler1.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager manager1 = new LinearLayoutManager(this);
+        manager1.setInitialPrefetchItemCount(4);
+        recycler1.setLayoutManager(manager1);
         buffetName=findViewById(R.id.buffetName);
         buffetName.setText(buffet.getName()+" " +(int)(buffet.getPrice())+"K");
         btnNuocngot.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +112,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity  = Integer.parseInt(food.numberFood.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }
@@ -118,7 +122,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity  = Integer.parseInt(food.numberFoodMoney.getText().toString());
                 if(quantity>0){
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false);
+                    OrderDetail detail = new OrderDetail(id,orderId,userId,food.foodId,quantity,time,false,false,true);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO,"addOk","Add ok"));
                 }

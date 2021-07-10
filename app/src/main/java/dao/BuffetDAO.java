@@ -58,7 +58,7 @@ public class BuffetDAO {
             ps = connection.prepareStatement(sql);
             rs=ps.executeQuery();
             while (rs.next()){
-                Buffet buffet=new Buffet(rs.getInt("Id"),
+                Buffet buffet=new Buffet(rs.getString("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Price"),
                         rs.getString("Description"),

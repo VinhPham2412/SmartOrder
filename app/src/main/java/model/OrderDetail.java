@@ -21,11 +21,12 @@ public class OrderDetail {
     private Date time;
     private boolean isSeen ;
     private boolean isAccepted ;
+    private boolean isInBuffet;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time,boolean isSeen,boolean isAccepted) {
+    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time,boolean isSeen,boolean isAccepted, boolean isInBuffet) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
@@ -34,6 +35,15 @@ public class OrderDetail {
         this.time = time;
         this.isSeen=isSeen;
         this.isAccepted=isAccepted;
+        this.isInBuffet = isInBuffet;
+    }
+
+    public boolean isInBuffet() {
+        return isInBuffet;
+    }
+
+    public void setInBuffet(boolean inBuffet) {
+        isInBuffet = inBuffet;
     }
 
     public boolean getIsAccepted() {
