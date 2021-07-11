@@ -45,9 +45,14 @@ public class GetBuffetActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    list.add(snapshot.getValue(Buffet.class));
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    if(snapshot1.exists()){
+                        list.add(snapshot1.getValue(Buffet.class));
+                    }
                 }
+                buffetAdapter=new BuffetAdapter(getApplicationContext(),list);
+                recyclerView.setAdapter(buffetAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(GetBuffetActivity.this));
             }
 
             @Override
@@ -55,9 +60,7 @@ public class GetBuffetActivity extends AppCompatActivity {
 
             }
         });
-        buffetAdapter=new BuffetAdapter(this,list);
-        recyclerView.setAdapter(buffetAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         btnConfirm.setOnClickListener(v -> {
             if (buffetAdapter.getSelected()!=null){
                 Buffet buffet=buffetAdapter.getSelected();

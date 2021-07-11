@@ -58,7 +58,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         return false;
     }
 
-    List<Food> getFoodsByCategory(String type) {
+    void getFoodsByCategory(String type) {
         List<Food> result = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Menu");
         reference.addValueEventListener(new ValueEventListener() {
@@ -72,6 +72,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                         }
                     }
                 }
+                ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), result);
+                recycler1.setAdapter(ordersFoodMoneyAdapter);
             }
 
             @Override
@@ -79,33 +81,40 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
             }
         });
-        return result;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_orders_food);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        recyclerView = findViewById(R.id.recycleView);
+
         if (user != null) {
             userId = user.getUid();
         }
-        setContentView(R.layout.activity_orders_food);
+
         btnNuocngot = findViewById(R.id.nuocngot);
         btnRuou = findViewById(R.id.ruou);
         btnDoan = findViewById(R.id.doan);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnOrder = findViewById(R.id.btnOrder);
         Intent intent = getIntent();
         Buffet buffet = (Buffet) intent.getSerializableExtra("buffet");
         list = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");
-        reference.child(buffet.getId()).child("food").addValueEventListener(new ValueEventListener() {
+        reference.child(buffet.getId()).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    list.add(snapshot.getValue(Food.class));
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    if (snapshot1.exists()) {
+                        list.add(snapshot1.getValue(Food.class));
+                    }
                 }
+                ordersFoodAdapter = new OrdersFoodAdapter(getApplicationContext(), list);
+                recyclerView.setAdapter(ordersFoodAdapter);
             }
 
             @Override
@@ -113,14 +122,11 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView = findViewById(R.id.recycleView);
-        ordersFoodAdapter = new OrdersFoodAdapter(this, list);
-        recyclerView.setAdapter(ordersFoodAdapter);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setInitialPrefetchItemCount(4);
-        recyclerView.setLayoutManager(manager);
+
+
         recycler1 = findViewById(R.id.recycleViewMoney);
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Food");
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Menu");
+        foodListMoney = new ArrayList<>();
         reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -130,6 +136,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                         foodListMoney.add(food);
                     }
                 }
+                ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
+                recycler1.setAdapter(ordersFoodMoneyAdapter);
             }
 
             @Override
@@ -138,28 +146,22 @@ public class OrdersFoodActivity extends AppCompatActivity {
             }
         });
 
-        ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(this, foodListMoney);
-        recycler1.setAdapter(ordersFoodMoneyAdapter);
         LinearLayoutManager manager1 = new LinearLayoutManager(this);
         manager1.setInitialPrefetchItemCount(4);
         recycler1.setLayoutManager(manager1);
         buffetName = findViewById(R.id.buffetName);
         buffetName.setText(buffet.getName() + " " + (int) (buffet.getPrice()) + "K");
         btnNuocngot.setOnClickListener(v -> {
-            foodListMoney = getFoodsByCategory("soft drink");
-            ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
-            recycler1.setAdapter(ordersFoodMoneyAdapter);
+            getFoodsByCategory("soft drink");
+
         });
         btnRuou.setOnClickListener(v -> {
-            foodListMoney = getFoodsByCategory("wine");
+            getFoodsByCategory("wine");
 
-            ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
-            recycler1.setAdapter(ordersFoodMoneyAdapter);
         });
         btnDoan.setOnClickListener(v -> {
-            foodListMoney = getFoodsByCategory("food");
-            ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
-            recycler1.setAdapter(ordersFoodMoneyAdapter);
+            getFoodsByCategory("food");
+
         });
         btnOrder.setOnClickListener(v -> {
             //get data and make new detail

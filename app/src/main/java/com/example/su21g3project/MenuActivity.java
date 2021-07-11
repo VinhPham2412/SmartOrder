@@ -34,16 +34,20 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        recyclerView=findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list=new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
                     if(snapshot.exists()){
                         list.add(snapshot1.getValue(Buffet.class));
                     }
                 }
+                menuAdapter=new MenuAdapter(list,MenuActivity.this);
+                recyclerView.setAdapter(menuAdapter);
             }
 
             @Override
@@ -51,10 +55,7 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView=findViewById(R.id.recycleView);
-        menuAdapter=new MenuAdapter(list,this);
-        recyclerView.setAdapter(menuAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         btnBack=findViewById(R.id.btnBackMenu);
         btnBack.setOnClickListener(v -> {
             startActivity(new Intent(MenuActivity.this,MainActivity.class));

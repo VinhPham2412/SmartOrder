@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @IgnoreExtraProperties
 public class Buffet implements Serializable {
@@ -13,6 +14,7 @@ public class Buffet implements Serializable {
     private float price;
     private String description;
     private String image;
+
 
 
     public String getId() {

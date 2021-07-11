@@ -53,7 +53,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         if(checkedPosition==-1){
             holder.imageView.setVisibility(View.GONE);
         }else{
-            if(checkedPosition==holder.getAdapterPosition()){
+            if(checkedPosition==holder.getAbsoluteAdapterPosition()){
                 holder.imageView.setVisibility(View.VISIBLE);
             }else{
                 holder.imageView.setVisibility(View.GONE);

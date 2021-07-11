@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Buffet;
@@ -63,7 +64,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.buffet_name.setText("SET "+(int)buffet.getPrice()+" K");
         holder.buffet_description.setText(buffet.getDescription());
         //get food id in this buffet
-         foods= new ArrayList<>();
+        foods= new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Buffet").child(buffet.getId()).child("foods");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -71,6 +72,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 for(DataSnapshot snap:snapshot.getChildren()){
                     Food food = snap.getValue(Food.class);
                     foods.add(food);
+                }
+                for (Food fod: foods) {
+                    TextView textView=new TextView(mContext);
+                    textView.setText(". "+fod.getName());
+                    textView.setTypeface(Typeface.DEFAULT_BOLD);
+                    textView.setTextSize(15);
+                    holder.gridLayout.addView(textView);
                 }
             }
 
@@ -80,13 +88,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             }
         });
 
-        for (Food fod: foods) {
-            TextView textView=new TextView(mContext);
-            textView.setText(". "+fod.getName());
-            textView.setTypeface(Typeface.DEFAULT_BOLD);
-            textView.setTextSize(15);
-            holder.gridLayout.addView(textView);
-        }
         new DownloadImageTask((ImageView) (holder.imageViewMenu))
                 .execute(buffet.getImage());
 

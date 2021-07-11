@@ -14,8 +14,10 @@ import com.example.su21g3project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,9 +56,15 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         Date time = postlist.get(0).getTime();
         for(OrderDetail orderDetail:postlist){
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food").child(orderDetail.getFoodId());
-            reference.get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
-                    foodName = task.getResult().getValue(Food.class).getName();
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    foodName = snapshot.getValue(Food.class).getName();
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
                 }
             });
             TextView textView = holder.getTxtFood();
