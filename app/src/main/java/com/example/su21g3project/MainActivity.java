@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+            reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
 
             reference.addValueEventListener(new ValueEventListener() {
                 @Override

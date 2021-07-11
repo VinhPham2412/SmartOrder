@@ -12,14 +12,25 @@ public class User {
     private String name;
     private String address;
     private String phone;
+    private String role;
 
     public User() {
+        role = "Customer";
     }
 
     public User(String name, String phone, String address) {
         this.name = name;
         this.address = address;
         this.phone = phone;
+        role = "Customer";
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getId() {
@@ -60,6 +71,7 @@ public class User {
         result.put("name", name);
         result.put("phone", phone);
         result.put("address", address);
+        result.put("role",role);
         return result;
     }
 

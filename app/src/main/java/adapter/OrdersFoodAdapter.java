@@ -91,7 +91,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
-        public int foodId;
+        public String foodId;
        public ImageView imageView;
        public TextView tvFoodName;
        public EditText numberFood;

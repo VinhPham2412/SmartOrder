@@ -32,7 +32,7 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         recyclerView=findViewById(R.id.recycleViewNotice);
         notificationList=new ArrayList<>();
-        reference= FirebaseDatabase.getInstance().getReference("Notifications");
+        reference= FirebaseDatabase.getInstance().getReference("Notification");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

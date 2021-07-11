@@ -29,18 +29,7 @@
         android:layout_marginRight="15dp"
         android:layout_height="1dp"
         android:background="@color/black" />
-    <TextView
-        android:text="Đồ uống + Đồ ăn "
-        android:textSize="20dp"
-        android:textStyle="italic"
-        android:textColor="@color/red"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewMoney"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
     <Button
         android:layout_marginLeft="150dp"
         android:id="@+id/btnConfirm"

@@ -91,7 +91,7 @@ public class OrdersFoodMoneyAdapter extends RecyclerView.Adapter<OrdersFoodMoney
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
-        public int foodId;
+        public String foodId;
         public ImageView imageViewMoney;
         public TextView tvFoodNameMoney,tvPrice;
         public EditText numberFoodMoney;

@@ -52,7 +52,7 @@ public class GetTableActivity2 extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
             userId = user.getUid();
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            reference = FirebaseDatabase.getInstance().getReference("User").child(userId);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

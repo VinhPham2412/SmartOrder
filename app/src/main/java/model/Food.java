@@ -12,6 +12,7 @@ public class Food {
     private String description;
     private int calories;
     private String image;
+    private String type;
 
     public String getId() {
         return id;
@@ -78,9 +79,17 @@ public class Food {
         result.put("description", description);
         result.put("calories", calories);
         result.put("image", image);
+        result.put("type",type);
         return result;
     }
 
     public Food() {
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type){
+        this.type = type;
     }
 }

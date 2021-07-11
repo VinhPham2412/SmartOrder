@@ -16,11 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
-import dao.UserDAO;
 import model.User;
 
 import static android.content.ContentValues.TAG;
@@ -82,12 +78,6 @@ public class VerifySMSToken extends AppCompatActivity {
 //                                                SharedPreferences preferences = getSharedPreferences("main", 0);
 //                                                preferences.edit().clear().commit();
                                             finish();
-                                        }
-                                        UserDAO userDAO=new UserDAO();
-                                        try {
-                                            userDAO.insertUser(userId,FName,LName,phone,1);
-                                        } catch (SQLException throwables) {
-                                            throwables.printStackTrace();
                                         }
                                     }).addOnFailureListener(e -> e.printStackTrace());
                                 }
@@ -297,7 +287,6 @@ public class VerifySMSToken extends AppCompatActivity {
 
         txtResend.setOnClickListener(v -> {
             resendVerificationCode(phone,mResendToken);
-            Log.w(TAG, "On resend press 11111111111111111111"+mResendToken);
         });
 
         btnVerify.setOnClickListener(v -> {

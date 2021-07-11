@@ -19,19 +19,16 @@ import com.example.su21g3project.R;
 import java.io.InputStream;
 import java.util.List;
 
-import dao.BuffetDAO;
 import model.Buffet;
 
 public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder> {
     private int checkedPosition=0;
     private Context mContext;
     private List<Buffet> list;
-    private BuffetDAO buffetDAO;
 
     public BuffetAdapter(Context mContext, List<Buffet> list) {
         this.mContext = mContext;
         this.list = list;
-        buffetDAO=new BuffetDAO();
     }
 
     @NonNull

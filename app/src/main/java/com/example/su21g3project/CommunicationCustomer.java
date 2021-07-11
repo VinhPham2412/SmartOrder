@@ -44,7 +44,7 @@ public class CommunicationCustomer extends AppCompatActivity {
         listviewdata.setAdapter(adapter);
         btnSenReason.setOnClickListener(v -> {
             String communicationId = UUID.randomUUID().toString();
-            reference = FirebaseDatabase.getInstance().getReference("Communications").child("Customer");
+            reference = FirebaseDatabase.getInstance().getReference("Communication").child("Customer");
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);

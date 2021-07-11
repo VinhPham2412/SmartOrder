@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -10,31 +9,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.MainActivity;
 import com.example.su21g3project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import dao.FoodDAO;
 import model.Buffet;
 import model.Food;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private List<Buffet> buffetList;
-    private List<Food> foodList;
+    private List<Food> foods;
     private Context mContext;
+    private DatabaseReference reference;
 
     public MenuAdapter(List<Buffet> buffetList, Context mContext) {
         this.buffetList = buffetList;
@@ -60,8 +62,25 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         final Buffet buffet=buffetList.get(position);
         holder.buffet_name.setText("SET "+(int)buffet.getPrice()+" K");
         holder.buffet_description.setText(buffet.getDescription());
-        foodList= new FoodDAO().getFoodsOfBuffet(buffet.getId());
-        for (Food fod: foodList) {
+        //get food id in this buffet
+         foods= new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Buffet").child(buffet.getId()).child("foods");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for(DataSnapshot snap:snapshot.getChildren()){
+                    Food food = snap.getValue(Food.class);
+                    foods.add(food);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        for (Food fod: foods) {
             TextView textView=new TextView(mContext);
             textView.setText(". "+fod.getName());
             textView.setTypeface(Typeface.DEFAULT_BOLD);

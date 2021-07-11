@@ -5,33 +5,35 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.security.AccessControlContext;
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import dao.FoodDAO;
+import model.Food;
 import model.OrderDetail;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
     private List<List<OrderDetail>> list;
     private List<OrderDetail> postlist;
-    private FoodDAO foodDAO;
     private Context context;
+    private String foodName;
     public OrderHistoryAdapter(List<List<OrderDetail>> list ){
         this.list = list;
-        foodDAO = new FoodDAO();
     }
 
     @Override
@@ -51,7 +53,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         postlist = list.get(position);
         Date time = postlist.get(0).getTime();
         for(OrderDetail orderDetail:postlist){
-            String foodName = foodDAO.getFoodNameById(orderDetail.getFoodId());
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food").child(orderDetail.getFoodId());
+            reference.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+                    foodName = task.getResult().getValue(Food.class).getName();
+                }
+            });
             TextView textView = holder.getTxtFood();
             textView.setText(textView.getText()+"\n"+foodName + " : " + orderDetail.getQuantity());
         }

@@ -51,7 +51,7 @@ public class UpdateProfile extends AppCompatActivity {
             //get user info from database with uid
             mDatabase = FirebaseDatabase.getInstance().getReference();
             id = fbuser.getUid();
-            mDatabase.child("Users").child(id).addValueEventListener(new ValueEventListener() {
+            mDatabase.child("User").child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     if(snapshot.getValue()!=null){
@@ -79,7 +79,7 @@ public class UpdateProfile extends AppCompatActivity {
 
                 User user = new User(name,phone,address);
                 user.setId(id);
-                mDatabase.child("Users").child(id).setValue(user.toMap())
+                mDatabase.child("User").child(id).setValue(user.toMap())
                         .addOnCompleteListener(task -> {
                             Toast.makeText(UpdateProfile.this,
                                     "Update success.", Toast.LENGTH_SHORT).show();

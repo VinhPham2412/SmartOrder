@@ -45,15 +45,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Notification notification=list.get(position);
         holder.txtNotice.setText(notification.getMessage());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index=holder.getAdapterPosition();
-                Notification notification1=list.get(index);
-                if (notification1.getType()==1){
-                    Intent intent1=new Intent(mContext, GetBuffetActivity.class);
-                    mContext.startActivity(intent1);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            int index=holder.getAdapterPosition();
+            Notification notification1=list.get(index);
+            if (notification1.getType()==1){
+                Intent intent1=new Intent(mContext, GetBuffetActivity.class);
+                mContext.startActivity(intent1);
             }
         });
     }

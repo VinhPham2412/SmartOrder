@@ -14,6 +14,7 @@ public class Buffet implements Serializable {
     private String description;
     private String image;
 
+
     public String getId() {
         return id;
     }

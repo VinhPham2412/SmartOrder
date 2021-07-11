@@ -56,7 +56,7 @@ public class AccountActivity extends AppCompatActivity {
 
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
-            reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+            reference= FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -16,7 +16,7 @@ public class OrderDetail {
     private String id;
     private String userId;
     private String orderId;
-    private int foodId;
+    private String foodId;
     private int quantity;
     private Date time;
     private boolean isSeen ;
@@ -26,7 +26,7 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(String id,String orderId, String userId, int foodId, int quantity, Date time,boolean isSeen,boolean isAccepted, boolean isInBuffet) {
+    public OrderDetail(String id,String orderId, String userId, String foodId, int quantity, Date time,boolean isSeen,boolean isAccepted, boolean isInBuffet) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
@@ -86,11 +86,11 @@ public class OrderDetail {
         this.userId = userId;
     }
 
-    public int getFoodId() {
+    public String getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(int foodId) {
+    public void setFoodId(String foodId) {
         this.foodId = foodId;
     }
 
