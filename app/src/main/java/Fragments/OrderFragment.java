@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import adapter.Waiter.OrderProcessingAdapter;
@@ -54,6 +55,7 @@ public class OrderFragment extends Fragment {
                     //if not seen
                     if(!orderDetail.getIsSeen()){
                         String orderId = orderDetail.getOrderId();
+                        Date time = orderDetail.getTime();
                         boolean isFoundPlace = false;
 
                         //go through all exist subResult
@@ -61,7 +63,7 @@ public class OrderFragment extends Fragment {
 
                             //get list contain elements with same orderId
                             subResult = result.get(i);
-                            if (isBelong(subResult, orderId)) {
+                            if (isBelong(subResult, orderId,time)) {
                                 subResult.add(orderDetail);
                                 isFoundPlace = true;
                             }
@@ -86,9 +88,11 @@ public class OrderFragment extends Fragment {
         return view;
     }
 
-    private boolean isBelong(List<OrderDetail> list, String orderId) {
+    //belong is same orderId and time
+    private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
         if (!list.isEmpty()&&list.get(0)!=null) {
-            return list.get(0).getOrderId().equals(orderId);
+            return list.get(0).getOrderId().equals(orderId)
+                    &&list.get(0).getTime().equals(time);
         }
         return false;
     }

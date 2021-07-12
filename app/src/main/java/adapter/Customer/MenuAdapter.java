@@ -1,4 +1,4 @@
-package adapter;
+package adapter.Customer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import model.Buffet;

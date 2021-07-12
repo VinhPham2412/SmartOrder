@@ -33,24 +33,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
+import Waiter.MainWaiterActivity;
 import model.User;
 
 import static android.content.ContentValues.TAG;
 
 public class VerifySMSToken extends AppCompatActivity {
 
-    private TextView txtPhone,txtResend;
-    private TextView num1,num2,num3,num4,num5,num6;
+    private TextView txtPhone, txtResend;
+    private TextView num1, num2, num3, num4, num5, num6;
     private Button btnVerify;
     private ProgressBar progressBar;
-    private String phone,FName,LName;
+    private String phone, FName, LName;
     private FirebaseAuth mAuth;
+    private String type;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private DatabaseReference databaseReference;
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential,String type) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -59,27 +61,42 @@ public class VerifySMSToken extends AppCompatActivity {
 
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
-                        Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                        // Update UI
-                         startActivity(intent);
-                       FirebaseUser firebaseUser=mAuth.getCurrentUser();
-                       assert firebaseUser != null;
-                       String userId=firebaseUser.getUid();
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                        ValueEventListener eventListener=new ValueEventListener() {
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        assert firebaseUser != null;
+                        String userId = firebaseUser.getUid();
+                        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userId);
+                        ValueEventListener eventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(!snapshot.exists()){
-                                    User user = new User(FName+LName,phone,"");
+                                //if have account and login
+                                if (snapshot.exists()&&type.equals("login")) {
+                                    User user = snapshot.getValue(User.class);
+                                    String role = user.getRole();
+                                    switch (role){
+                                        case "customer":
+                                            Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+                                            startActivity(intent);
+                                            break;
+                                        case "receptionist":
+                                            Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
+                                            startActivity(intent1);
+                                            break;
+                                    }
+                                }
+                                //if don't have account and register
+                                if (!snapshot.exists() && type.equals("register")) {
+                                    User user = new User(FName + LName, phone, "");
                                     databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
-                                        if(task1.isSuccessful()){
-//                                                SharedPreferences preferences = getSharedPreferences("main", 0);
-//                                                preferences.edit().clear().commit();
+                                        if (task1.isSuccessful()) {
                                             finish();
                                         }
                                     }).addOnFailureListener(e -> e.printStackTrace());
+                                }
+                                //if don't have account and login
+                                if(!snapshot.exists()&&type.equals("login")){
+                                    Toast.makeText(VerifySMSToken.this,"Your account don't exist in our database, please register.",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(VerifySMSToken.this,ResisterActivity.class);
+                                    startActivity(intent);
                                 }
                             }
 
@@ -96,11 +113,14 @@ public class VerifySMSToken extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             btnVerify.setVisibility(View.VISIBLE);
                             // The verification code entered was invalid
-                            Toast.makeText(VerifySMSToken.this,"Invalid verification code",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VerifySMSToken.this, "Invalid verification code", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    progressBar.setVisibility(View.GONE);
+                    btnVerify.setVisibility(View.VISIBLE);
                 });
     }
+
     private void resendVerificationCode(String phoneNumber,
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
@@ -113,9 +133,10 @@ public class VerifySMSToken extends AppCompatActivity {
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
-    private void verifyPhoneNumberWithCode(String verificationId, String code) {
+
+    private void verifyPhoneNumberWithCode(String verificationId, String code, String type) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithPhoneAuthCredential(credential);
+        signInWithPhoneAuthCredential(credential,type);
     }
 
     @Override
@@ -129,16 +150,16 @@ public class VerifySMSToken extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         phone = getIntent().getStringExtra("phone");
+        //get type of verify
+        type = getIntent().getStringExtra("type");
         txtPhone.setText(phone);
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-
-
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-                signInWithPhoneAuthCredential(credential);
+                signInWithPhoneAuthCredential(credential,type);
             }
 
             @Override
@@ -148,11 +169,11 @@ public class VerifySMSToken extends AppCompatActivity {
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
-                    Toast.makeText(VerifySMSToken.this,"Invalid request",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifySMSToken.this, "Invalid request", Toast.LENGTH_SHORT).show();
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
-                    Toast.makeText(VerifySMSToken.this,"The SMS quota for the project has been exceeded",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifySMSToken.this, "The SMS quota for the project has been exceeded", Toast.LENGTH_SHORT).show();
                 }
                 return;
                 // Show a message and update the UI
@@ -178,14 +199,14 @@ public class VerifySMSToken extends AppCompatActivity {
         num6 = findViewById(R.id.inputCode6);
         num1.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start,int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(num1.getText().toString().length()==1)     //size as per your requirement
+                if (num1.getText().toString().length() == 1)     //size as per your requirement
                 {
                     num2.requestFocus();
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 // TODO Auto-generated method stub
@@ -199,14 +220,14 @@ public class VerifySMSToken extends AppCompatActivity {
         });
         num2.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start,int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(num2.getText().toString().length()==1)     //size as per your requirement
+                if (num2.getText().toString().length() == 1)     //size as per your requirement
                 {
                     num3.requestFocus();
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 // TODO Auto-generated method stub
@@ -220,14 +241,14 @@ public class VerifySMSToken extends AppCompatActivity {
         });
         num3.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start,int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(num3.getText().toString().length()==1)     //size as per your requirement
+                if (num3.getText().toString().length() == 1)     //size as per your requirement
                 {
                     num4.requestFocus();
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 // TODO Auto-generated method stub
@@ -241,14 +262,14 @@ public class VerifySMSToken extends AppCompatActivity {
         });
         num4.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start,int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(num4.getText().toString().length()==1)     //size as per your requirement
+                if (num4.getText().toString().length() == 1)     //size as per your requirement
                 {
                     num5.requestFocus();
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 // TODO Auto-generated method stub
@@ -262,14 +283,14 @@ public class VerifySMSToken extends AppCompatActivity {
         });
         num5.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start,int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(num5.getText().toString().length()==1)     //size as per your requirement
+                if (num5.getText().toString().length() == 1)     //size as per your requirement
                 {
                     num6.requestFocus();
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 // TODO Auto-generated method stub
@@ -286,16 +307,16 @@ public class VerifySMSToken extends AppCompatActivity {
         LName = getIntent().getStringExtra("LName");
 
         txtResend.setOnClickListener(v -> {
-            resendVerificationCode(phone,mResendToken);
+            resendVerificationCode(phone, mResendToken);
         });
 
         btnVerify.setOnClickListener(v -> {
-            if(num1.getText().toString().trim().isEmpty()
-                    ||num2.getText().toString().trim().isEmpty()
-                    ||num3.getText().toString().trim().isEmpty()
-                    ||num4.getText().toString().trim().isEmpty()
-                    ||num5.getText().toString().trim().isEmpty()
-                    ||num6.getText().toString().trim().isEmpty()) {
+            if (num1.getText().toString().trim().isEmpty()
+                    || num2.getText().toString().trim().isEmpty()
+                    || num3.getText().toString().trim().isEmpty()
+                    || num4.getText().toString().trim().isEmpty()
+                    || num5.getText().toString().trim().isEmpty()
+                    || num6.getText().toString().trim().isEmpty()) {
                 Toast.makeText(VerifySMSToken.this, "Please enter valid code", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -308,7 +329,7 @@ public class VerifySMSToken extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             btnVerify.setVisibility(View.GONE);
             mVerificationId = getIntent().getStringExtra("verificationId");
-            verifyPhoneNumberWithCode(mVerificationId,code);
+            verifyPhoneNumberWithCode(mVerificationId, code,type);
         });
 
     }

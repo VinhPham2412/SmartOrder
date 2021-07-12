@@ -1,24 +1,17 @@
-package com.example.su21g3project;
+package com.example.su21g3project.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridView;
 import android.widget.TextView;
 
-import com.example.su21g3project.Customer.BookedHistory;
-import com.example.su21g3project.Customer.OrderHistory;
+import com.example.su21g3project.MainActivity;
+import com.example.su21g3project.R;
+import com.example.su21g3project.UpdateProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,14 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import Fragments.HistoryOrderFragment;
-import adapter.BookedHistoryAdapter;
-import model.ProcessOrder;
 import model.User;
 
 public class AccountActivity extends AppCompatActivity {
@@ -60,9 +45,11 @@ public class AccountActivity extends AppCompatActivity {
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user =snapshot.getValue(User.class);
-                    txtName.setText(user.getName());
-                    txtPhone.setText(user.getPhone());
+                    if(snapshot.exists()){
+                        User user =snapshot.getValue(User.class);
+                        txtName.setText(user.getName());
+                        txtPhone.setText(user.getPhone());
+                    }
                 }
 
                 @Override
@@ -75,7 +62,7 @@ public class AccountActivity extends AppCompatActivity {
         txtChange = findViewById(R.id.txtChangeInfo);
         txtLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(AccountActivity.this,MainActivity.class);
+            Intent intent=new Intent(AccountActivity.this, MainActivity.class);
             SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=pref.edit();
             editor.putString("1","logout");
@@ -101,7 +88,7 @@ public class AccountActivity extends AppCompatActivity {
             return false;
         });
         txtChange.setOnClickListener(v -> {
-            Intent intent = new Intent(AccountActivity.this,UpdateProfile.class);
+            Intent intent = new Intent(AccountActivity.this, UpdateProfile.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });

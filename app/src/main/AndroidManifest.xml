@@ -13,8 +13,9 @@
         android:theme="@style/Theme.Su21G3Project">
         <activity android:name=".Customer.BookedHistory"></activity>
         <activity android:name=".Customer.OrderHistory" />
-        <activity android:name="Waiter.MainWaiterActivity" />
-        <activity android:name=".CommunicationCustomer" />
+        <activity android:name="Waiter.MainWaiterActivity" >
+        </activity>
+        <activity android:name=".Customer.CommunicationCustomer" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".GetBuffetActivity" />
         <activity android:name=".OrdersFoodActivity" />
@@ -22,7 +23,7 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".GetTableActivity" />
         <activity android:name=".UpdateProfile" />
-        <activity android:name=".AccountActivity" />
+        <activity android:name=".Customer.AccountActivity" />
         <activity android:name=".VerifySMSToken" />
         <activity android:name=".ResisterActivity" />
         <activity android:name=".LoginActivity" />
