@@ -66,7 +66,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         Food food = snapshot1.getValue(Food.class);
-                        if (food.getType().equals(type)) {
+                        if (food.getType().equals(type)&&!isIn(list,food.getId())) {
                             result.add(food);
                         }
                     }
@@ -131,12 +131,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Food food = snapshot1.getValue(Food.class);
-                    foodListMoney.add(food);
-                }
-                for(int i=0;i<foodListMoney.size();i++){
-                    Food f = foodListMoney.get(i);
-                    if (isIn(list, f.getId())) {
-                        foodListMoney.remove(i);
+                    if(!isIn(list,food.getId())){
+                        foodListMoney.add(food);
                     }
                 }
                 ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
