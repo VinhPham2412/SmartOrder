@@ -56,7 +56,6 @@ public class VerifySMSToken extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
                         preferences.edit().clear().commit();
-
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
                         Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
@@ -67,7 +66,7 @@ public class VerifySMSToken extends AppCompatActivity {
                        FirebaseUser firebaseUser=mAuth.getCurrentUser();
                        assert firebaseUser != null;
                        String userId=firebaseUser.getUid();
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userId);
                         ValueEventListener eventListener=new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {

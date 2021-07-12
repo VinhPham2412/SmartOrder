@@ -38,6 +38,7 @@ public class BookedHistory extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
                     ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
                     if(processOrder.getUserId().equals(user.getUid())){
