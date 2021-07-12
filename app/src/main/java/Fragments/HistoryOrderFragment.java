@@ -10,14 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.su21g3project.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import adapter.BookedHistoryAdapter;
-import adapter.OrderHistoryAdapter;
-import model.OrderDetail;
-import model.ProcessOrder;
-
 
 public class HistoryOrderFragment extends Fragment {
     public HistoryOrderFragment() {

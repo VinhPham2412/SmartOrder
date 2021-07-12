@@ -1,4 +1,4 @@
-package adapter;
+package adapter.Customer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -61,9 +61,9 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         }
         holder.itemView.setOnClickListener(v -> {
             holder.imageView.setVisibility(View.VISIBLE);
-            if(checkedPosition!=holder.getAdapterPosition()){
+            if(checkedPosition!=holder.getAbsoluteAdapterPosition()){
                 notifyItemChanged(checkedPosition);
-                checkedPosition=holder.getAdapterPosition();
+                checkedPosition=holder.getAbsoluteAdapterPosition();
             }
         });
 

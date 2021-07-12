@@ -7,17 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,22 +56,27 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
         for (OrderDetail od : details) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food").child(od.getFoodId());
-            reference.get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
-                    foodName = task.getResult().getValue(Food.class).getName();
+            ids.add(od.getId());
+            reference = FirebaseDatabase.getInstance().getReference("Food").child(od.getFoodId());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    //get foodName and display
+                    Food food = snapshot.getValue(Food.class);
+                    foodName = food.getName();
+                    TextView textView = holder.getTxtFood();
+                    textView.setText(textView.getText()+"\n"+foodName+" : "+od.getQuantity());
+                }
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
                 }
             });
-            TextView textView = new TextView(mContext);
-            textView.setText(foodName + " : " + od.getQuantity());
-
-            holder.gridView.addView(textView);
-            ids.add(od.getId());
         }
-        OrderDetail orderDetail=details.get(1);
-        holder.btnAccept.setOnClickListener(v -> {
+        holder.getBtnAccept().setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
+            reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             for (String id : ids
             ) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
@@ -79,7 +85,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set accepted ok"));
             }
         });
-        holder.btnReject.setOnClickListener(v -> {
+        holder.getBtnReject().setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
             for (String id : ids) {
@@ -87,8 +93,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
             }
         });
-        holder.txtTime.setText(orderDetail.getTime().toString());
-
+        holder.getTxtTime().setText(details.get(0).getTimeString());
     }
 
     @Override
@@ -97,17 +102,39 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtTableName,txtTime;
-        public GridLayout gridView;
-        public Button btnReject, btnAccept;
+        private final TextView txtTableName;
+        private final TextView txtTime;
+        private TextView txtFood;
+        private Button btnReject, btnAccept;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            gridView = itemView.findViewById(R.id.gridview);
+            txtFood = itemView.findViewById(R.id.txtWaiterFood);
             btnAccept = itemView.findViewById(R.id.btnAccept);
             btnReject = itemView.findViewById(R.id.btnReject);
-            txtTableName=itemView.findViewById(R.id.txtTable);
-            txtTime=itemView.findViewById(R.id.txtTime);
+            txtTableName = itemView.findViewById(R.id.txtTable);
+            txtTime = itemView.findViewById(R.id.txtTime);
+            txtFood.setText("");
+        }
+
+        public TextView getTxtTableName() {
+            return txtTableName;
+        }
+
+        public TextView getTxtTime() {
+            return txtTime;
+        }
+
+        public TextView getTxtFood() {
+            return txtFood;
+        }
+
+        public Button getBtnReject() {
+            return btnReject;
+        }
+
+        public Button getBtnAccept() {
+            return btnAccept;
         }
     }
 }

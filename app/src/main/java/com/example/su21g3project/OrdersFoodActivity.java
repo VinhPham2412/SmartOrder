@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.su21g3project.Customer.CommunicationCustomer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +31,8 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import adapter.OrdersFoodAdapter;
-import adapter.OrdersFoodMoneyAdapter;
+import adapter.Customer.OrdersFoodAdapter;
+import adapter.Customer.OrdersFoodMoneyAdapter;
 import model.Buffet;
 import model.Food;
 import model.OrderDetail;

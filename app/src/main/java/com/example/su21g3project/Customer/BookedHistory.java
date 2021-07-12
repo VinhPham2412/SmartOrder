@@ -16,12 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.BookedHistoryAdapter;
+import adapter.Customer.BookedHistoryAdapter;
 import model.ProcessOrder;
 
 public class BookedHistory extends AppCompatActivity {

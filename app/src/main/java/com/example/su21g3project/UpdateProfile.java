@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.su21g3project.Customer.AccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -91,7 +92,7 @@ public class UpdateProfile extends AppCompatActivity {
 
                             fbuser.updateProfile(profileUpdates);
 
-                            Intent intent = new Intent(UpdateProfile.this,AccountActivity.class);
+                            Intent intent = new Intent(UpdateProfile.this, AccountActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         });

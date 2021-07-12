@@ -1,4 +1,4 @@
-package adapter;
+package adapter.Customer;
 
 import android.content.Context;
 import android.content.Intent;

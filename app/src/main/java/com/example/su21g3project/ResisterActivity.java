@@ -66,6 +66,7 @@ public class ResisterActivity extends AppCompatActivity {
                 intent.putExtra("phone", phone);
                 intent.putExtra("FName", fName);
                 intent.putExtra("LName", lName);
+                intent.putExtra("type","register");
                 intent.putExtra("verificationId",verificationId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -84,30 +85,27 @@ public class ResisterActivity extends AppCompatActivity {
             }
         };
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnRegister.setVisibility(View.GONE);
-                progressBar.setVisibility(View.VISIBLE);
-                fName = txtFName.getText().toString();
-                lName = txtLName.getText().toString();
-                phone = txtPhone.getText().toString();
-                if (checkInput(fName) && checkInput(lName) && checkInput(phone)) {
-                    //send code
-                    phone = txtPhone.getText().toString().replaceFirst("0","+84");
-                    //send OTP
-                    PhoneAuthOptions options =
-                            PhoneAuthOptions.newBuilder(mAuth)
-                                    .setPhoneNumber(phone)       // Phone number to verify
-                                    .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                                    .setActivity(ResisterActivity.this)                 // Activity (for callback binding)
-                                    .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                                    .build();
-                    PhoneAuthProvider.verifyPhoneNumber(options);
-                }else
-                    Toast.makeText(getApplicationContext(),"All field is required."
-                            ,Toast.LENGTH_SHORT).show();
-            }
+        btnRegister.setOnClickListener(v -> {
+            btnRegister.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            fName = txtFName.getText().toString();
+            lName = txtLName.getText().toString();
+            phone = txtPhone.getText().toString();
+            if (checkInput(fName) && checkInput(lName) && checkInput(phone)) {
+                //send code
+                phone = txtPhone.getText().toString().replaceFirst("0","+84");
+                //send OTP
+                PhoneAuthOptions options =
+                        PhoneAuthOptions.newBuilder(mAuth)
+                                .setPhoneNumber(phone)       // Phone number to verify
+                                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                                .setActivity(ResisterActivity.this)                 // Activity (for callback binding)
+                                .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                                .build();
+                PhoneAuthProvider.verifyPhoneNumber(options);
+            }else
+                Toast.makeText(getApplicationContext(),"All field is required."
+                        ,Toast.LENGTH_SHORT).show();
         });
 
     }

@@ -105,6 +105,10 @@ public class OrderDetail {
     public Date getTime() {
         return time;
     }
+    public String getTimeString(){
+        DateFormat format = new SimpleDateFormat("dd/MM/YYYY HH:mm");
+        return format.format(time);
+    }
 
     public void setTime(String time) {
 
@@ -128,6 +132,7 @@ public class OrderDetail {
         result.put("time", d);
         result.put("isSeen",isSeen);
         result.put("isAccepted",isAccepted);
+        result.put("isInBuffet",isInBuffet);
         return result;
     }
 }

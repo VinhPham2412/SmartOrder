@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.su21g3project.Customer.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -91,8 +92,12 @@ public class MainActivity extends AppCompatActivity {
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    txtUsername.setText("Xin chào " + user.getName());
+                    if(snapshot.exists()){
+                        User user = snapshot.getValue(User.class);
+                        txtUsername.setText("Xin chào " + user.getName());
+                    }else{
+                        FirebaseAuth.getInstance().signOut();
+                    }
                 }
 
                 @Override
@@ -105,12 +110,9 @@ public class MainActivity extends AppCompatActivity {
             txtUsername.setText("Xin chào ");
 
         mainLogin=findViewById(R.id.mainLogin);
-        mainLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                finish();
-            }
+        mainLogin.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         });
         viewPager =findViewById(R.id.viewImageResstaurant);
         photoList=getPhoto();
@@ -147,12 +149,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         btnVoucher=findViewById(R.id.btnVoucher);
-        btnVoucher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,GetBuffetActivity.class));
-            }
-        });
+        btnVoucher.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,GetBuffetActivity.class)));
 
 
     }

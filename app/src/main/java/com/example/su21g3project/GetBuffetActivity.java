@@ -21,10 +21,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.BuffetAdapter;
-import adapter.OrdersFoodMoneyAdapter;
+import adapter.Customer.BuffetAdapter;
 import model.Buffet;
-import model.Food;
 
 public class GetBuffetActivity extends AppCompatActivity {
     private RecyclerView recyclerView;

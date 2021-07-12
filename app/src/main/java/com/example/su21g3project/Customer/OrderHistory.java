@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import adapter.OrderHistoryAdapter;
+import adapter.Customer.OrderHistoryAdapter;
 import model.OrderDetail;
 
 public class OrderHistory extends AppCompatActivity {
