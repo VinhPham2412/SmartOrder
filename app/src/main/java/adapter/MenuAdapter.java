@@ -69,7 +69,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                foods.clear();
                 for(DataSnapshot snap:snapshot.getChildren()){
+
                     Food food = snap.getValue(Food.class);
                     foods.add(food);
                 }

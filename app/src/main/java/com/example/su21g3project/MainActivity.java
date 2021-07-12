@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,11 +27,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import adapter.PhotoAdapter;
+import model.Buffet;
+import model.Food;
 import model.Photo;
 import model.User;
 import me.relex.circleindicator.CircleIndicator;
@@ -49,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        reference = FirebaseDatabase.getInstance().getReference("Table");
         mNavigationView=findViewById(R.id.navigation);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -96,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             txtUsername.setText("Xin chào ");
+
         mainLogin=findViewById(R.id.mainLogin);
         mainLogin.setOnClickListener(new View.OnClickListener() {
             @Override

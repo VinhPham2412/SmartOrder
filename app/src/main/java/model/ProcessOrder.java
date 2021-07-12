@@ -119,6 +119,7 @@ public class ProcessOrder {
         result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
         result.put("isVerify", isVerify);
+        result.put("status",false);
 
         return result;
     }

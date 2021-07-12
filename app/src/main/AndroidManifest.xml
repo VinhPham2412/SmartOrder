@@ -13,7 +13,9 @@
         android:theme="@style/Theme.Su21G3Project">
         <activity android:name=".Customer.BookedHistory"></activity>
         <activity android:name=".Customer.OrderHistory" />
-        <activity android:name="Waiter.MainWaiterActivity" />
+        <activity android:name="Waiter.MainWaiterActivity" >
+
+        </activity>
         <activity android:name=".CommunicationCustomer" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".GetBuffetActivity" />
@@ -29,7 +31,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
