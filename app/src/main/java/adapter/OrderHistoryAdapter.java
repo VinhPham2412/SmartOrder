@@ -56,10 +56,15 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         Date time = postlist.get(0).getTime();
         for(OrderDetail orderDetail:postlist){
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food").child(orderDetail.getFoodId());
-            reference.addValueEventListener(new ValueEventListener() {
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    foodName = snapshot.getValue(Food.class).getName();
+                    if(snapshot.exists()){
+                        Food food = snapshot.getValue(Food.class);
+                        foodName = food.getName();
+                        TextView textView = holder.getTxtFood();
+                        textView.setText(textView.getText()+"\n"+foodName + " : " + orderDetail.getQuantity());
+                    }
                 }
 
                 @Override
@@ -67,8 +72,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
                 }
             });
-            TextView textView = holder.getTxtFood();
-            textView.setText(textView.getText()+"\n"+foodName + " : " + orderDetail.getQuantity());
         }
         DateFormat format = new SimpleDateFormat("dd/MM/YYYY HH:mm");
         holder.getTxtTime().setText(format.format(time));

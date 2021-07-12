@@ -22,7 +22,7 @@ public class GetTableActivity extends AppCompatActivity {
     private SeekBar slTime;
     private Button today,today1,today2,today3;
     private Calendar finalDate,d,d1,d2,d3;
-    private int hour,minute;
+    private int hour,minute,currentMinute,currentHour;
 
     private String getTime(Calendar date){
         int day = date.get(Calendar.DATE);
@@ -35,16 +35,25 @@ public class GetTableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_table);
+        Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
+        currentMinute = date.get(Calendar.MINUTE);
+        currentHour = date.get(Calendar.HOUR_OF_DAY);
+        currentHour+=7;
+
         today = findViewById(R.id.btnToday);
         today1 = findViewById(R.id.btnTomorrow);
         today2 = findViewById(R.id.btnAfterTomorrow);
         today3 = findViewById(R.id.btnNextAfterTomorrow);
+        prTime = findViewById(R.id.txtPreviewTime);
+        slTime = findViewById(R.id.seekBar_slTime);
+        slTime.setMax(1440);
 
         today.setSelected(true);
         today.setBackgroundColor(Color.GRAY);
         today1.setBackgroundColor(Color.LTGRAY);
         today2.setBackgroundColor(Color.LTGRAY);
         today3.setBackgroundColor(Color.LTGRAY);
+        slTime.setMin(currentHour*60 + currentMinute);
         finalDate = d;
 
         today.setOnClickListener(v -> {
@@ -53,6 +62,7 @@ public class GetTableActivity extends AppCompatActivity {
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
             finalDate = d;
+            slTime.setMin(currentHour*60 + currentMinute);
         });
         today1.setOnClickListener(v -> {
             today1.setBackgroundColor(Color.GRAY);
@@ -60,6 +70,7 @@ public class GetTableActivity extends AppCompatActivity {
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
             finalDate = d1;
+            slTime.setMin(1);
         });
         today2.setOnClickListener(v -> {
             today2.setBackgroundColor(Color.GRAY);
@@ -67,6 +78,7 @@ public class GetTableActivity extends AppCompatActivity {
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             finalDate = d2;
+            slTime.setMin(1);
         });
         today3.setOnClickListener(v -> {
             today3.setBackgroundColor(Color.GRAY);
@@ -74,12 +86,8 @@ public class GetTableActivity extends AppCompatActivity {
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             finalDate = d3;
+            slTime.setMin(1);
         });
-        Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
-
-        int currentMinute = date.get(Calendar.MINUTE);
-        int currentHour = date.get(Calendar.HOUR_OF_DAY);
-        currentHour+=7;
         today.setText("Hôm nay"+
                 "\n"+getTime(date));
         d = date;
@@ -99,13 +107,6 @@ public class GetTableActivity extends AppCompatActivity {
 
         btnNext = findViewById(R.id.btnNext);
         noPp = findViewById(R.id.txtNoPP);
-        prTime = findViewById(R.id.txtPreviewTime);
-        slTime = findViewById(R.id.seekBar_slTime);
-        int now = currentHour*60 + currentMinute;
-        slTime.setMax(1440);
-        if(date!=d){
-
-        }
 
         slTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

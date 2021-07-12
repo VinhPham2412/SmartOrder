@@ -3,7 +3,6 @@ package com.example.su21g3project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -60,7 +59,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
     void getFoodsByCategory(String type) {
         List<Food> result = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Menu");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -125,15 +124,19 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
 
         recycler1 = findViewById(R.id.recycleViewMoney);
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Menu");
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Food");
         foodListMoney = new ArrayList<>();
         reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Food food = snapshot1.getValue(Food.class);
-                    if (!isIn(list, food.getId())) {
-                        foodListMoney.add(food);
+                    foodListMoney.add(food);
+                }
+                for(int i=0;i<foodListMoney.size();i++){
+                    Food f = foodListMoney.get(i);
+                    if (isIn(list, f.getId())) {
+                        foodListMoney.remove(i);
                     }
                 }
                 ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
