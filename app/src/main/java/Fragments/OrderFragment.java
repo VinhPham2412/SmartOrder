@@ -31,7 +31,7 @@ public class OrderFragment extends Fragment {
 
 
     private RecyclerView recyclerView;
-    private List<List<OrderDetail>> list;
+//    private List<List<OrderDetail>> list;
     private DatabaseReference reference;
     private OrderProcessingAdapter orderProcessingAdapter;
     private List<List<OrderDetail>> result = new ArrayList<>();

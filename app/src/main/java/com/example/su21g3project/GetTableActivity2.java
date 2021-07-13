@@ -84,7 +84,7 @@ public class GetTableActivity2 extends AppCompatActivity {
             Date date = new Date();
             date.setTime(getIntent().getLongExtra("date",-1));
             int noPP = Integer.parseInt(getIntent().getStringExtra("noPP"));
-            ProcessOrder order = new ProcessOrder(orderId,userId,name,phone,date,noPP,note,false);
+            ProcessOrder order = new ProcessOrder(orderId,userId,name,phone,date,noPP,note,false,false);
             reference.child(orderId).setValue(order.toMap()).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(GetTableActivity2.this,

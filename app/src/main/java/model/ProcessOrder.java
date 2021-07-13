@@ -22,12 +22,13 @@ public class ProcessOrder {
     private int numberOfPeople;
     private String note;
     private boolean isVerify = false;
+    private boolean status=false;
 
     public ProcessOrder() {
     }
 
     public ProcessOrder(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note, boolean isVerify) {
+                        Date date, int numberOfPeople, String note, boolean isVerify,boolean status) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -36,6 +37,7 @@ public class ProcessOrder {
         this.numberOfPeople = numberOfPeople;
         this.note = note;
         this.isVerify = isVerify;
+        this.status=status;
     }
 
     public String getName() {
@@ -91,6 +93,14 @@ public class ProcessOrder {
         }
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
@@ -119,6 +129,7 @@ public class ProcessOrder {
         result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
         result.put("isVerify", isVerify);
+        result.put("status",status);
 
         return result;
     }
