@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
 
-public class ResisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     private TextView txtFName;
     private TextView txtLName;
     private TextView txtPhone;
@@ -61,7 +61,7 @@ public class ResisterActivity extends AppCompatActivity {
                 Log.d(TAG, "onCodeSent:" + verificationId);
 
                 // Save verification ID
-                Intent intent = new Intent(ResisterActivity.this, VerifySMSToken.class);
+                Intent intent = new Intent(RegisterActivity.this, VerifySMSToken.class);
 
                 intent.putExtra("phone", phone);
                 intent.putExtra("FName", fName);
@@ -99,7 +99,7 @@ public class ResisterActivity extends AppCompatActivity {
                         PhoneAuthOptions.newBuilder(mAuth)
                                 .setPhoneNumber(phone)       // Phone number to verify
                                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                                .setActivity(ResisterActivity.this)                 // Activity (for callback binding)
+                                .setActivity(RegisterActivity.this)                 // Activity (for callback binding)
                                 .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                                 .build();
                 PhoneAuthProvider.verifyPhoneNumber(options);

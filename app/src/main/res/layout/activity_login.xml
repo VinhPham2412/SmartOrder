@@ -106,7 +106,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
                 <Button
                     android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
@@ -119,6 +118,14 @@
                     android:text="Đăng nhập"
                     android:textColor="@color/cardview_light_background"
                     android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_marginStart="145dp"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"

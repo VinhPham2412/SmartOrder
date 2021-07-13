@@ -56,9 +56,6 @@ public class VerifySMSToken extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        SharedPreferences preferences = getSharedPreferences("main", Context.MODE_PRIVATE);
-                        preferences.edit().clear().commit();
-
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -88,6 +85,8 @@ public class VerifySMSToken extends AppCompatActivity {
                                     User user = new User(FName + LName, phone, "");
                                     databaseReference.setValue(user.toMap()).addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {
+                                            Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
+                                            startActivity(intent);
                                             finish();
                                         }
                                     }).addOnFailureListener(e -> e.printStackTrace());
@@ -95,7 +94,7 @@ public class VerifySMSToken extends AppCompatActivity {
                                 //if don't have account and login
                                 if(!snapshot.exists()&&type.equals("login")){
                                     Toast.makeText(VerifySMSToken.this,"Your account don't exist in our database, please register.",Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(VerifySMSToken.this,ResisterActivity.class);
+                                    Intent intent = new Intent(VerifySMSToken.this,RegisterActivity.class);
                                     startActivity(intent);
                                 }
                             }

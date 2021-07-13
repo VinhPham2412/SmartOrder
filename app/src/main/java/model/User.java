@@ -15,14 +15,14 @@ public class User {
     private String role;
 
     public User() {
-        role = "Customer";
+        role = "customer";
     }
 
     public User(String name, String phone, String address) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        role = "Customer";
+        role = "customer";
     }
 
     public String getRole() {

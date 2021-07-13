@@ -37,16 +37,14 @@ import model.User;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnNotHaveAccount,mainLogin;
-    private ImageButton btnGetTable,btnMenu,btnVoucher;
+    private Button mainLogin;
+    private ImageButton btnGetTable,btnMenu,btnVoucher,notify;
     private CircleIndicator circleIndicator;
     private Timer timer;
     ViewPager viewPager;
     private List<Photo> photoList;
     private ActionBar toolbar;
     private TextView txtUsername;
-    private FirebaseUser user;
-    private ImageButton imageButton;
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mNavigationView=findViewById(R.id.navigation);
+        notify = findViewById(R.id.imageButton);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -81,26 +80,25 @@ public class MainActivity extends AppCompatActivity {
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
             reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
-
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
                         User user = snapshot.getValue(User.class);
                         txtUsername.setText("Xin chào " + user.getName());
+                        mainLogin.setVisibility(View.INVISIBLE);
+                        notify.setVisibility(View.VISIBLE);
                     }else{
                         FirebaseAuth.getInstance().signOut();
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });
         }
-        else
-            txtUsername.setText("Xin chào ");
+        txtUsername.setText("Xin chào ");
         mainLogin=findViewById(R.id.mainLogin);
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
@@ -114,36 +112,12 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator.setViewPager(viewPager);
         autoSlideImage();
         toolbar = getSupportActionBar();
-        btnNotHaveAccount=findViewById(R.id.btnNotHaveAccount);
-        imageButton=findViewById(R.id.imageButton);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-         if(user==null){
-            btnNotHaveAccount.setVisibility(View.VISIBLE);
-            imageButton.setVisibility(View.INVISIBLE);
-            mainLogin.setVisibility(View.INVISIBLE);
-            btnNotHaveAccount.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this,ResisterActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            });
-
-        }else{
-            btnNotHaveAccount.setVisibility(View.INVISIBLE);
-            imageButton.setVisibility(View.VISIBLE);
-            mainLogin.setVisibility(View.INVISIBLE);
-
-            toolbar.setTitle("Trang chủ");
-        }
         btnGetTable = findViewById(R.id.btnGetTable);
         btnGetTable.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-        btnVoucher=findViewById(R.id.btnVoucher);
-        btnVoucher.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,GetBuffetActivity.class)));
-
-
     }
     private void autoSlideImage(){
         if(timer==null){
@@ -179,21 +153,6 @@ public class MainActivity extends AppCompatActivity {
         if(timer!=null){
             timer.cancel();
             timer=null;
-        }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mNavigationView.setSelectedItemId(R.id.navigation_home);
-        SharedPreferences preferences=getSharedPreferences("main", Context.MODE_PRIVATE);
-        String visible=preferences.getString("1","login");
-        if (visible.equals("logout")){
-            mainLogin.setVisibility(View.VISIBLE);
-            imageButton.setVisibility(View.INVISIBLE);
-            btnNotHaveAccount.setVisibility(View.INVISIBLE);
-        }
-        else {
-            return;
         }
     }
 }
