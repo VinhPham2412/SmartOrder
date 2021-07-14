@@ -24,6 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -81,8 +84,15 @@ public class GetTableActivity2 extends AppCompatActivity {
             name = txtName.getText().toString();
             phone = txtPhone.getText().toString();
             note = txtNote.getText().toString();
-            Date date = new Date();
-            date.setTime(getIntent().getLongExtra("date",-1));
+            Date date = null;
+            String strDate = getIntent().getStringExtra("date");
+            DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
+            try {
+                date = format.parse(strDate);
+                int x = 3;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             int noPP = Integer.parseInt(getIntent().getStringExtra("noPP"));
             ProcessOrder order = new ProcessOrder(orderId,userId,name,phone,date,noPP,note,false,false);
             reference.child(orderId).setValue(order.toMap()).addOnCompleteListener(task -> {

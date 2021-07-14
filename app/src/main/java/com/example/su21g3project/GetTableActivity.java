@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,12 +23,13 @@ public class GetTableActivity extends AppCompatActivity {
     private EditText noPp;
     private TextView prTime;
     private SeekBar slTime;
+    private String selectedDate;
     private Button today,today1,today2,today3;
-    private Calendar finalDate,d,d1,d2,d3;
+    private Calendar date;
     private int hour,minute,currentMinute,currentHour;
 
     private String getTime(Calendar date){
-        int day = date.get(Calendar.DATE);
+        int day = date.get(Calendar.DAY_OF_MONTH);
         int month = date.get(Calendar.MONTH);
         month++;
         int year = date.get(Calendar.YEAR);
@@ -35,7 +39,8 @@ public class GetTableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_table);
-        Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
+        date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
+        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         currentMinute = date.get(Calendar.MINUTE);
         currentHour = date.get(Calendar.HOUR_OF_DAY);
         currentHour+=7;
@@ -47,67 +52,69 @@ public class GetTableActivity extends AppCompatActivity {
         prTime = findViewById(R.id.txtPreviewTime);
         slTime = findViewById(R.id.seekBar_slTime);
         slTime.setMax(1440);
+        date.add(Calendar.DAY_OF_MONTH,3);
+        today3.setText("Ngày kìa"+
+                "\n"+getTime(date));
+        date.add(Calendar.DAY_OF_MONTH,-1);
+        today2.setText("Ngày kia"+
+                "\n"+getTime(date));
+        date.add(Calendar.DAY_OF_MONTH,-1);
+        today1.setText("Ngày mai"+
+                "\n"+getTime(date));
+        date.add(Calendar.DAY_OF_MONTH,-1);
+        today.setText("Hôm nay"+
+                "\n"+getTime(date));
+
+
 
         today.setSelected(true);
         today.setBackgroundColor(Color.GRAY);
         today1.setBackgroundColor(Color.LTGRAY);
         today2.setBackgroundColor(Color.LTGRAY);
         today3.setBackgroundColor(Color.LTGRAY);
-        slTime.setMin(currentHour*60 + currentMinute);
-        finalDate = d;
+        slTime.setMin(1);
+        selectedDate = format.format(date.getTime());
 
         today.setOnClickListener(v -> {
             today.setBackgroundColor(Color.GRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            finalDate = d;
+            date.add(Calendar.DAY_OF_MONTH,-3);
+            selectedDate = format.format(date.getTime());
             slTime.setMin(currentHour*60 + currentMinute);
+            date.add(Calendar.DATE,3);
         });
         today1.setOnClickListener(v -> {
             today1.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            finalDate = d1;
+            date.add(Calendar.DAY_OF_MONTH,-2);
+            selectedDate = format.format(date.getTime());
             slTime.setMin(1);
+            date.add(Calendar.DAY_OF_MONTH,2);
         });
         today2.setOnClickListener(v -> {
             today2.setBackgroundColor(Color.GRAY);
             today3.setBackgroundColor(Color.LTGRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
-            finalDate = d2;
+            date.add(Calendar.DAY_OF_MONTH,-1);
+            selectedDate = format.format(date.getTime());
             slTime.setMin(1);
+            date.add(Calendar.DAY_OF_MONTH,1);
         });
         today3.setOnClickListener(v -> {
             today3.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
-            finalDate = d3;
+            selectedDate = format.format(date.getTime());
             slTime.setMin(1);
         });
-        today.setText("Hôm nay"+
-                "\n"+getTime(date));
-        d = date;
-        date.add(Calendar.DATE,1);
-        today1.setText("Ngày mai"+
-                "\n"+getTime(date));
-        d1 = date;
-        date.add(Calendar.DATE,1);
-        today2.setText("Ngày kia"+
-                "\n"+getTime(date));
-        d2 = date;
-        date.add(Calendar.DATE,1);
-        today3.setText("Ngày kìa"+
-                "\n"+getTime(date));
-        d3 = date;
-
-
         btnNext = findViewById(R.id.btnNext);
         noPp = findViewById(R.id.txtNoPP);
-
         slTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -128,13 +135,9 @@ public class GetTableActivity extends AppCompatActivity {
         });
         btnNext.setOnClickListener(v -> {
             Intent intent = new Intent(GetTableActivity.this,GetTableActivity2.class);
-
             //transfer date,time,number of people to next view
             //combine date and time to date type
-            int tMonth = finalDate.get(Calendar.MONTH);
-            GregorianCalendar gregorianCalendar = new GregorianCalendar(finalDate.get(Calendar.YEAR),tMonth,finalDate.get(Calendar.DATE),hour,minute,0);
-            Date finalDateAndTime = gregorianCalendar.getTime();
-            intent.putExtra("date",finalDateAndTime.getTime());
+            intent.putExtra("date",selectedDate);
             intent.putExtra("noPP",noPp.getText().toString());
 
             startActivity(intent);

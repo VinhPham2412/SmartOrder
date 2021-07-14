@@ -85,7 +85,7 @@ public class ProcessOrder {
     }
 
     public void setDate(String date) {
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         try{
             this.date = format.parse(date);
         }catch (ParseException e){
@@ -123,7 +123,7 @@ public class ProcessOrder {
         result.put("userId", userId);
         result.put("name", name);
         result.put("phone", phone);
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        DateFormat format = new SimpleDateFormat("YYYYMMdd_HHmm");
         String d = format.format(date);
         result.put("date",d);
         result.put("numberOfPeople", numberOfPeople);
