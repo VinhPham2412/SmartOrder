@@ -155,4 +155,10 @@ public class MainActivity extends AppCompatActivity {
             timer=null;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setSelectedItemId(R.id.navigation_home);
+    }
 }

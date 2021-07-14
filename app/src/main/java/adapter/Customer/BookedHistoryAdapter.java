@@ -67,18 +67,23 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
                 "\nGiờ ăn : "+order.getDate().toString()+
                 "\nSố người ăn : "+order.getNumberOfPeople()+
                 "\nGhi chú : "+order.getNote());
-        if (order.getIsVerify() && order.isStatus()) {
+        if (order.getStatus().equals("confirmed")) {
             holder.getTxtStatus().setText("Đã xác nhận");
             holder.getTxtStatus().setTextColor(Color.GREEN);
         }
-        else if (order.getIsVerify() && !order.isStatus()) {
+        else if (order.getStatus().equals("rejected")) {
             holder.getTxtStatus().setText("Đã Từ chối");
             holder.getTxtStatus().setTextColor(Color.RED);
-        }else {
+        }
+        else if(order.getStatus().equals("done")){
+            holder.getTxtStatus().setText("Đã phục vụ");
+            holder.getTxtStatus().setTextColor(Color.BLUE);
+        }
+        else {
             holder.getTxtStatus().setText("Chưa xác nhận");
             holder.getTxtStatus().setTextColor(Color.RED);
         }
-        if(!order.getIsVerify()){
+        if(!order.getStatus().equals("confirmed")){
             holder.getBtngetFood().setVisibility(View.INVISIBLE);
         }
         holder.getBtngetFood().setOnClickListener(v -> {

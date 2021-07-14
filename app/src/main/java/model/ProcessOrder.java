@@ -21,14 +21,14 @@ public class ProcessOrder {
     private Date date;
     private int numberOfPeople;
     private String note;
-    private boolean isVerify = false;
-    private boolean status=false;
+    private String status;
+    private String buffetId ;
 
     public ProcessOrder() {
     }
 
     public ProcessOrder(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note, boolean isVerify,boolean status) {
+                        Date date, int numberOfPeople, String note,String status) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -36,8 +36,23 @@ public class ProcessOrder {
         this.date = date;
         this.numberOfPeople = numberOfPeople;
         this.note = note;
-        this.isVerify = isVerify;
         this.status=status;
+    }
+
+    public String getBuffetId() {
+        return buffetId;
+    }
+
+    public void setBuffetId(String buffetId) {
+        this.buffetId = buffetId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getName() {
@@ -54,14 +69,6 @@ public class ProcessOrder {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public boolean getIsVerify() {
-        return isVerify;
-    }
-
-    public void setVerify(boolean verify) {
-        isVerify = verify;
     }
 
     public String getId() {
@@ -93,14 +100,6 @@ public class ProcessOrder {
         }
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
@@ -128,7 +127,6 @@ public class ProcessOrder {
         result.put("date",d);
         result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
-        result.put("isVerify", isVerify);
         result.put("status",status);
 
         return result;

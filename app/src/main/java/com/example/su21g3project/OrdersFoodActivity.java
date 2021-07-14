@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.Customer.CommunicationCustomer;
+import com.example.su21g3project.Customer.OrderHistory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +45,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private List<Food> list;
     private List<Food> foodListMoney;
     private TextView buffetName;
-    private Button btnOrder, btnC;
+    private Button btnOrder, btnC, btnHistory;
     private FirebaseUser user;
     private String userId;
     private ImageButton btnNuocngot, btnRuou, btnDoan;
@@ -89,6 +90,10 @@ public class OrdersFoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orders_food);
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.recycleView);
+        btnHistory = findViewById(R.id.btnHistory);
+        btnHistory.setOnClickListener(v -> {
+            startActivity(new Intent(OrdersFoodActivity.this, OrderHistory.class));
+        });
 
         if (user != null) {
             userId = user.getUid();
