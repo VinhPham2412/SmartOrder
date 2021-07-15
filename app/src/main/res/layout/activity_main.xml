@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorAccent"
     tools:context=".MainActivity"
     android:id="@+id/mainScreen">
 
@@ -55,6 +55,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/viewImageResstaurant">
 
             </me.relex.circleindicator.CircleIndicator>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="18dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/txtNotice"
+                android:visibility="invisible"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/imageButton"

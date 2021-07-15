@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.su21g3project.Customer.AccountActivity;
+import com.example.su21g3project.Customer.BookedHistory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,12 +34,14 @@ import java.util.TimerTask;
 
 import adapter.PhotoAdapter;
 import model.Photo;
+import model.ProcessOrder;
 import model.User;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView txtNotice;
     private Button mainLogin;
-    private ImageButton btnGetTable,btnMenu,btnVoucher,notify;
+    private ImageButton btnGetTable,btnMenu,imageButton,notify;
     private CircleIndicator circleIndicator;
     private Timer timer;
     ViewPager viewPager;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtNotice=findViewById(R.id.txtNotice);
         mNavigationView=findViewById(R.id.navigation);
         notify = findViewById(R.id.imageButton);
         mNavigationView.setSelectedItemId(R.id.navigation_home);
@@ -118,6 +122,45 @@ public class MainActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+        List<ProcessOrder> processOrderList=new ArrayList<>();
+        reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                processOrderList.clear();
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
+                    if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid())) ||
+                            (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(firebaseUser.getUid()))){
+                        processOrderList.add(processOrder);
+                    }
+                }
+
+                if(processOrderList.size()>0){
+                    txtNotice.setVisibility(View.VISIBLE);
+                    txtNotice.setText(String.valueOf(processOrderList.size()));
+                    SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=pref.edit();
+                    editor.putInt("processOrderList",processOrderList.size());
+                    editor.commit();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        imageButton=findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BookedHistory.class));
+            }
+        });
+
+
     }
     private void autoSlideImage(){
         if(timer==null){

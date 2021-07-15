@@ -1,6 +1,9 @@
 package com.example.su21g3project.Customer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,11 +33,12 @@ public class OrderHistory extends AppCompatActivity {
     private FirebaseUser user;
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
-
+    private Button btnBill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_order_history);
+        String orderId=getIntent().getStringExtra("orderId");
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
         reference.addValueEventListener(new ValueEventListener() {
@@ -82,6 +86,15 @@ public class OrderHistory extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
+            }
+        });
+        btnBill=findViewById(R.id.btnBill);
+        btnBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1=new Intent(OrderHistory.this,BillActivity.class);
+                intent1.putExtra("orderId",orderId);
+                startActivity(intent1);
             }
         });
     }

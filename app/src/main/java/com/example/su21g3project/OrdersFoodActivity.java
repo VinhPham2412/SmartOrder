@@ -88,11 +88,14 @@ public class OrdersFoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders_food);
+        String orderId = getIntent().getStringExtra("orderId");
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.recycleView);
         btnHistory = findViewById(R.id.btnHistory);
         btnHistory.setOnClickListener(v -> {
-            startActivity(new Intent(OrdersFoodActivity.this, OrderHistory.class));
+            Intent intent= new Intent(OrdersFoodActivity.this,OrderHistory.class);
+            intent.putExtra("orderId",orderId);
+            startActivity(intent);
         });
 
         if (user != null) {
@@ -174,7 +177,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
             DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             // get orderId
-            String orderId = getIntent().getStringExtra("orderId");
+
             //get food and quantity from food in buffet
             for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
                 int quantity = Integer.parseInt(food.numberFood.getText().toString());
