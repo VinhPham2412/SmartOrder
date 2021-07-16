@@ -29,17 +29,20 @@ public class GetBuffetActivity extends AppCompatActivity {
     private List<Buffet> list;
     private Button btnConfirm;
     private BuffetAdapter buffetAdapter;
+    private  DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_buffet);
+        String orderId = getIntent().getStringExtra("orderId");
+        //check if buffet is selected
         recyclerView = findViewById(R.id.recycleView);
         btnConfirm = findViewById(R.id.btnConfirm);
         list = new ArrayList<>();
         //get all buffet
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Buffet");
+        reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
@@ -61,9 +64,12 @@ public class GetBuffetActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(v -> {
             if (buffetAdapter.getSelected() != null) {
                 Buffet buffet = buffetAdapter.getSelected();
+                //insert buffet id to order
+                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId).child("buffetId");
+                reference2.setValue(buffet.getId());
                 Intent intent = new Intent(GetBuffetActivity.this, OrdersFoodActivity.class);
-                intent.putExtra("buffet", buffet);
                 intent.putExtra("orderId", getIntent().getStringExtra("orderId"));
+                intent.putExtra("buffetId",buffet.getId());
                 startActivity(intent);
             } else {
                 ShowToast("No buffet is choose!");

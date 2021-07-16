@@ -89,13 +89,10 @@ public class OrderHistory extends AppCompatActivity {
             }
         });
         btnBill=findViewById(R.id.btnBill);
-        btnBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1=new Intent(OrderHistory.this,BillActivity.class);
-                intent1.putExtra("orderId",orderId);
-                startActivity(intent1);
-            }
+        btnBill.setOnClickListener(v -> {
+            Intent intent1=new Intent(OrderHistory.this,BillActivity.class);
+            intent1.putExtra("orderId",orderId);
+            startActivity(intent1);
         });
     }
 

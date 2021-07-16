@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.GetBuffetActivity;
+import com.example.su21g3project.OrdersFoodActivity;
 import com.example.su21g3project.R;
 
 import java.util.List;
@@ -87,9 +88,17 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             holder.getBtngetFood().setVisibility(View.INVISIBLE);
         }
         holder.getBtngetFood().setOnClickListener(v -> {
+            if(order.getBuffetId()==null){
             Intent intent = new Intent(context, GetBuffetActivity.class);
             intent.putExtra("orderId",order.getId());
             context.startActivity(intent);
+            }else
+                {
+                    Intent intent = new Intent(context, OrdersFoodActivity.class);
+                    intent.putExtra("orderId",order.getId());
+                    intent.putExtra("buffetId",order.getBuffetId());
+                    context.startActivity(intent);
+            }
         });
     }
 

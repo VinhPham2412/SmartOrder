@@ -23,12 +23,13 @@ public class ProcessOrder {
     private String note;
     private String status;
     private String buffetId ;
+    private String tableId;
 
     public ProcessOrder() {
     }
 
     public ProcessOrder(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note,String status) {
+                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -37,6 +38,15 @@ public class ProcessOrder {
         this.numberOfPeople = numberOfPeople;
         this.note = note;
         this.status=status;
+        this.tableId = tableId;
+    }
+
+    public String getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(String tableId) {
+        this.tableId = tableId;
     }
 
     public String getBuffetId() {
@@ -128,6 +138,7 @@ public class ProcessOrder {
         result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
         result.put("status",status);
+        result.put("tableId",null);
 
         return result;
     }

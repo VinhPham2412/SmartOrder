@@ -80,37 +80,37 @@ public class GetTableActivity extends AppCompatActivity {
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            date.add(Calendar.DAY_OF_MONTH,-3);
             selectedDate = format.format(date.getTime());
             slTime.setMin(currentHour*60 + currentMinute);
-            date.add(Calendar.DATE,3);
         });
         today1.setOnClickListener(v -> {
             today1.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.LTGRAY);
-            date.add(Calendar.DAY_OF_MONTH,-2);
+            date.add(Calendar.DAY_OF_MONTH,1);
             selectedDate = format.format(date.getTime());
+            date.add(Calendar.DAY_OF_MONTH,-1);
             slTime.setMin(1);
-            date.add(Calendar.DAY_OF_MONTH,2);
         });
         today2.setOnClickListener(v -> {
             today2.setBackgroundColor(Color.GRAY);
             today3.setBackgroundColor(Color.LTGRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
-            date.add(Calendar.DAY_OF_MONTH,-1);
+            date.add(Calendar.DAY_OF_MONTH,2);
             selectedDate = format.format(date.getTime());
+            date.add(Calendar.DAY_OF_MONTH,-2);
             slTime.setMin(1);
-            date.add(Calendar.DAY_OF_MONTH,1);
         });
         today3.setOnClickListener(v -> {
             today3.setBackgroundColor(Color.GRAY);
             today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.LTGRAY);
             today2.setBackgroundColor(Color.LTGRAY);
+            date.add(Calendar.DAY_OF_MONTH,3);
             selectedDate = format.format(date.getTime());
+            date.add(Calendar.DAY_OF_MONTH,-3);
             slTime.setMin(1);
         });
         btnNext = findViewById(R.id.btnNext);

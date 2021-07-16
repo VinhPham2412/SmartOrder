@@ -68,7 +68,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         Food food = snapshot1.getValue(Food.class);
-                        if (food.getType().equals(type)&&!isIn(list,food.getId())) {
+                        if (food.getType().equals(type) && !isIn(list, food.getId())) {
                             result.add(food);
                         }
                     }
@@ -109,20 +109,33 @@ public class OrdersFoodActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnOrder = findViewById(R.id.btnOrder);
-        Intent intent = getIntent();
-        Buffet buffet = (Buffet) intent.getSerializableExtra("buffet");
+        String buffetId = getIntent().getStringExtra("buffetId");
         list = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");
-        reference.child(buffet.getId()).child("foods").addValueEventListener(new ValueEventListener() {
+        reference.child(buffetId).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         list.add(snapshot1.getValue(Food.class));
                     }
                 }
                 ordersFoodAdapter = new OrdersFoodAdapter(getApplicationContext(), list);
                 recyclerView.setAdapter(ordersFoodAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
+        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                Buffet buffet = snapshot.getValue(Buffet.class);
+                buffetName = findViewById(R.id.buffetName);
+                buffetName.setText(buffet.getName() + " " + (int) (buffet.getPrice()) + "K");
             }
 
             @Override
@@ -140,7 +153,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Food food = snapshot1.getValue(Food.class);
-                    if(!isIn(list,food.getId())){
+                    if (!isIn(list, food.getId())) {
                         foodListMoney.add(food);
                     }
                 }
@@ -157,8 +170,6 @@ public class OrdersFoodActivity extends AppCompatActivity {
         LinearLayoutManager manager1 = new LinearLayoutManager(this);
         manager1.setInitialPrefetchItemCount(4);
         recycler1.setLayoutManager(manager1);
-        buffetName = findViewById(R.id.buffetName);
-        buffetName.setText(buffet.getName() + " " + (int) (buffet.getPrice()) + "K");
         btnNuocngot.setOnClickListener(v -> {
             getFoodsByCategory("soft drink");
 
@@ -174,7 +185,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         btnOrder.setOnClickListener(v -> {
             //get data and make new detail
             //insert into rtdb
-            DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("OrderDetail");
+            DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             // get orderId
 
@@ -184,7 +195,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 if (quantity > 0) {
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, false, false, false);
-                    reference2.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                    reference3.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }
             }
@@ -194,7 +205,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 if (quantity > 0) {
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, false, false, true);
-                    reference2.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                    reference3.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }
             }
