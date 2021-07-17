@@ -1,13 +1,11 @@
 package com.example.su21g3project.Customer;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +25,8 @@ import model.ProcessOrder;
 public class BookedHistory extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseUser user;
-    List<ProcessOrder> list;
+    private List<ProcessOrder> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,57 +35,56 @@ public class BookedHistory extends AppCompatActivity {
         list = new ArrayList<>();
         RecyclerView view = findViewById(R.id.container_customer_booked_history);
         view.setLayoutManager(new LinearLayoutManager(this));
-        SharedPreferences pref = getSharedPreferences("main", Context.MODE_PRIVATE);
-        int listSize = pref.getInt("processOrderList", 0);
-        if (listSize > 0) {
-            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
-                        if ((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(user.getUid())) ||
-                                (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(user.getUid()))) {
-                            list.add(processOrder);
-                        }
-
+//        SharedPreferences pref = getSharedPreferences("main", Context.MODE_PRIVATE);
+//        int listSize = pref.getInt("processOrderList", 0);
+//        if (listSize > 0) {
+//            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    list.clear();
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
+//                        if ((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(user.getUid())) ||
+//                                (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(user.getUid()))) {
+//                            list.add(processOrder);
+//                        }
+//
+//                    }
+//                    BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
+//                    view.setAdapter(adapter);
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//
+//        } else {
+//
+        reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
+                    if (processOrder.getUserId().equals(user.getUid())) {
+                        list.add(processOrder);
                     }
-                    BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
-                    view.setAdapter(adapter);
 
                 }
+                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
+                view.setAdapter(adapter);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        } else {
-            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
-                        if (processOrder.getUserId().equals(user.getUid())) {
-                            list.add(processOrder);
-                        }
-
-                    }
-                    BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
-                    view.setAdapter(adapter);
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
+            }
+        });
     }
 }

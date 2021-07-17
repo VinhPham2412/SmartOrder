@@ -3,9 +3,7 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,10 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
-import Waiter.MainWaiterActivity;
+import com.example.su21g3project.Waiter.MainWaiterActivity;
 import model.User;
 
 import static android.content.ContentValues.TAG;
@@ -74,7 +71,7 @@ public class VerifySMSToken extends AppCompatActivity {
                                             Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
                                             startActivity(intent);
                                             break;
-                                        case "receptionist":
+                                        case "waiter":
                                             Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
                                             startActivity(intent1);
                                             break;

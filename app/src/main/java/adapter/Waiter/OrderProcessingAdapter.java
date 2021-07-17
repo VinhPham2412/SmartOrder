@@ -28,7 +28,7 @@ import java.util.List;
 import model.Food;
 import model.OrderDetail;
 
-public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.OrderProcessingAdapter.ViewHolder> {
+public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessingAdapter.ViewHolder> {
     List<List<OrderDetail>> orderDetailList;
     Context mContext;
     DatabaseReference reference;
@@ -56,29 +56,32 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
         for (OrderDetail od : details) {
-            ids.add(od.getId());
-            reference = FirebaseDatabase.getInstance().getReference("Food").child(od.getFoodId());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    //get foodName and display
-                    Food food = snapshot.getValue(Food.class);
-                    foodName = food.getName();
-                    TextView textView = holder.getTxtFood();
-                    textView.setText(textView.getText()+"\n"+foodName+" : "+od.getQuantity());
-                }
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            if(!od.getIsSeen()){
+                ids.add(od.getId());
+                reference = FirebaseDatabase.getInstance().getReference("Food").child(od.getFoodId());
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        //get foodName and display
+                        if(snapshot.exists()){
+                            Food food = snapshot.getValue(Food.class);
+                            foodName = food.getName();
+                            TextView textView = holder.getTxtFood();
+                            textView.setText(textView.getText()+"\n"+foodName+" : "+od.getQuantity());
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                }
-            });
+                    }
+                });
+            }
         }
         holder.getBtnAccept().setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
             reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
-            for (String id : ids
-            ) {
+            for (String id : ids) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set seen ok"));
                 reference.child(id).child("isAccepted").setValue(true).addOnCompleteListener(
@@ -88,6 +91,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<adapter.Waiter.
         holder.getBtnReject().setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
+            reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             for (String id : ids) {
                 reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));

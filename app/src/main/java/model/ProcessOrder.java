@@ -100,6 +100,10 @@ public class ProcessOrder {
     public Date getDate() {
         return date;
     }
+    public String getStrDate(){
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return format.format(date);
+    }
 
     public void setDate(String date) {
         DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");

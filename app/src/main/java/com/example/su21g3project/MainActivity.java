@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.su21g3project.Customer.AccountActivity;
 import com.example.su21g3project.Customer.BookedHistory;
+import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +47,29 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnGetTable,btnMenu,imageButton,notify;
     private CircleIndicator circleIndicator;
     private Timer timer;
-    ViewPager viewPager;
+    private ViewPager viewPager;
     private List<Photo> photoList;
     private ActionBar toolbar;
     private TextView txtUsername;
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+    private List<ProcessOrder> processOrderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txtNotice=findViewById(R.id.txtNotice);
+        btnMenu=findViewById(R.id.btnMenu);
+        txtUsername = findViewById(R.id.txtUseName);
+        imageButton=findViewById(R.id.imageButton);
+        mainLogin=findViewById(R.id.mainLogin);
+        viewPager =findViewById(R.id.viewImageResstaurant);
+        circleIndicator=findViewById(R.id.circleIndicator);
+        btnGetTable = findViewById(R.id.btnGetTable);
         mNavigationView=findViewById(R.id.navigation);
         notify = findViewById(R.id.imageButton);
+        //init nav
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -74,24 +86,65 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-        btnMenu=findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,MenuActivity.class));
             finish();
         });
-        txtUsername = findViewById(R.id.txtUseName);
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
+           processOrderList =new ArrayList<>();
+            reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    processOrderList.clear();
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                        ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
+                        if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid())) ||
+                                (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(firebaseUser.getUid()))){
+                            processOrderList.add(processOrder);
+                        }
+                    }
+                    if(processOrderList.size()>0){
+                        txtNotice.setVisibility(View.VISIBLE);
+                        txtNotice.setText(String.valueOf(processOrderList.size()));
+                        SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putInt("processOrderList",processOrderList.size());
+                        editor.commit();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
             reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
                         User user = snapshot.getValue(User.class);
+                        if(user.getRole().equals("waiter")){
+                            Intent intent = new Intent(MainActivity.this, MainWaiterActivity.class);
+                            intent.putExtra("role",user.getRole());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
                         txtUsername.setText("Xin chào " + user.getName());
                         mainLogin.setVisibility(View.INVISIBLE);
                         notify.setVisibility(View.VISIBLE);
+                        btnGetTable.setOnClickListener(v -> {
+                            Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
+                            intent.putExtra("role",user.getRole());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        });
                     }else{
                         FirebaseAuth.getInstance().signOut();
                     }
@@ -103,64 +156,17 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         txtUsername.setText("Xin chào ");
-        mainLogin=findViewById(R.id.mainLogin);
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         });
-        viewPager =findViewById(R.id.viewImageResstaurant);
         photoList=getPhoto();
         PhotoAdapter photoAdapter =new PhotoAdapter(this,photoList);
         viewPager.setAdapter(photoAdapter);
-        circleIndicator=findViewById(R.id.circleIndicator);
+
         circleIndicator.setViewPager(viewPager);
         autoSlideImage();
         toolbar = getSupportActionBar();
-        btnGetTable = findViewById(R.id.btnGetTable);
-        btnGetTable.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        });
-        List<ProcessOrder> processOrderList=new ArrayList<>();
-        reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                processOrderList.clear();
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
-                    if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid())) ||
-                            (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(firebaseUser.getUid()))){
-                        processOrderList.add(processOrder);
-                    }
-                }
-
-                if(processOrderList.size()>0){
-                    txtNotice.setVisibility(View.VISIBLE);
-                    txtNotice.setText(String.valueOf(processOrderList.size()));
-                    SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor=pref.edit();
-                    editor.putInt("processOrderList",processOrderList.size());
-                    editor.commit();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        imageButton=findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BookedHistory.class));
-            }
-        });
-
-
     }
     private void autoSlideImage(){
         if(timer==null){

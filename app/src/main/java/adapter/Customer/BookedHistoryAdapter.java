@@ -65,7 +65,7 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         ProcessOrder order = list.get(position);
         holder.getTxtText().setText("Người đặt : "+order.getName()+
                 "\nSố điện thoại : "+order.getPhone()+
-                "\nGiờ ăn : "+order.getDate().toString()+
+                "\nGiờ ăn : "+order.getStrDate()+
                 "\nSố người ăn : "+order.getNumberOfPeople()+
                 "\nGhi chú : "+order.getNote());
         if (order.getStatus().equals("confirmed")) {

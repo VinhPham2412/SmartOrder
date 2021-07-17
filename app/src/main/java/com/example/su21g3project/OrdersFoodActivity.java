@@ -3,6 +3,7 @@ package com.example.su21g3project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import adapter.Customer.OrdersFoodMoneyAdapter;
 import model.Buffet;
 import model.Food;
 import model.OrderDetail;
+import model.User;
 
 public class OrdersFoodActivity extends AppCompatActivity {
     private RecyclerView recyclerView, recycler1;
@@ -49,6 +51,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private FirebaseUser user;
     private String userId;
     private ImageButton btnNuocngot, btnRuou, btnDoan;
+    private String role;
+    private DatabaseReference reference;
 
     private boolean isIn(List<Food> list, String id) {
         for (Food f : list) {
@@ -61,7 +65,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
     void getFoodsByCategory(String type) {
         List<Food> result = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Food");
+        reference = FirebaseDatabase.getInstance().getReference("Food");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -92,26 +96,42 @@ public class OrdersFoodActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.recycleView);
         btnHistory = findViewById(R.id.btnHistory);
+        btnNuocngot = findViewById(R.id.nuocngot);
+        btnRuou = findViewById(R.id.ruou);
+        btnDoan = findViewById(R.id.doan);
+        btnOrder = findViewById(R.id.btnOrder);
+        btnC = findViewById(R.id.btnCommunication);
+        role = "customer";
+
         btnHistory.setOnClickListener(v -> {
-            Intent intent= new Intent(OrdersFoodActivity.this,OrderHistory.class);
-            intent.putExtra("orderId",orderId);
+            Intent intent = new Intent(OrdersFoodActivity.this, OrderHistory.class);
+            intent.putExtra("orderId", orderId);
             startActivity(intent);
         });
 
         if (user != null) {
+            btnOrder.setVisibility(View.INVISIBLE);
             userId = user.getUid();
+            reference = FirebaseDatabase.getInstance().getReference("User");
+            reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    role = snapshot.getValue(User.class).getRole();
+                    btnOrder.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
         }
-
-        btnNuocngot = findViewById(R.id.nuocngot);
-        btnRuou = findViewById(R.id.ruou);
-        btnDoan = findViewById(R.id.doan);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        btnOrder = findViewById(R.id.btnOrder);
+
         String buffetId = getIntent().getStringExtra("buffetId");
         list = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");
+        reference = FirebaseDatabase.getInstance().getReference("Buffet");
         reference.child(buffetId).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -129,8 +149,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
             }
         });
-        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
-        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 Buffet buffet = snapshot.getValue(Buffet.class);
@@ -146,9 +166,9 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
 
         recycler1 = findViewById(R.id.recycleViewMoney);
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Food");
+        reference = FirebaseDatabase.getInstance().getReference("Food");
         foodListMoney = new ArrayList<>();
-        reference1.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
@@ -185,7 +205,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         btnOrder.setOnClickListener(v -> {
             //get data and make new detail
             //insert into rtdb
-            DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("OrderDetail");
+            reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
             // get orderId
 
@@ -194,8 +214,9 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity = Integer.parseInt(food.numberFood.getText().toString());
                 if (quantity > 0) {
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, false, false, false);
-                    reference3.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                    OrderDetail detail;
+                    detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, false);
+                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }
             }
@@ -204,15 +225,14 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 int quantity = Integer.parseInt(food.numberFoodMoney.getText().toString());
                 if (quantity > 0) {
                     String id = UUID.randomUUID().toString();
-                    OrderDetail detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, false, false, true);
-                    reference3.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                    OrderDetail detail;
+                    detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true);
+                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }
             }
             Toast.makeText(this, "Gọi món thành công", Toast.LENGTH_SHORT).show();
         });
-        btnC = findViewById(R.id.btnCommunication);
         btnC.setOnClickListener(v -> startActivity(new Intent(OrdersFoodActivity.this, CommunicationCustomer.class)));
-
     }
 }

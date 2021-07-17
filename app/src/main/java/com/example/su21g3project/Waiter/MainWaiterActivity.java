@@ -1,4 +1,4 @@
-package Waiter;
+package com.example.su21g3project.Waiter;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -11,7 +11,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import adapter.ViewPagerAdapter;
 

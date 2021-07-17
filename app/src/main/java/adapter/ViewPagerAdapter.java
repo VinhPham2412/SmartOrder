@@ -29,14 +29,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new HistoryOrderFragment();
             case 3:
                 return new CommunicationFragment();
-            case 4:
+            case 5:
                 return new WaitingTableFragment();
             default:
                 return new GetFoodFragment();
 
         }
     }
-
     @Override
     public int getItemCount() {
         return 6;
