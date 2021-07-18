@@ -1,95 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Customer.BillActivity"
     android:orientation="vertical">
+
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/txtTableName"
-        android:layout_marginStart="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/red"
         android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="@color/red"/>
-    <TextView
-        android:id="@+id/a"
-        android:layout_below="@id/txtTableName"
-        android:layout_marginStart="15dp"
-        android:text="Tên"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_below="@+id/txtTableName"
-        android:layout_toRightOf="@id/a"
-        android:layout_marginStart="70dp"
-        android:text=""
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/b"
-        android:layout_below="@+id/txtTableName"
-        android:layout_toRightOf="@id/a"
-        android:layout_marginStart="70dp"
-        android:text="Số Lượng"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/c"
-        android:layout_below="@+id/txtTableName"
-        android:layout_toRightOf="@id/b"
-        android:layout_marginStart="70dp"
-        android:text="Gía"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_below="@+id/txtTableName"
-        android:layout_toRightOf="@id/c"
-        android:layout_marginStart="70dp"
-        android:text="Tổng"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/billRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txtTableName"
-        android:layout_marginTop="30dp"
-        android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="348dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:layout_below="@id/recycleView"
+        android:layout_below="@id/billRecycleView"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:gravity="center"
         android:textColor="@color/red"
         android:id="@+id/txtTotalMoney"/>
+
     <Button
-        android:layout_below="@id/txtTotalMoney"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="150dp"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnBack"
+        android:layout_below="@id/txtTotalMoney"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="-21dp"
         android:backgroundTint="@color/colorAccent"
-        android:text="Quay lại"/>
+        android:text="Quay lại" />
 
 </RelativeLayout>
 </ScrollView>

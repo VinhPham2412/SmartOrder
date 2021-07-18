@@ -47,41 +47,40 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
                 inflater.inflate(R.layout.custom_orders, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(uView);
+        allViews.add(viewHolder);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Food food=foodList.get(position);
-//        holder.imageView.setImageResource(R.drawable.bf2);
+        final Food food = foodList.get(position);
         holder.foodId = food.getId();
         holder.tvFoodName.setText(food.getName());
         holder.add.setOnClickListener(v -> {
-            int number=0;
+            int number = 0;
             try {
-                number=Integer.parseInt(holder.numberFood.getText().toString());
-            }catch (NumberFormatException e){
+                number = Integer.parseInt(holder.numberFood.getText().toString());
+            } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
-            holder.numberFood.setText(String.valueOf(number+1));
+            holder.numberFood.setText(String.valueOf(number + 1));
         });
         holder.remove.setOnClickListener(v -> {
-            int number=0;
+            int number = 0;
             try {
 
-                number=Integer.parseInt(holder.numberFood.getText().toString());
+                number = Integer.parseInt(holder.numberFood.getText().toString());
 
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
-            if(number>0){
-                holder.numberFood.setText(String.valueOf(number-1));
+            if (number > 0) {
+                holder.numberFood.setText(String.valueOf(number - 1));
             }
 
         });
         new DownloadImageTask((ImageView) (holder.imageView))
                 .execute(food.getImage());
-        allViews.add(holder);
     }
 
     @Override
@@ -89,24 +88,33 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         return foodList.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public String foodId;
-       public ImageView imageView;
-       public TextView tvFoodName;
-       public EditText numberFood;
-       public Button add,remove;
+        public ImageView imageView;
+        public TextView tvFoodName;
+        public EditText numberFood;
+        public Button add, remove;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-           imageView=itemView.findViewById(R.id.foodOrderView);
-           tvFoodName=itemView.findViewById(R.id.tvFoodName);
-           numberFood=itemView.findViewById(R.id.txtNumberFood);
-           add=itemView.findViewById(R.id.btnAdd);
-           remove=itemView.findViewById(R.id.btnRemove);
+            imageView = itemView.findViewById(R.id.foodOrderView);
+            tvFoodName = itemView.findViewById(R.id.tvFoodName);
+            numberFood = itemView.findViewById(R.id.txtNumberFood);
+            add = itemView.findViewById(R.id.btnAdd);
+            remove = itemView.findViewById(R.id.btnRemove);
         }
     }
-    public List<ViewHolder> getAllHolder(){
-        return allViews;
+
+    public List<ViewHolder> getAllHolder() {
+        List<ViewHolder> result = new ArrayList<>();
+        for (ViewHolder holder : allViews) {
+            if (Integer.parseInt(holder.numberFood.getText().toString()) > 0) {
+                result.add(holder);
+            }
+        }
+        return result;
     }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

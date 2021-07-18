@@ -33,7 +33,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        recyclerView=findViewById(R.id.recycleView);
+        recyclerView=findViewById(R.id.billRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list=new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Buffet");

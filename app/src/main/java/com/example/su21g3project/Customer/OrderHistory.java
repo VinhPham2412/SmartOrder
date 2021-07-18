@@ -88,12 +88,6 @@ public class OrderHistory extends AppCompatActivity {
 
             }
         });
-        btnBill=findViewById(R.id.btnBill);
-        btnBill.setOnClickListener(v -> {
-            Intent intent1=new Intent(OrderHistory.this,BillActivity.class);
-            intent1.putExtra("orderId",orderId);
-            startActivity(intent1);
-        });
     }
 
     private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {

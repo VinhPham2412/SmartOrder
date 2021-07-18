@@ -34,7 +34,6 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 import adapter.Customer.OrdersFoodAdapter;
-import adapter.Customer.OrdersFoodMoneyAdapter;
 import model.Buffet;
 import model.Food;
 import model.OrderDetail;
@@ -42,8 +41,7 @@ import model.User;
 
 public class OrdersFoodActivity extends AppCompatActivity {
     private RecyclerView recyclerView, recycler1;
-    private OrdersFoodAdapter ordersFoodAdapter;
-    private OrdersFoodMoneyAdapter ordersFoodMoneyAdapter;
+    private OrdersFoodAdapter inBuffetAdapter, outBuffetAdapter;
     private List<Food> list;
     private List<Food> foodListMoney;
     private TextView buffetName;
@@ -77,8 +75,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                         }
                     }
                 }
-                ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), result);
-                recycler1.setAdapter(ordersFoodMoneyAdapter);
+                outBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), result);
+                recycler1.setAdapter(outBuffetAdapter);
             }
 
             @Override
@@ -94,7 +92,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orders_food);
         String orderId = getIntent().getStringExtra("orderId");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        recyclerView = findViewById(R.id.recycleView);
+        recyclerView = findViewById(R.id.billRecycleView);
         btnHistory = findViewById(R.id.btnHistory);
         btnNuocngot = findViewById(R.id.nuocngot);
         btnRuou = findViewById(R.id.ruou);
@@ -131,6 +129,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
         String buffetId = getIntent().getStringExtra("buffetId");
         list = new ArrayList<>();
+        //get food in buffet
         reference = FirebaseDatabase.getInstance().getReference("Buffet");
         reference.child(buffetId).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
@@ -140,8 +139,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                         list.add(snapshot1.getValue(Food.class));
                     }
                 }
-                ordersFoodAdapter = new OrdersFoodAdapter(getApplicationContext(), list);
-                recyclerView.setAdapter(ordersFoodAdapter);
+                inBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), list);
+                recyclerView.setAdapter(inBuffetAdapter);
             }
 
             @Override
@@ -166,6 +165,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
 
 
         recycler1 = findViewById(R.id.recycleViewMoney);
+        //get food out buffet
         reference = FirebaseDatabase.getInstance().getReference("Food");
         foodListMoney = new ArrayList<>();
         reference.addValueEventListener(new ValueEventListener() {
@@ -177,8 +177,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                         foodListMoney.add(food);
                     }
                 }
-                ordersFoodMoneyAdapter = new OrdersFoodMoneyAdapter(getApplicationContext(), foodListMoney);
-                recycler1.setAdapter(ordersFoodMoneyAdapter);
+                outBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), foodListMoney);
+                recycler1.setAdapter(outBuffetAdapter);
             }
 
             @Override
@@ -207,12 +207,24 @@ public class OrdersFoodActivity extends AppCompatActivity {
             //insert into rtdb
             reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
-            // get orderId
-
             //get food and quantity from food in buffet
-            for (OrdersFoodAdapter.ViewHolder food : ordersFoodAdapter.getAllHolder()) {
-                int quantity = Integer.parseInt(food.numberFood.getText().toString());
-                if (quantity > 0) {
+            List<OrdersFoodAdapter.ViewHolder> allInHolder = inBuffetAdapter.getAllHolder();
+            List<OrdersFoodAdapter.ViewHolder> allOutHolder = outBuffetAdapter.getAllHolder();
+            if(allInHolder.size()>0){
+                for (OrdersFoodAdapter.ViewHolder food : allInHolder) {
+                    int quantity = Integer.parseInt(food.numberFood.getText().toString());
+                    String id = UUID.randomUUID().toString();
+                    OrderDetail detail;
+                    detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true);
+                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                            Log.println(Log.INFO, "addOk", "Add ok"));
+
+                }
+            }
+            //get food and quantity from food out of buffet
+            if(allOutHolder.size()>0){
+                for (OrdersFoodAdapter.ViewHolder food : allOutHolder) {
+                    int quantity = Integer.parseInt(food.numberFood.getText().toString());
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail;
                     detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, false);
@@ -220,18 +232,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }
             }
-            //get food and quantity from food out of buffet
-            for (OrdersFoodMoneyAdapter.ViewHolder food : ordersFoodMoneyAdapter.getAllHolder()) {
-                int quantity = Integer.parseInt(food.numberFoodMoney.getText().toString());
-                if (quantity > 0) {
-                    String id = UUID.randomUUID().toString();
-                    OrderDetail detail;
-                    detail = new OrderDetail(id, orderId, userId, food.foodId, quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true);
-                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
-                            Log.println(Log.INFO, "addOk", "Add ok"));
-                }
-            }
-            Toast.makeText(this, "Gọi món thành công", Toast.LENGTH_SHORT).show();
+            int count = allInHolder.size()+ allOutHolder.size();
+            Toast.makeText(this, "Gọi thành công "+count+" món", Toast.LENGTH_SHORT).show();
         });
         btnC.setOnClickListener(v -> startActivity(new Intent(OrdersFoodActivity.this, CommunicationCustomer.class)));
     }

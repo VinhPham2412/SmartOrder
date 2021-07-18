@@ -36,7 +36,7 @@ public class GetBuffetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_buffet);
         String orderId = getIntent().getStringExtra("orderId");
-        recyclerView = findViewById(R.id.recycleView);
+        recyclerView = findViewById(R.id.billRecycleView);
         btnConfirm = findViewById(R.id.btnConfirm);
         list = new ArrayList<>();
         //get all buffet
