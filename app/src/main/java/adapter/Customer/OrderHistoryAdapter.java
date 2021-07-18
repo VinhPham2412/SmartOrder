@@ -75,25 +75,25 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                     }
                 });
             }
-            holder.getBtnBill().setOnClickListener(v -> {
-                reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            ProcessOrder processOrder = snapshot.getValue(ProcessOrder.class);
-                            Intent intent = new Intent(context,BillActivity.class);
-                            intent.putExtra("orderId",orderId);
-                            intent.putExtra("tableId",processOrder.getTableId());
-                            context.startActivity(intent);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                    }
-                });
-            });
+//            holder.getBtnBill().setOnClickListener(v -> {
+//                reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
+//                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                        if(snapshot.exists()){
+//                            ProcessOrder processOrder = snapshot.getValue(ProcessOrder.class);
+//                            Intent intent = new Intent(context,BillActivity.class);
+//                            intent.putExtra("orderId",orderId);
+//                            intent.putExtra("tableId",processOrder.getTableId());
+//                            context.startActivity(intent);
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//                    }
+//                });
+//            });
             holder.getTxtTime().setText(details.get(0).getTimeString());
 
             if(details.get(0).getIsAccepted()){
@@ -125,7 +125,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             txtTime = itemView.findViewById(R.id.txtHistoryTime);
             txtFood = itemView.findViewById(R.id.txtHistoryFood);
             txtStatus = itemView.findViewById(R.id.txtHistoryStatus);
-            btnBill = itemView.findViewById(R.id.btnHistoryBill);
+//            btnBill = itemView.findViewById(R.id.btnHistoryBill);
             txtFood.setText("");
         }
 

@@ -27,6 +27,7 @@ import java.util.List;
 
 import adapter.Customer.OrderHistoryAdapter;
 import model.OrderDetail;
+import model.ProcessOrder;
 
 public class OrderHistory extends AppCompatActivity {
     private DatabaseReference reference;
@@ -88,7 +89,35 @@ public class OrderHistory extends AppCompatActivity {
 
             }
         });
+        btnBill=findViewById(R.id.btnBill);
+        btnBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            ProcessOrder processOrder = snapshot.getValue(ProcessOrder.class);
+                            Intent intent = new Intent(getApplicationContext(), BillActivity.class);
+                            intent.putExtra("orderId", orderId);
+                            intent.putExtra("tableId", processOrder.getTableId());
+                            intent.putExtra("buffetId",processOrder.getBuffetId());
+                            intent.putExtra("numPeople",processOrder.getNumberOfPeople());
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
     }
+
+
 
     private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
         if (!list.isEmpty() && list != null) {

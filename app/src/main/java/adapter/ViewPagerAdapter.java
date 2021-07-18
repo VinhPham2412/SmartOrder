@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import Fragments.CommunicationFragment;
 import Fragments.GetFoodFragment;
-import Fragments.HistoryOrderFragment;
+import Fragments.BillFragment;
 import Fragments.OrderFragment;
 import Fragments.WaitingTableFragment;
 
@@ -24,7 +24,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new OrderFragment();
             case 2:
-                return new HistoryOrderFragment();
+                return new BillFragment();
             case 3:
                 return new CommunicationFragment();
             case 5:

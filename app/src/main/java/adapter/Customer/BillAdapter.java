@@ -1,9 +1,11 @@
 package adapter.Customer;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,8 +29,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private DatabaseReference reference;
     private int quantity;
 
-    public BillAdapter(List<OrderDetail> orderDetailList) {
+    public BillAdapter(List<OrderDetail> orderDetailList,Context mContext) {
         this.orderDetailList = orderDetailList;
+        this.mContext=mContext;
         reference = FirebaseDatabase.getInstance().getReference("Food");
     }
 
@@ -51,7 +54,23 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Food food = snapshot.getValue(Food.class);
                 int total = (int)(food.getPrice() * quantity);
-                holder.getTxtBillRow().setText(food.getName()+"   "+food.getPrice()+"        "+quantity+"         "+total);
+                TextView foodName=new TextView(mContext);
+                foodName.setText(food.getName());
+                foodName.setWidth(280);
+                TextView quantity1=new TextView(mContext);
+                quantity1.setText(quantity+"");
+                quantity1.setWidth(230);
+                TextView foodPrice=new TextView(mContext);
+                foodPrice.setText((int)food.getPrice()+"");
+                foodPrice.setWidth(250);
+                TextView totalMoney=new TextView(mContext);
+                totalMoney.setText(total+"");
+                totalMoney.setTextColor(Color.RED);
+                totalMoney.setWidth(250);
+                holder.getTxtBillRow().addView(foodName);
+                holder.getTxtBillRow().addView(quantity1);
+                holder.getTxtBillRow().addView(foodPrice);
+                holder.getTxtBillRow().addView(totalMoney);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -65,12 +84,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtBillRow;
+        private GridLayout txtBillRow;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtBillRow = itemView.findViewById(R.id.txtBillRow);
         }
-        public TextView getTxtBillRow() {
+        public GridLayout getTxtBillRow() {
             return txtBillRow;
         }
     }

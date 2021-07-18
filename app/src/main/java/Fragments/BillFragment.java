@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.example.su21g3project.R;
 
 
-public class HistoryOrderFragment extends Fragment {
-    public HistoryOrderFragment() {
+public class BillFragment extends Fragment {
+    public BillFragment() {
     }
 
     @Override
