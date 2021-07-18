@@ -35,7 +35,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
         View uView =
-                inflater.inflate(R.layout.custom_orders, parent, false);
+                inflater.inflate(R.layout.custom_orders_money, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;

@@ -26,7 +26,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private Context mContext;
     private DatabaseReference reference;
     private int quantity;
-    private ViewHolder viewHolder;
 
     public BillAdapter(List<OrderDetail> orderDetailList) {
         this.orderDetailList = orderDetailList;
@@ -39,26 +38,23 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View uView =
-                inflater.inflate(R.layout.custom_bill, parent, false);
+                inflater.from(parent.getContext()).inflate(R.layout.custom_bill, parent, false);
         return new ViewHolder(uView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        viewHolder = holder;
         OrderDetail orderDetail = orderDetailList.get(position);
         quantity = orderDetail.getQuantity();
-        reference.child(orderDetail.getFoodId()).addValueEventListener(new ValueEventListener() {
+        reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Food food = snapshot.getValue(Food.class);
                 int total = (int)(food.getPrice() * quantity);
-                viewHolder.getTxtBillRow().setText(food.getName()+" "+food.getPrice()+" "+quantity+" "+total);
+                holder.getTxtBillRow().setText(food.getName()+"   "+food.getPrice()+"        "+quantity+"         "+total);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
@@ -74,7 +70,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             super(itemView);
             txtBillRow = itemView.findViewById(R.id.txtBillRow);
         }
-
         public TextView getTxtBillRow() {
             return txtBillRow;
         }

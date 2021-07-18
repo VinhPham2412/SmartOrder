@@ -29,22 +29,24 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     private Context mContext;
     private List<Food> foodList;
     private List<ViewHolder> allViews;
+    private boolean money;
 
-    public OrdersFoodAdapter(Context mContext, List<Food> foodList) {
+    public OrdersFoodAdapter(Context mContext, List<Food> foodList, boolean money) {
         this.mContext = mContext;
         this.foodList = foodList;
         allViews = new ArrayList<>();
+        this.money = money;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        mContext = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mContext);
 
 
         View uView =
-                inflater.inflate(R.layout.custom_orders, parent, false);
+                inflater.inflate(R.layout.custom_orders_money, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(uView);
         allViews.add(viewHolder);
@@ -54,32 +56,35 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Food food = foodList.get(position);
-        holder.foodId = food.getId();
-        holder.tvFoodName.setText(food.getName());
-        holder.add.setOnClickListener(v -> {
+        holder.setFoodId(food.getId());
+        holder.getTvFoodName().setText(food.getName());
+        if(money){
+            holder.getTvPrice().setText(food.getPrice()+"");
+        }
+        holder.getAdd().setOnClickListener(v -> {
             int number = 0;
             try {
-                number = Integer.parseInt(holder.numberFood.getText().toString());
+                number = Integer.parseInt(holder.getNumberFood().getText().toString());
             } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
-            holder.numberFood.setText(String.valueOf(number + 1));
+            holder.getNumberFood().setText(String.valueOf(number + 1));
         });
-        holder.remove.setOnClickListener(v -> {
+        holder.getRemove().setOnClickListener(v -> {
             int number = 0;
             try {
 
-                number = Integer.parseInt(holder.numberFood.getText().toString());
+                number = Integer.parseInt(holder.getNumberFood().getText().toString());
 
             } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
             if (number > 0) {
-                holder.numberFood.setText(String.valueOf(number - 1));
+                holder.getNumberFood().setText(String.valueOf(number - 1));
             }
 
         });
-        new DownloadImageTask((ImageView) (holder.imageView))
+        new DownloadImageTask((ImageView) (holder.getImageView()))
                 .execute(food.getImage());
     }
 
@@ -89,19 +94,53 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public String foodId;
-        public ImageView imageView;
-        public TextView tvFoodName;
-        public EditText numberFood;
-        public Button add, remove;
+        private String foodId;
+        private TextView tvPrice;
+        private ImageView imageView;
+        private TextView tvFoodName;
+        private EditText numberFood;
+        private Button add, remove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.foodOrderView);
-            tvFoodName = itemView.findViewById(R.id.tvFoodName);
-            numberFood = itemView.findViewById(R.id.txtNumberFood);
-            add = itemView.findViewById(R.id.btnAdd);
-            remove = itemView.findViewById(R.id.btnRemove);
+            imageView = itemView.findViewById(R.id.foodOrderViewMoney);
+            tvFoodName = itemView.findViewById(R.id.tvFoodNameMoney);
+            numberFood = itemView.findViewById(R.id.txtNumberFoodMoney);
+            add = itemView.findViewById(R.id.btnAddMoney);
+            remove = itemView.findViewById(R.id.btnRemoveMoney);
+            tvPrice = itemView.findViewById(R.id.tvMoney);
+        }
+
+        public TextView getTvPrice() {
+            return tvPrice;
+        }
+
+        public String getFoodId() {
+            return foodId;
+        }
+
+        public void setFoodId(String foodId) {
+            this.foodId = foodId;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public TextView getTvFoodName() {
+            return tvFoodName;
+        }
+
+        public EditText getNumberFood() {
+            return numberFood;
+        }
+
+        public Button getAdd() {
+            return add;
+        }
+
+        public Button getRemove() {
+            return remove;
         }
     }
 

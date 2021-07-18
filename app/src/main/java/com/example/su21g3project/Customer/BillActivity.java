@@ -55,6 +55,7 @@ public class BillActivity extends AppCompatActivity {
 
             }
         });
+        //display detail
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,7 +63,7 @@ public class BillActivity extends AppCompatActivity {
                 orderDetailList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     OrderDetail orderDetail = dataSnapshot.getValue(OrderDetail.class);
-                    if (orderDetail.getIsSeen() && orderDetail.getIsAccepted() &&
+                    if (orderDetail.getIsAccepted() &&
                             !orderDetail.isInBuffet() && orderDetail.getOrderId().equals(orderId))
                     {
                         orderDetailList.add(orderDetail);
@@ -77,5 +78,8 @@ public class BillActivity extends AppCompatActivity {
 
             }
         });
+        //display buffet
+
+
     }
 }
