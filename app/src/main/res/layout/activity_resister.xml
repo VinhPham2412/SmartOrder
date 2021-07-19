@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/colorPrimary"
     android:fillViewport="true"
-    tools:context=".ResisterActivity">
+    tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:drawableStart="@drawable/ic_baseline_phone_android_24"
             android:drawablePadding="16dp"
             android:ems="10"
-            android:hint="@string/phone"
+            android:hint="@string/sodienthoai"
             android:inputType="phone"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
             android:drawableStart="@drawable/ic_baseline_account_circle_24"
             android:drawablePadding="16dp"
             android:ems="10"
-            android:hint="FirstName"
+            android:hint="@string/firstname"
             android:inputType="textPersonName"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
             android:drawableStart="@drawable/ic_baseline_account_circle_24"
             android:drawablePadding="16dp"
             android:ems="10"
-            android:hint="LastName"
+            android:hint="@string/lastname"
             android:inputType="textPersonName"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"

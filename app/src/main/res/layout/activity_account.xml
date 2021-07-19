@@ -36,11 +36,11 @@
             android:layout_height="43dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_baseline_settings_24"
             android:drawablePadding="25dp"
-            android:text="Thông tin tài khoản"
+            android:text="@string/thongtintaikhoan"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_baseline_settings_24" />
 
         <TextView
             android:id="@+id/txtTableHistory"
@@ -50,7 +50,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_baseline_access_alarm_24"
             android:drawablePadding="25dp"
-            android:text="Lịch sử đặt bàn"
+            android:text="@string/lichsudatban"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_baseline_access_alarm_24"
             android:drawablePadding="25dp"
-            android:text="Lịch sử gọi món"
+            android:text="@string/lichsugoimon"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_baseline_login_24"
             android:drawablePadding="25dp"
-            android:text="Đăng xuất"
+            android:text="@string/dangxuat"
             android:textSize="20dp"
             android:textStyle="bold" />
 

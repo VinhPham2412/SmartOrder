@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="OTP Verification"
+            android:text="@string/otpverify"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:textStyle="bold">
@@ -60,7 +60,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="50dp"
             android:gravity="center"
-            android:text="Enter the OTP send to"
+            android:text="@string/enterotp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14dp"
             android:textStyle="bold"></TextView>
@@ -172,7 +172,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Didn't receive the OTP"
+                android:text="@string/notreceive"
                 android:textSize="14dp" />
 
             <TextView
@@ -180,7 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Resend OTP"
+                android:text="@string/guilaiotp"
                 android:textColor="@color/red"
                 android:textSize="15dp"
                 android:textStyle="bold" />
@@ -193,7 +193,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
-            android:text="Verify"
+            android:text="@string/confirm"
             android:textColor="@color/white"
             android:textSize="16dp" />
 

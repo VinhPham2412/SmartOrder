@@ -12,17 +12,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:singleLine="false"
-        android:text="Giao tiếp với Quản lí"
+        android:text="@string/giaotiepvoiquanly"
         android:textColor="@color/red"
         android:textSize="20dp" />
+
     <EditText
-        android:hint="Nhập nội dung"
-        android:inputType="textMultiLine"
-        android:layout_below="@+id/communication"
-        android:textSize="14dp"
+        android:id="@+id/txtReason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtReason"/>
+        android:layout_below="@+id/communication"
+        android:hint="@string/nhapnoidung"
+        android:inputType="textMultiLine"
+        android:textSize="14dp" />
 
     <ListView
         android:layout_below="@+id/txtReason"

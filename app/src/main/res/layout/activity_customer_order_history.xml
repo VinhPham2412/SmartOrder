@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -19,11 +18,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_marginStart="150dp"
         android:id="@+id/btnBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hóa đơn"
-        android:backgroundTint="@color/colorAccent" />
+        android:layout_marginStart="150dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/hoadon" />
 </LinearLayout>
 </ScrollView>

@@ -33,5 +33,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="17dp"
         android:layout_marginRight="23dp"
-        android:text="Hóa đơn" />
+        android:text="@string/bill" />
 </RelativeLayout>
