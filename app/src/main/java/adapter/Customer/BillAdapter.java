@@ -1,7 +1,9 @@
 package adapter.Customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +30,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private Context mContext;
     private DatabaseReference reference;
     private int quantity;
+    private int dvWidth;
+    private Float finalSum = 0f;
 
-    public BillAdapter(List<OrderDetail> orderDetailList,Context mContext) {
+    public BillAdapter(List<OrderDetail> orderDetailList, Context mContext) {
         this.orderDetailList = orderDetailList;
-        this.mContext=mContext;
+        this.mContext = mContext;
         reference = FirebaseDatabase.getInstance().getReference("Food");
     }
 
@@ -39,6 +43,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        dvWidth = displayMetrics.widthPixels;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View uView =
                 inflater.from(parent.getContext()).inflate(R.layout.custom_bill, parent, false);
@@ -47,35 +54,41 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        OrderDetail orderDetail = orderDetailList.get(position);
-        quantity = orderDetail.getQuantity();
-        reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Food food = snapshot.getValue(Food.class);
-                int total = (int)(food.getPrice() * quantity);
-                TextView foodName=new TextView(mContext);
-                foodName.setText(food.getName());
-                foodName.setWidth(280);
-                TextView quantity1=new TextView(mContext);
-                quantity1.setText(quantity+"");
-                quantity1.setWidth(230);
-                TextView foodPrice=new TextView(mContext);
-                foodPrice.setText((int)food.getPrice()+"");
-                foodPrice.setWidth(250);
-                TextView totalMoney=new TextView(mContext);
-                totalMoney.setText(total+"");
-                totalMoney.setTextColor(Color.RED);
-                totalMoney.setWidth(250);
-                holder.getTxtBillRow().addView(foodName);
-                holder.getTxtBillRow().addView(quantity1);
-                holder.getTxtBillRow().addView(foodPrice);
-                holder.getTxtBillRow().addView(totalMoney);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+            OrderDetail orderDetail = orderDetailList.get(position);
+            quantity = orderDetail.getQuantity();
+            reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Food food = snapshot.getValue(Food.class);
+                        int total = (int) (food.getPrice() * quantity);
+                        TextView foodName = new TextView(mContext);
+                        foodName.setText(food.getName());
+                        foodName.setWidth(dvWidth / 4);
+                        TextView quantity1 = new TextView(mContext);
+                        quantity1.setText(quantity + "");
+                        quantity1.setWidth(dvWidth / 4);
+                        TextView foodPrice = new TextView(mContext);
+                        foodPrice.setText((int) food.getPrice() + "");
+                        foodPrice.setWidth(dvWidth / 4);
+                        TextView totalMoney = new TextView(mContext);
+                        totalMoney.setText(total + "");
+                        totalMoney.setTextColor(Color.RED);
+                        totalMoney.setWidth(dvWidth / 4);
+                        finalSum += total;
+                        holder.getTxtBillRow().addView(foodName);
+                        holder.getTxtBillRow().addView(quantity1);
+                        holder.getTxtBillRow().addView(foodPrice);
+                        holder.getTxtBillRow().addView(totalMoney);
+                        reference = FirebaseDatabase.getInstance().getReference("SubTotal");
+                        reference.child(orderDetail.getOrderId()).setValue(finalSum);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+
     }
 
     @Override
@@ -85,10 +98,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private GridLayout txtBillRow;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtBillRow = itemView.findViewById(R.id.txtBillRow);
         }
+
         public GridLayout getTxtBillRow() {
             return txtBillRow;
         }
