@@ -88,7 +88,7 @@ public class BillActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     OrderDetail orderDetail = dataSnapshot.getValue(OrderDetail.class);
                     if (orderDetail.getIsAccepted() &&
-                        !orderDetail.isInBuffet() &&
+                        !orderDetail.getIsInBuffet() &&
                          orderDetail.getOrderId().equals(orderId))
                     {
                         orderDetailList.add(orderDetail);

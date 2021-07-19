@@ -191,7 +191,6 @@ public class OrdersFoodActivity extends AppCompatActivity {
         });
 
         LinearLayoutManager manager1 = new LinearLayoutManager(this);
-        manager1.setInitialPrefetchItemCount(4);
         recycler1.setLayoutManager(manager1);
         btnNuocngot.setOnClickListener(v -> {
             getFoodsByCategory("soft drink");

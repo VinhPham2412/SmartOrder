@@ -29,7 +29,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private List<OrderDetail> orderDetailList;
     private Context mContext;
     private DatabaseReference reference;
-    private int quantity;
     private int dvWidth;
     private Float finalSum = 0f;
 
@@ -54,8 +53,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            OrderDetail orderDetail = orderDetailList.get(position);
-            quantity = orderDetail.getQuantity();
+            final OrderDetail orderDetail = orderDetailList.get(position);
+            int quantity = orderDetail.getQuantity();
             reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

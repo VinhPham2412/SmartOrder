@@ -38,11 +38,11 @@ public class OrderDetail {
         this.isInBuffet = isInBuffet;
     }
 
-    public boolean isInBuffet() {
+    public boolean getIsInBuffet() {
         return isInBuffet;
     }
 
-    public void setInBuffet(boolean inBuffet) {
+    public void setIsInBuffet(boolean inBuffet) {
         isInBuffet = inBuffet;
     }
 

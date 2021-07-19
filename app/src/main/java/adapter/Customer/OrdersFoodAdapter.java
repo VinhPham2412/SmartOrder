@@ -36,8 +36,17 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         this.foodList = foodList;
         allViews = new ArrayList<>();
         this.money = money;
+        setHasStableIds(true);
+    }
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
