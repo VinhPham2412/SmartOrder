@@ -9,7 +9,7 @@ import Fragments.CommunicationFragment;
 import Fragments.GetFoodFragment;
 import Fragments.BillFragment;
 import Fragments.OrderFragment;
-import Fragments.WaitingTableFragment;
+import Fragments.WaiterOrderFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -21,21 +21,18 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-            case 1:
                 return new OrderFragment();
-            case 2:
+            case 1:
                 return new BillFragment();
-            case 3:
-                return new CommunicationFragment();
-            case 5:
-                return new WaitingTableFragment();
+            case 2:
+                return new WaiterOrderFragment();
             default:
-                return new GetFoodFragment();
+                return new CommunicationFragment();
 
         }
     }
     @Override
     public int getItemCount() {
-        return 6;
+        return 4;
     }
 }

@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,7 +72,7 @@ public class BillActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Table table = snapshot.getValue(Table.class);
-                txtTableName.setText(table.getName());
+                txtTableName.setText("Bàn "+table.getName());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -91,6 +92,17 @@ public class BillActivity extends AppCompatActivity {
                          orderDetail.getOrderId().equals(orderId))
                     {
                         orderDetailList.add(orderDetail);
+                    }
+                }
+                for(int i=0;i<orderDetailList.size()-1;i++){
+                    for(int j=i+1;j<orderDetailList.size();j++){
+                        if(orderDetailList.get(i).getFoodId()
+                                .equals(orderDetailList.get(j).getFoodId())){
+                            int oldQuantity = orderDetailList.get(i).getQuantity();
+                            int alphaQuantity = orderDetailList.get(j).getQuantity();
+                            orderDetailList.get(i).setQuantity(oldQuantity+alphaQuantity);
+                            orderDetailList.remove(j);
+                        }
                     }
                 }
                 billAdapter = new BillAdapter(orderDetailList,getApplicationContext());
@@ -123,10 +135,9 @@ public class BillActivity extends AppCompatActivity {
                             if(snapshot.exists()){
                                 Long finalSum = snapshot.getValue(Long.class);
                                 finalMoney=finalSum+buffetSum;
-                                txtTotal.setText("Grand Sum : "+finalMoney);
+                                txtTotal.setText("Tổng : "+finalMoney);
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
@@ -156,6 +167,13 @@ public class BillActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+        btnConfirmBill.setOnClickListener(v -> {
+            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
+            reference.child("status").setValue("done");
+            reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId);
+            reference.child("status").setValue(true);
+            Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
         });
     }
 }

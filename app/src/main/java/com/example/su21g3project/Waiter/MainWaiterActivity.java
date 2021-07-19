@@ -40,18 +40,11 @@ public class MainWaiterActivity extends AppCompatActivity {
                     tab.setText("Hóa Đơn");
                     break;
                 case 2:
-                    tab.setText("Lịch sử gọi món");
+                    tab.setText("Gọi món");
                     break;
                 case 3:
                     tab.setText("Giao tiếp");
                     break;
-                case 4:
-                    tab.setText("Bàn chờ");
-                    break;
-                case 5:
-                    tab.setText("Gọi món");
-                    break;
-
             }
         }).attach();
 

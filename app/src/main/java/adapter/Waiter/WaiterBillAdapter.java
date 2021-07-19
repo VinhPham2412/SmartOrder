@@ -58,7 +58,7 @@ public class WaiterBillAdapter extends RecyclerView.Adapter<WaiterBillAdapter.Vi
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     Table table = snapshot.getValue(Table.class);
-                    holder.getTxtTable().setText(table.getName());
+                    holder.getTxtTable().setText("Bàn "+table.getName());
                     holder.getTxtCustomer().setText(processOrder.getName());
                     holder.getBtnBill().setOnClickListener(v -> {
                         Intent intent = new Intent(context, BillActivity.class);

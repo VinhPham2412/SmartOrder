@@ -26,7 +26,7 @@ import adapter.Customer.BookedHistoryAdapter;
 import model.ProcessOrder;
 
 
-public class WaitingTableFragment extends Fragment {
+public class WaiterOrderFragment extends Fragment {
 
     private DatabaseReference reference;
     private List<ProcessOrder> list;

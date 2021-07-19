@@ -70,7 +70,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         Food food = snapshot1.getValue(Food.class);
-                        if (food.getType().equals(type) && !isIn(list, food.getId())) {
+                        if (food.getType().equals(type) &&
+                                !isIn(list, food.getId())) {
                             result.add(food);
                         }
                     }
@@ -134,6 +135,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         reference.child(buffetId).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         list.add(snapshot1.getValue(Food.class));
@@ -171,6 +173,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                foodListMoney.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Food food = snapshot1.getValue(Food.class);
                     if (!isIn(list, food.getId())) {
