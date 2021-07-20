@@ -126,8 +126,6 @@ public class OrdersFoodActivity extends AppCompatActivity {
             });
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
         String buffetId = getIntent().getStringExtra("buffetId");
         list = new ArrayList<>();
         //get food in buffet

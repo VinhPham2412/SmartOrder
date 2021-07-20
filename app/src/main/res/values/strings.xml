@@ -16,4 +16,8 @@
     <string name="goimon">Gọi món</string>
     <string name="register">Đăng ký</string>
     <string name="btnHistoryBill">Bill</string>
+    <string name="FoodName">Tên Món</string>
+    <string name="FoodQuantity">Số Lượng</string>
+    <string name="FoodPrice">Gía</string>
+    <string name="FoodTotal">Tổng</string>
 </resources>

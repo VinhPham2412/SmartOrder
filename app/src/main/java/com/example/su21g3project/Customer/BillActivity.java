@@ -24,7 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import adapter.Customer.BillAdapter;
 import model.Buffet;
@@ -42,15 +44,32 @@ public class BillActivity extends AppCompatActivity {
     private Button btnConfirmBill;
     private List<OrderDetail> orderDetailList;
     FirebaseUser user;
-    private int dvWidth;
     private Float finalMoney=0f;
+    String role="customer";
+    User currentUser=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        dvWidth = displayMetrics.widthPixels;
+        user= FirebaseAuth.getInstance().getCurrentUser();
+        reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    currentUser=snapshot.getValue(User.class);
+                    role=currentUser.getRole();
+                    if (currentUser.getRole().equals("waiter")){
+                        btnConfirmBill.setVisibility(View.VISIBLE);
+                    }else
+                        btnConfirmBill.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         btnConfirmBill=findViewById(R.id.btnConfirmBill);
         billBuffetName=findViewById(R.id.billBuffetName);
         billBuffetNumPeople=findViewById(R.id.billBuffetNumpeople);
@@ -79,7 +98,9 @@ public class BillActivity extends AppCompatActivity {
 
             }
         });
-        //display detail
+        /**
+         * Display all orderDetail in recyclerView
+         */
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -105,27 +126,26 @@ public class BillActivity extends AppCompatActivity {
                         }
                     }
                 }
-                billAdapter = new BillAdapter(orderDetailList,getApplicationContext());
+                billAdapter = new BillAdapter(orderDetailList,getApplicationContext(),role);
                 recyclerView.setAdapter(billAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
+        /**
+         * Display buffet info in ProcessOrder
+         */
         reference=FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     Buffet buffet=snapshot.getValue(Buffet.class);
-                    billBuffetName.setWidth(dvWidth/4);
                     billBuffetName.setText(buffet.getName());
-                    billBuffetNumPeople.setWidth(dvWidth/4);
                     billBuffetNumPeople.setText(numPeople+"");
-                    billBuffetPrice.setWidth(dvWidth/4);
                     billBuffetPrice.setText((int)buffet.getPrice()+"");
-                    billBuffetTotal.setWidth(dvWidth/4);
                     Float buffetSum = buffet.getPrice()*numPeople;
                     billBuffetTotal.setText(buffetSum+"");
                     reference = FirebaseDatabase.getInstance().getReference("SubTotal").child(orderId);
@@ -135,7 +155,15 @@ public class BillActivity extends AppCompatActivity {
                             if(snapshot.exists()){
                                 Long finalSum = snapshot.getValue(Long.class);
                                 finalMoney=finalSum+buffetSum;
-                                txtTotal.setText("Tổng : "+finalMoney);
+                                txtTotal.setText("Tổng : "+finalMoney+"K");
+                                reference=FirebaseDatabase.getInstance().getReference("Bill").child(orderId);
+                                HashMap hashMap=new HashMap<String,Object>();
+                                hashMap.put("id",tableId);
+                                hashMap.put("totalMoney",finalMoney);
+                                hashMap.put("isPaid",false);
+                                hashMap.put("isCheckOut",false);
+                                reference.setValue(hashMap);
+
                             }
                         }
                         @Override
@@ -150,29 +178,18 @@ public class BillActivity extends AppCompatActivity {
 
             }
         });
-        user= FirebaseAuth.getInstance().getCurrentUser();
-        reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    User user=snapshot.getValue(User.class);
-                    if (user.getRole().equals("waiter")){
-                        btnConfirmBill.setVisibility(View.VISIBLE);
-                    }else
-                        btnConfirmBill.setVisibility(View.INVISIBLE);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         btnConfirmBill.setOnClickListener(v -> {
+            List<BillAdapter.ViewHolder> viewHolderList=billAdapter.getAllHolder();
+            for (BillAdapter.ViewHolder viewHolder:viewHolderList){
+                reference=FirebaseDatabase.getInstance().getReference("OrderDetail").child(viewHolder.getOrderDetailId()).child("quantity");
+                reference.setValue(Integer.parseInt(viewHolder.getEtFoodQuantity().getText().toString()));
+            }
             reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
             reference.child("status").setValue("done");
             reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId);
             reference.child("status").setValue(true);
+            reference=FirebaseDatabase.getInstance().getReference("Bill").child(orderId).child("isCheckOut");
+            reference.setValue(true);
             Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
         });
     }
