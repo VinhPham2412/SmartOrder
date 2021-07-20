@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +33,19 @@ public class BillFragment extends Fragment {
     private List<ProcessOrder> list;
     private RecyclerView recyclerView;
     private WaiterBillAdapter adapter;
-    public BillFragment() {
+    private int dvHeight;
+    public BillFragment(FragmentActivity fragmentActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        dvHeight = displayMetrics.heightPixels;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_waiting_table, container, false);
-        recyclerView  = view.findViewById(R.id.container_waiter_booked_history);
+        View view = inflater.inflate(R.layout.fragment_bill_waiter, container, false);
+        recyclerView  = view.findViewById(R.id.bill_waiter_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
@@ -55,6 +61,7 @@ public class BillFragment extends Fragment {
 
                 }
                 adapter = new WaiterBillAdapter(list, getContext());
+                recyclerView.setMinimumHeight(dvHeight);
                 recyclerView.setAdapter(adapter);
             }
 

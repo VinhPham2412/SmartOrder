@@ -34,16 +34,16 @@ public class MainWaiterActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             switch (position){
                 case 0:
-                    tab.setText("Trang chủ");
+                    tab.setText(R.string.trangchu);
                     break;
                 case 1:
-                    tab.setText("Hóa Đơn");
+                    tab.setText(R.string.bill);
                     break;
                 case 2:
-                    tab.setText("Gọi món");
+                    tab.setText(R.string.goimon);
                     break;
                 case 3:
-                    tab.setText("Giao tiếp");
+                    tab.setText(R.string.communication);
                     break;
             }
         }).attach();

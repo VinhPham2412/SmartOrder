@@ -13,7 +13,7 @@
     <string name="thongtinkhachhang">Thông tin khách hàng</string>
     <string name="goimon">Gọi món</string>
     <string name="register">Đăng ký</string>
-    <string name="btnHistoryBill">Bill</string>
+    <string name="btnHistoryBill">Hóa đơn</string>
     <string name="thongtintaikhoan">Thông tin tài khoản</string>
     <string name="lichsudatban">Lịch sử đặt bàn</string>
     <string name="lichsugoimon">Lịch sử gọi món</string>
@@ -45,4 +45,5 @@
     <string name="bill">Hóa đơn</string>
     <string name="reject">Từ chối</string>
     <string name="accept">Chấp nhận</string>
+    <string name="communication">Giao tiếp</string>
 </resources>

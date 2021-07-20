@@ -9,13 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Login Page"
+            android:text="@string/login"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"

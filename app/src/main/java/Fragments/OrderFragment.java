@@ -1,12 +1,14 @@
 package Fragments;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,13 @@ public class OrderFragment extends Fragment {
     private OrderProcessingAdapter orderProcessingAdapter;
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
+    private int dvHeight;
+
+    public OrderFragment(FragmentActivity fragmentActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        dvHeight = displayMetrics.heightPixels;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +54,7 @@ public class OrderFragment extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
         recyclerView = view.findViewById(R.id.recycleViewOrder);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setMinimumHeight(dvHeight);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
