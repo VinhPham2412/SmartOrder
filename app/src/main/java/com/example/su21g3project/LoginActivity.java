@@ -3,9 +3,7 @@ package com.example.su21g3project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +26,8 @@ import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnLogin,btnRegister;
+    private Button btnLogin;
+    private TextView txtRegister;
     private TextView phone;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -57,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 progressBar.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
-                btnRegister.setVisibility(View.VISIBLE);
+                txtRegister.setVisibility(View.VISIBLE);
                 startActivity(intent);
             }
 
@@ -65,18 +64,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onVerificationCompleted(@NonNull @NotNull PhoneAuthCredential phoneAuthCredential) {
                 progressBar.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
-                btnRegister.setVisibility(View.VISIBLE);
+                txtRegister.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onVerificationFailed(@NonNull @NotNull FirebaseException e) {
                 progressBar.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
-                btnRegister.setVisibility(View.VISIBLE);
+                txtRegister.setVisibility(View.VISIBLE);
             }
         };
         btnLogin=findViewById(R.id.btnLogin);
-        btnRegister=findViewById(R.id.btnRegister);
+        txtRegister =findViewById(R.id.txtRegister);
         btnLogin.setOnClickListener(v -> {
 
             if (phone.getText().toString().trim().isEmpty()){
@@ -86,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             phoneNumber = phone.getText().toString().replaceFirst("0","+84");
             progressBar.setVisibility(View.VISIBLE);
             btnLogin.setVisibility(View.INVISIBLE);
-            btnRegister.setVisibility(View.INVISIBLE);
+            txtRegister.setVisibility(View.INVISIBLE);
 
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(mAuth)
@@ -97,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                             .build();
             PhoneAuthProvider.verifyPhoneNumber(options);
         });
-        btnRegister.setOnClickListener(v -> {
+        txtRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
             startActivity(intent);
         });

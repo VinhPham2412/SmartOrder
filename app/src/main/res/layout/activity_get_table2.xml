@@ -19,8 +19,8 @@
         android:gravity="center"
         android:text="@string/thongtinkhachhang"
         android:textColor="@color/red"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
+
     <TextView
         android:id="@+id/textView11"
         android:layout_marginStart="90dp"
@@ -37,6 +37,7 @@
         android:layout_marginBottom="50dp"
         android:ems="10"
         android:inputType="textPersonName" />
+
     <TextView
         android:layout_marginStart="90dp"
         android:id="@+id/textView12"

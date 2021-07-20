@@ -47,4 +47,5 @@
     <string name="reject">Reject</string>
     <string name="accept">Approve</string>
     <string name="communication">Communication</string>
+    <string name="donthaveacc">Don\'t have account ?</string>
 </resources>

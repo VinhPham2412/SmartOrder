@@ -46,4 +46,5 @@
     <string name="reject">Từ chối</string>
     <string name="accept">Chấp nhận</string>
     <string name="communication">Giao tiếp</string>
+    <string name="donthaveacc">Chưa có tài khoản ?</string>
 </resources>
