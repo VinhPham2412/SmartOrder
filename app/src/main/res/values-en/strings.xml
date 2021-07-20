@@ -48,4 +48,8 @@
     <string name="accept">Approve</string>
     <string name="communication">Communication</string>
     <string name="donthaveacc">Don\'t have account ?</string>
+    <string name="FoodName">FoodName</string>
+    <string name="FoodQuantity">Quantity</string>
+    <string name="FoodPrice">Price</string>
+    <string name="FoodTotal">Total</string>
 </resources>

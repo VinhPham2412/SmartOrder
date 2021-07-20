@@ -47,4 +47,8 @@
     <string name="accept">Chấp nhận</string>
     <string name="communication">Giao tiếp</string>
     <string name="donthaveacc">Chưa có tài khoản ?</string>
+    <string name="FoodName">Tên món</string>
+    <string name="FoodQuantity">Số lượng</string>
+    <string name="FoodPrice">Gía</string>
+    <string name="FoodTotal">Tổng</string>
 </resources>
