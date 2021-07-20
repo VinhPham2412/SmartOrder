@@ -19,8 +19,8 @@
         android:gravity="center"
         android:text="@string/thongtinkhachhang"
         android:textColor="@color/red"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
+
     <TextView
         android:id="@+id/textView11"
         android:layout_marginStart="90dp"
@@ -37,6 +37,7 @@
         android:layout_marginBottom="50dp"
         android:ems="10"
         android:inputType="textPersonName" />
+
     <TextView
         android:layout_marginStart="90dp"
         android:id="@+id/textView12"
@@ -76,9 +77,8 @@
         android:id="@+id/btnNext1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xác nhận"
         android:layout_marginStart="150dp"
-        />
+        android:text="@string/confirm" />
 
     <ProgressBar
         android:id="@+id/progressBar5"

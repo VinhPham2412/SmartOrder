@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
-                        txtUsername.setText("Xin chào " + user.getName());
+                        txtUsername.setText(R.string.welcome);
+                        txtUsername.setText(txtUsername.getText()+" "+user.getName());
                         mainLogin.setVisibility(View.INVISIBLE);
                         notify.setVisibility(View.VISIBLE);
                         btnGetTable.setOnClickListener(v -> {

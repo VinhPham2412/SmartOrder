@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,13 @@ public class WaiterOrderFragment extends Fragment {
     private List<ProcessOrder> list;
     private RecyclerView recyclerView;
     private BookedHistoryAdapter adapter;
+    private int dvWidth;
+
+    public WaiterOrderFragment(FragmentActivity fragmentActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        dvWidth = displayMetrics.widthPixels;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +63,7 @@ public class WaiterOrderFragment extends Fragment {
 
                 }
                 adapter = new BookedHistoryAdapter(list, getContext());
+                recyclerView.setMinimumHeight(dvWidth);
                 recyclerView.setAdapter(adapter);
             }
 

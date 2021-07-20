@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationActivity"
+    tools:context=".Customer.CommunicationCustomer"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thông báo"
+        android:gravity="center"
+        android:text="@string/notification"
         android:textColor="@color/red"
         android:textSize="20dp"
-        android:gravity="center"
-        android:textStyle="italic"/>
+        android:textStyle="italic" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/recycleViewNotice"

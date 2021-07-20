@@ -12,8 +12,10 @@ import Fragments.OrderFragment;
 import Fragments.WaiterOrderFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
+    private FragmentActivity fragmentActivity;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+        this.fragmentActivity =fragmentActivity;
     }
 
     @NonNull
@@ -21,13 +23,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new OrderFragment();
+                return new OrderFragment(fragmentActivity);
             case 1:
-                return new BillFragment();
+                return new BillFragment(fragmentActivity);
             case 2:
-                return new WaiterOrderFragment();
+                return new WaiterOrderFragment(fragmentActivity);
             default:
-                return new CommunicationFragment();
+                return new CommunicationFragment(fragmentActivity);
 
         }
     }

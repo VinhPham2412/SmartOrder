@@ -1,148 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:keepScreenOn="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Login Page"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.479"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view5" />
+    android:textAlignment="center"
+    tools:layout_editor_absoluteY="81dp">
 
-        <EditText
-            android:id="@+id/txtLoginAccount"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/border"
-            android:drawableStart="@drawable/ic_baseline_account_circle_24"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:hint="@string/phone"
-            android:inputType="phone"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtLoginAccount"
+        app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"></TextView>
 
-        <View
-            android:id="@+id/topView5"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+    <EditText
+        android:id="@+id/txtLoginAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="308dp"
+        android:background="@drawable/border"
+        android:drawableStart="@drawable/ic_baseline_account_circle_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/sodienthoai"
+        android:inputType="phone"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="@+id/txtRegister"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-        <View
-            android:id="@+id/view5"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_wave"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.571"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topView5" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="119dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintStart_toEndOf="@+id/txtRegister"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/buffet" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="119dp"
-            android:layout_height="119dp"
-            android:layout_marginTop="40dp"
-            android:contentDescription="@string/account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.945"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/buffet" />
+    <TextView
+        android:id="@+id/txtRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/app_name"
+        android:textColor="#E91E63"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtRegister"
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="60dp"
-            android:text="SmartOrder"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.173"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/login"
+        android:textColor="@color/cardview_light_background"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
+        app:layout_constraintHorizontal_bias="0.477"
+        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
+        app:layout_constraintTop_toBottomOf="@+id/txtdonthaveacc" />
 
-        <LinearLayout
-            android:layout_width="397dp"
-            android:layout_height="167dp"
-            android:layout_marginTop="38dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txtReister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/register"
+        android:textColor="#F44336"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txtdonthaveacc"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
 
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="48dp"
-                    android:layout_marginEnd="50dp"
-                    android:background="@drawable/border"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:text="Đăng nhập"
-                    android:textColor="@color/cardview_light_background"
-                    android:textStyle="bold" />
-                <Button
-                    android:id="@+id/btnRegister"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="110dp"
-                    android:layout_marginEnd="50dp"
-                    android:background="@drawable/border"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    <TextView
+        android:id="@+id/txtdonthaveacc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/donthaveacc"
+        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
+</androidx.constraintlayout.widget.ConstraintLayout>
