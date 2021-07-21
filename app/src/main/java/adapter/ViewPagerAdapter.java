@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import Fragments.CommunicationFragment;
-import Fragments.GetFoodFragment;
 import Fragments.BillFragment;
 import Fragments.OrderFragment;
 import Fragments.WaiterOrderFragment;

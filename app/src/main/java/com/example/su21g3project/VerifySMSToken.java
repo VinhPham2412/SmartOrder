@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.su21g3project.Chef.MainChefActivity;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,6 +75,10 @@ public class VerifySMSToken extends AppCompatActivity {
                                         case "waiter":
                                             Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
                                             startActivity(intent1);
+                                            break;
+                                        case "chef":
+                                            Intent intent2 = new Intent(VerifySMSToken.this, MainChefActivity.class);
+                                            startActivity(intent2);
                                             break;
                                     }
                                 }

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
-        <activity android:name=".Customer.BillActivity"></activity>
+        <activity android:name=".Chef.MainChefActivity"></activity>
+        <activity android:name=".Customer.BillActivity" />
         <activity android:name=".Customer.BookedHistory" />
         <activity android:name=".Customer.OrderHistory" />
         <activity android:name=".Waiter.MainWaiterActivity" />

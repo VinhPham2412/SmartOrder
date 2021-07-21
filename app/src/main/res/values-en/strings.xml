@@ -52,4 +52,7 @@
     <string name="FoodQuantity">Quantity</string>
     <string name="FoodPrice">Price</string>
     <string name="FoodTotal">Total</string>
+    <string name="done">Do</string>
+    <string name="chefNotice">Notice</string>
+    <string name="chefCommunication">Contact to Manager</string>
 </resources>

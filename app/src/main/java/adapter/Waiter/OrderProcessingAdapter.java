@@ -86,6 +86,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set seen ok"));
                 reference.child(id).child("isAccepted").setValue(true).addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set accepted ok"));
+                reference.child(id).child("doing").setValue(false);
             }
         });
         holder.getBtnReject().setOnClickListener(v -> {

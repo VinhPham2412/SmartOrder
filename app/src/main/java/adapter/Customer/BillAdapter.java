@@ -53,9 +53,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        dvWidth = displayMetrics.widthPixels;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View uView = inflater.from(parent.getContext()).inflate(R.layout.custom_bill, parent, false);
         ViewHolder viewHolder = new ViewHolder(uView);

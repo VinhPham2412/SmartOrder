@@ -63,10 +63,6 @@ public class AccountActivity extends AppCompatActivity {
         txtLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-            SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=pref.edit();
-            editor.putString("1","logout");
-            editor.commit();
             startActivity(intent);
             finish();
         });

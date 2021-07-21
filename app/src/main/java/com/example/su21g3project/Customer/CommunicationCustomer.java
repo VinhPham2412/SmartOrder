@@ -32,8 +32,9 @@ public class CommunicationCustomer extends AppCompatActivity {
     private Button btnSenReason,btnCamera;
     private DatabaseReference reference;
     private String userId;
-    String [] waiterNotice={"Khách yêu cầu gặp quản lí","Khách có thái độ không tốt,mất kiểm soát","Tôi có việc đột xuất cần nghỉ",
-            "Xin về sớm"};
+    private String role="customer";
+    String [] chefNotice={"Bếp gặp sự cố","Nguyên liệu có vấn đề","Có người bị thương trong bếp",
+            "Cần bổ xung thêm người làm"};
     String [] customerNotice={"Đồ ăn ra quá chậm","Đồ ăn ra không đúng với Order","Chất lượng đồ ăn có vấn đề",
             "Thái độ nhân viên không được chuẩn mực","Vệ sinh bàn còn rất bẩn"};
     @Override
@@ -50,36 +51,14 @@ public class CommunicationCustomer extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     User user=snapshot.getValue(User.class);
-                    if(user.getRole().equals("waiter")){
-                        adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice,waiterNotice);
-                        listviewdata.setAdapter(adapter);
-                        btnSenReason.setOnClickListener(v -> {
-                            String communicationId = UUID.randomUUID().toString();
-                            reference = FirebaseDatabase.getInstance().getReference("Communication").child("Waiter");
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("id", communicationId);
-                            hashMap.put("userId", userId);
-                            hashMap.put("message", txtReason.getText().toString());
-                            hashMap.put("isSeen", false);
-                            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
-                                    task -> Toast.makeText(CommunicationCustomer.this,"Gửi ý kiến thành công",
-                                            Toast.LENGTH_SHORT).show());
-                        });
-                    }else{
+                    role=user.getRole();
+                    if (role.equals("customer")){
                         adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice,customerNotice);
                         listviewdata.setAdapter(adapter);
-                        btnSenReason.setOnClickListener(v -> {
-                            String communicationId = UUID.randomUUID().toString();
-                            reference = FirebaseDatabase.getInstance().getReference("Communication").child("Customer");
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("id", communicationId);
-                            hashMap.put("userId", userId);
-                            hashMap.put("message", txtReason.getText().toString());
-                            hashMap.put("isSeen", false);
-                            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
-                                    task -> Toast.makeText(CommunicationCustomer.this,"Gửi ý kiến thành công",
-                                            Toast.LENGTH_SHORT).show());
-                        });
+                    }
+                    else {
+                        adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice,chefNotice);
+                        listviewdata.setAdapter(adapter);
                     }
                 }
             }
@@ -88,6 +67,22 @@ public class CommunicationCustomer extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+
+        btnSenReason.setOnClickListener(v -> {
+            String communicationId = UUID.randomUUID().toString();
+            if (role.equals("customer"))
+                reference = FirebaseDatabase.getInstance().getReference("Communication").child("Customer");
+            else
+                reference = FirebaseDatabase.getInstance().getReference("Communication").child("Chef");
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id", communicationId);
+            hashMap.put("userId", userId);
+            hashMap.put("message", txtReason.getText().toString());
+            hashMap.put("isSeen", false);
+            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
+                    task -> Toast.makeText(CommunicationCustomer.this,"Gửi ý kiến thành công",
+                            Toast.LENGTH_SHORT).show());
         });
 
 

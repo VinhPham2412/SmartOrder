@@ -215,7 +215,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail;
-                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true);
+                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
 
@@ -227,7 +227,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
                     String id = UUID.randomUUID().toString();
                     OrderDetail detail;
-                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, false);
+                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, false,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                 }

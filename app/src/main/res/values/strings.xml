@@ -51,4 +51,7 @@
     <string name="FoodQuantity">Số lượng</string>
     <string name="FoodPrice">Gía</string>
     <string name="FoodTotal">Tổng</string>
+    <string name="done">Làm</string>
+    <string name="chefNotice">Thông Báo</string>
+    <string name="chefCommunication">Giao tiếp với Quản lí</string>
 </resources>

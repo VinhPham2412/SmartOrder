@@ -19,14 +19,23 @@ public class OrderDetail {
     private String foodId;
     private int quantity;
     private Date time;
-    private boolean isSeen ;
+    private boolean isSeen;
     private boolean isAccepted ;
     private boolean isInBuffet;
+    private boolean doing;
+
+    public boolean isDoing() {
+        return doing;
+    }
+
+    public void setDoing(boolean doing) {
+        this.doing = doing;
+    }
 
     public OrderDetail() {
     }
 
-    public OrderDetail(String id,String orderId, String userId, String foodId, int quantity, Date time,boolean isSeen,boolean isAccepted, boolean isInBuffet) {
+    public OrderDetail(String id,String orderId, String userId, String foodId, int quantity, Date time,boolean isSeen,boolean isAccepted, boolean isInBuffet,boolean doing) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
@@ -36,6 +45,7 @@ public class OrderDetail {
         this.isSeen=isSeen;
         this.isAccepted=isAccepted;
         this.isInBuffet = isInBuffet;
+        this.doing=doing;
     }
 
     public boolean getIsInBuffet() {
@@ -133,6 +143,7 @@ public class OrderDetail {
         result.put("isSeen",isSeen);
         result.put("isAccepted",isAccepted);
         result.put("isInBuffet",isInBuffet);
+        result.put("doing",doing);
         return result;
     }
 }
