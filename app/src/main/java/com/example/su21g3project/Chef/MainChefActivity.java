@@ -23,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import adapter.Chef.ChefAdapter;
 import model.OrderDetail;
@@ -66,6 +68,7 @@ public class MainChefActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     OrderDetail orderDetail=dataSnapshot.getValue(OrderDetail.class);
                     if (orderDetail.getIsAccepted() && !orderDetail.isDoing()){

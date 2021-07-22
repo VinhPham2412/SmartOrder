@@ -54,4 +54,6 @@
     <string name="done">Làm</string>
     <string name="chefNotice">Thông Báo</string>
     <string name="chefCommunication">Giao tiếp với Quản lí</string>
+    <string name="Giaotiep">Giao Tiếp</string>
+    <string name="history">Lịch sử</string>
 </resources>

@@ -55,4 +55,6 @@
     <string name="done">Do</string>
     <string name="chefNotice">Notice</string>
     <string name="chefCommunication">Contact to Manager</string>
+    <string name="Giaotiep">Communication</string>
+    <string name="history">HistoryOrder</string>
 </resources>

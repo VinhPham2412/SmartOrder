@@ -66,7 +66,7 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
         holder.btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference=FirebaseDatabase.getInstance().getReference("OrderDeatil").child(orderDetail.getId()).child("doing");
+                reference=FirebaseDatabase.getInstance().getReference("OrderDetail").child(orderDetail.getId()).child("doing");
                 reference.setValue(true);
             }
         });

@@ -62,7 +62,7 @@ public class MainWaiterActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainWaiterActivity.this);
 
                 builder.setTitle("Confirm");
-                builder.setMessage("Are you sure?");
+                builder.setMessage("Do you want logout?");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {

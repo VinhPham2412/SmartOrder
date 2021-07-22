@@ -156,11 +156,10 @@ public class BillActivity extends AppCompatActivity {
                                 Long finalSum = snapshot.getValue(Long.class);
                                 finalMoney=finalSum+buffetSum;
                                 txtTotal.setText("Tổng : "+finalMoney+"K");
-                                reference=FirebaseDatabase.getInstance().getReference("Bill").child(orderId);
+                                reference=FirebaseDatabase.getInstance().getReference("Bill").child(tableId);
                                 HashMap hashMap=new HashMap<String,Object>();
                                 hashMap.put("id",tableId);
                                 hashMap.put("totalMoney",finalMoney);
-                                hashMap.put("isPaid",false);
                                 hashMap.put("isCheckOut",false);
                                 reference.setValue(hashMap);
 
@@ -188,7 +187,7 @@ public class BillActivity extends AppCompatActivity {
             reference.child("status").setValue("done");
             reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId);
             reference.child("status").setValue(true);
-            reference=FirebaseDatabase.getInstance().getReference("Bill").child(orderId).child("isCheckOut");
+            reference=FirebaseDatabase.getInstance().getReference("Bill").child(tableId).child("isCheckOut");
             reference.setValue(true);
             Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
         });
