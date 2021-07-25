@@ -40,7 +40,7 @@
         android:hint="@string/sodienthoai"
         android:inputType="phone"
         android:padding="16dp"
-        app:layout_constraintStart_toStartOf="@+id/txtRegister"
+        app:layout_constraintStart_toStartOf="@+id/txtAppName"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ImageView
@@ -52,12 +52,12 @@
         android:contentDescription="@string/account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.716"
-        app:layout_constraintStart_toEndOf="@+id/txtRegister"
+        app:layout_constraintStart_toEndOf="@+id/txtAppName"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/buffet" />
 
     <TextView
-        android:id="@+id/txtRegister"
+        android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <TextView
-        android:id="@+id/txtReister"
+        android:id="@+id/txtRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
