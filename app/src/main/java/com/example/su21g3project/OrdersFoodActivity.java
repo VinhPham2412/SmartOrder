@@ -117,6 +117,10 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     role = snapshot.getValue(User.class).getRole();
                     btnOrder.setVisibility(View.VISIBLE);
+                    if (role.equals("waiter")){
+                        btnC.setVisibility(View.INVISIBLE);
+                    }else
+                        btnC.setVisibility(View.VISIBLE);
                 }
 
                 @Override

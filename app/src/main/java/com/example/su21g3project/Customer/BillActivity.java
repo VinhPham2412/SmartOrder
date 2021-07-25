@@ -52,7 +52,11 @@ public class BillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
         user= FirebaseAuth.getInstance().getCurrentUser();
+
         reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        /**
+         * get current info User
+         */
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,7 +89,9 @@ public class BillActivity extends AppCompatActivity {
         int numPeople=getIntent().getIntExtra("numPeople",0);
         txtTableName = findViewById(R.id.txtTableName);
 
-        //get table name
+        /**
+         * get tableName
+         */
         reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -115,6 +121,9 @@ public class BillActivity extends AppCompatActivity {
                         orderDetailList.add(orderDetail);
                     }
                 }
+                /**
+                 * check if same food then add quantity together
+                 */
                 for(int i=0;i<orderDetailList.size()-1;i++){
                     for(int j=i+1;j<orderDetailList.size();j++){
                         if(orderDetailList.get(i).getFoodId()
@@ -134,10 +143,11 @@ public class BillActivity extends AppCompatActivity {
             }
         });
 
+
+        reference=FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
         /**
          * Display buffet info in ProcessOrder
          */
-        reference=FirebaseDatabase.getInstance().getReference("Buffet").child(buffetId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -156,9 +166,10 @@ public class BillActivity extends AppCompatActivity {
                                 Long finalSum = snapshot.getValue(Long.class);
                                 finalMoney=finalSum+buffetSum;
                                 txtTotal.setText("Tổng : "+finalMoney+"K");
-                                reference=FirebaseDatabase.getInstance().getReference("Bill").child(tableId);
+                                reference=FirebaseDatabase.getInstance().getReference("TableBill").child(tableId);
                                 HashMap hashMap=new HashMap<String,Object>();
                                 hashMap.put("id",tableId);
+                                hashMap.put("processOrderId",orderId);
                                 hashMap.put("totalMoney",finalMoney);
                                 hashMap.put("isCheckOut",false);
                                 reference.setValue(hashMap);
@@ -177,6 +188,9 @@ public class BillActivity extends AppCompatActivity {
 
             }
         });
+        /**
+         * action when click confirmBill
+         */
         btnConfirmBill.setOnClickListener(v -> {
             List<BillAdapter.ViewHolder> viewHolderList=billAdapter.getAllHolder();
             for (BillAdapter.ViewHolder viewHolder:viewHolderList){
@@ -187,7 +201,9 @@ public class BillActivity extends AppCompatActivity {
             reference.child("status").setValue("done");
             reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId);
             reference.child("status").setValue(true);
-            reference=FirebaseDatabase.getInstance().getReference("Bill").child(tableId).child("isCheckOut");
+            reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId).child("isReadyToPay");
+            reference.setValue(true);
+            reference=FirebaseDatabase.getInstance().getReference("TableBill").child(tableId).child("isCheckOut");
             reference.setValue(true);
             Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
         });

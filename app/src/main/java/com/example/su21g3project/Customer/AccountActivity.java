@@ -38,9 +38,14 @@ public class AccountActivity extends AppCompatActivity {
         txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
         txtOrderHistory =findViewById(R.id.txtOrderhistory);
-
+        /**
+         * get current User in device
+         */
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){
+            /**
+             * get info User
+             */
             reference= FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -60,6 +65,9 @@ public class AccountActivity extends AppCompatActivity {
         }
         txtLogout=findViewById(R.id.txtLogout);
         txtChange = findViewById(R.id.txtChangeInfo);
+        /**
+         * action when click on Text Logout
+         */
         txtLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent=new Intent(AccountActivity.this, MainActivity.class);
@@ -68,6 +76,9 @@ public class AccountActivity extends AppCompatActivity {
         });
         mNavigationView=findViewById(R.id.navigation1);
         mNavigationView.setSelectedItemId(R.id.navigation_account);
+        /**
+         * set action when choose item in NavigationView
+         */
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.navigation_home:
@@ -83,12 +94,17 @@ public class AccountActivity extends AppCompatActivity {
             }
             return false;
         });
+        /**
+         * intent to UpdateProfile when click UpdateInfo
+         */
         txtChange.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, UpdateProfile.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-
+        /**
+         * intent to BookedHistory
+         */
         txtBookedHistory.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, BookedHistory.class);
             startActivity(intent);

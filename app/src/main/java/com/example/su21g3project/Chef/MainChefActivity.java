@@ -47,7 +47,11 @@ public class MainChefActivity extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
         recyclerView=findViewById(R.id.chefRecyclerView);
         txtChefName=findViewById(R.id.txtChefName);
+
         reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        /**
+         * get info of Chef user
+         */
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -64,7 +68,11 @@ public class MainChefActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list=new ArrayList<>();
+
         reference= FirebaseDatabase.getInstance().getReference("OrderDetail");
+        /**
+         * get all OrderDetail with accepted and have't done
+         */
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -87,12 +95,22 @@ public class MainChefActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * add options Menu in activity
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chef_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * set action for click on Item in menu
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();

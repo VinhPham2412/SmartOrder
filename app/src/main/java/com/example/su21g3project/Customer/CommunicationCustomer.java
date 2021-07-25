@@ -37,6 +37,11 @@ public class CommunicationCustomer extends AppCompatActivity {
             "Cần bổ xung thêm người làm"};
     String [] customerNotice={"Đồ ăn ra quá chậm","Đồ ăn ra không đúng với Order","Chất lượng đồ ăn có vấn đề",
             "Thái độ nhân viên không được chuẩn mực","Vệ sinh bàn còn rất bẩn"};
+
+    /**
+     * create View
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,7 @@ public class CommunicationCustomer extends AppCompatActivity {
         txtReason=findViewById(R.id.txtReason);
         listviewdata=findViewById(R.id.listview_data);
         reference=FirebaseDatabase.getInstance().getReference("User").child(userId);
+        // check role user then display reason allow role
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -68,7 +74,7 @@ public class CommunicationCustomer extends AppCompatActivity {
 
             }
         });
-
+        // action when click send reason
         btnSenReason.setOnClickListener(v -> {
             String communicationId = UUID.randomUUID().toString();
             if (role.equals("customer"))
@@ -88,12 +94,22 @@ public class CommunicationCustomer extends AppCompatActivity {
 
     }
 
+    /**
+     * create optionMenu in activity
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_communication,menu);
         return  true;
     }
 
+    /**
+     * action when click item in Menu
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();

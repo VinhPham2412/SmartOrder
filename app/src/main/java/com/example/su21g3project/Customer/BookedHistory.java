@@ -35,36 +35,10 @@ public class BookedHistory extends AppCompatActivity {
         list = new ArrayList<>();
         RecyclerView view = findViewById(R.id.container_customer_booked_history);
         view.setLayoutManager(new LinearLayoutManager(this));
-//        SharedPreferences pref = getSharedPreferences("main", Context.MODE_PRIVATE);
-//        int listSize = pref.getInt("processOrderList", 0);
-//        if (listSize > 0) {
-//            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
-//            reference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    list.clear();
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
-//                        if ((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(user.getUid())) ||
-//                                (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(user.getUid()))) {
-//                            list.add(processOrder);
-//                        }
-//
-//                    }
-//                    BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
-//                    view.setAdapter(adapter);
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//        } else {
-//
         reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+        /**
+         * get all ProcessOrder of currentUser
+         */
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,6 +50,7 @@ public class BookedHistory extends AppCompatActivity {
                     }
 
                 }
+                //show list processOrder by apdater
                 BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistory.this);
                 view.setAdapter(adapter);
 

@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 public class CommunicationFragment extends Fragment {
     private EditText txtReason;
@@ -35,6 +37,7 @@ public class CommunicationFragment extends Fragment {
     private Button btnSenReason,btnCamera;
     private DatabaseReference reference;
     private String userId;
+    List<String> stringList;
     String [] waiterNotice={"Khách yêu cầu gặp quản lí","Khách có thái độ không tốt,mất kiểm soát","Tôi có việc đột xuất cần nghỉ",
             "Xin về sớm"};
 
@@ -51,6 +54,7 @@ private int dvHeight;
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_communication, container, false);
         setHasOptionsMenu(true);
+        stringList=new ArrayList<>();
 //        startActivity(new Intent(getContext(), CommunicationCustomer.class));
         userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         btnSenReason=view.findViewById(R.id.btnSendReason);
