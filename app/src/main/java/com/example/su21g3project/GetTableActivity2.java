@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.scwang.wave.MultiWaveHeader;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -40,11 +42,21 @@ public class GetTableActivity2 extends AppCompatActivity {
     private FirebaseUser user;
     private ProgressBar bar;
     private String userId;
+    private MultiWaveHeader waveHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_table2);
+
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.MAGENTA);
+        waveHeader.setCloseColor(Color.YELLOW);
 
         txtName = findViewById(R.id.txtCName);
         txtPhone = findViewById(R.id.txtCPhone);

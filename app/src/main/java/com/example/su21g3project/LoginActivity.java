@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.scwang.wave.MultiWaveHeader;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,10 +34,20 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     String phoneNumber;
+    private MultiWaveHeader waveHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.BLUE);
+        waveHeader.setCloseColor(Color.YELLOW);
         phone = findViewById(R.id.txtLoginAccount);
         final ProgressBar progressBar=findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();

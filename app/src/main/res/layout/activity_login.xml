@@ -10,6 +10,14 @@
     android:layout_height="wrap_content"
     android:textAlignment="center"
     tools:layout_editor_absoluteY="81dp">
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader"
+        android:layout_width="match_parent"
+        android:layout_height="239dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView9"
@@ -19,7 +27,7 @@
         android:gravity="center"
         android:text="@string/login"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/red"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtLoginAccount"
@@ -63,7 +71,7 @@
         android:layout_marginStart="108dp"
         android:layout_marginTop="64dp"
         android:text="@string/app_name"
-        android:textColor="#E91E63"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

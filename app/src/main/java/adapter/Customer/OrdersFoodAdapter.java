@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,7 +69,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         holder.setFoodId(food.getId());
         holder.getTvFoodName().setText(food.getName());
         if(money){
-            holder.getTvPrice().setText(food.getPrice()+"");
+            holder.getTvPrice().setText((int)food.getPrice()+"");
         }
         holder.getAdd().setOnClickListener(v -> {
             int number = 0;
@@ -108,7 +109,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         private ImageView imageView;
         private TextView tvFoodName;
         private EditText numberFood;
-        private Button add, remove;
+        private ImageButton add, remove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -144,11 +145,11 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
             return numberFood;
         }
 
-        public Button getAdd() {
+        public ImageButton getAdd() {
             return add;
         }
 
-        public Button getRemove() {
+        public ImageButton getRemove() {
             return remove;
         }
     }

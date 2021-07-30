@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.scwang.wave.MultiWaveHeader;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class GetTableActivity extends AppCompatActivity {
     private Button today,today1,today2,today3;
     private Calendar date;
     private int hour,minute,currentMinute,currentHour;
+    private MultiWaveHeader waveHeader;
 
     private String getTime(Calendar date){
         int day = date.get(Calendar.DAY_OF_MONTH);
@@ -39,6 +42,16 @@ public class GetTableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_table);
+
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.RED);
+        waveHeader.setCloseColor(Color.CYAN);
+
         date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
         DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         currentMinute = date.get(Calendar.MINUTE);
@@ -68,46 +81,46 @@ public class GetTableActivity extends AppCompatActivity {
 
 
         today.setSelected(true);
-        today.setBackgroundColor(Color.GRAY);
-        today1.setBackgroundColor(Color.LTGRAY);
-        today2.setBackgroundColor(Color.LTGRAY);
-        today3.setBackgroundColor(Color.LTGRAY);
+        today.setBackgroundColor(Color.YELLOW);
+        today1.setBackgroundColor(Color.WHITE);
+        today2.setBackgroundColor(Color.WHITE);
+        today3.setBackgroundColor(Color.WHITE);
         slTime.setMin(1);
         selectedDate = format.format(date.getTime());
 
         today.setOnClickListener(v -> {
-            today.setBackgroundColor(Color.GRAY);
-            today1.setBackgroundColor(Color.LTGRAY);
-            today2.setBackgroundColor(Color.LTGRAY);
-            today3.setBackgroundColor(Color.LTGRAY);
+            today.setBackgroundColor(Color.YELLOW);
+            today1.setBackgroundColor(Color.WHITE);
+            today2.setBackgroundColor(Color.WHITE);
+            today3.setBackgroundColor(Color.WHITE);
             selectedDate = format.format(date.getTime());
             slTime.setMin(currentHour*60 + currentMinute);
         });
         today1.setOnClickListener(v -> {
-            today1.setBackgroundColor(Color.GRAY);
-            today.setBackgroundColor(Color.LTGRAY);
-            today2.setBackgroundColor(Color.LTGRAY);
-            today3.setBackgroundColor(Color.LTGRAY);
+            today1.setBackgroundColor(Color.YELLOW);
+            today.setBackgroundColor(Color.WHITE);
+            today2.setBackgroundColor(Color.WHITE);
+            today3.setBackgroundColor(Color.WHITE);
             date.add(Calendar.DAY_OF_MONTH,1);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-1);
             slTime.setMin(1);
         });
         today2.setOnClickListener(v -> {
-            today2.setBackgroundColor(Color.GRAY);
-            today3.setBackgroundColor(Color.LTGRAY);
-            today.setBackgroundColor(Color.LTGRAY);
-            today1.setBackgroundColor(Color.LTGRAY);
+            today2.setBackgroundColor(Color.YELLOW);
+            today3.setBackgroundColor(Color.WHITE);
+            today.setBackgroundColor(Color.WHITE);
+            today1.setBackgroundColor(Color.WHITE);
             date.add(Calendar.DAY_OF_MONTH,2);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-2);
             slTime.setMin(1);
         });
         today3.setOnClickListener(v -> {
-            today3.setBackgroundColor(Color.GRAY);
-            today.setBackgroundColor(Color.LTGRAY);
-            today1.setBackgroundColor(Color.LTGRAY);
-            today2.setBackgroundColor(Color.LTGRAY);
+            today3.setBackgroundColor(Color.YELLOW);
+            today.setBackgroundColor(Color.WHITE);
+            today1.setBackgroundColor(Color.WHITE);
+            today2.setBackgroundColor(Color.WHITE);
             date.add(Calendar.DAY_OF_MONTH,3);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-3);

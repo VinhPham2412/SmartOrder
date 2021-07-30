@@ -25,6 +25,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:background="@drawable/border"
+            android:textColor="@color/black"
             android:id="@+id/billBuffetName"
             android:layout_width="112dp"
             android:layout_height="19dp"

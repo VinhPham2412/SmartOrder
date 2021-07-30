@@ -3,12 +3,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
    <TextView
+       android:textColor="@color/black"
+       android:background="@drawable/border"
        android:id="@+id/txtFoodName"
        android:layout_width="149dp"
        android:layout_height="26dp"
@@ -20,6 +21,7 @@
 
 
    <EditText
+       android:background="@drawable/border"
        android:ems="10"
        android:id="@+id/etFoodQantity"
        android:layout_width="56dp"
@@ -33,6 +35,7 @@
        app:layout_constraintTop_toTopOf="parent" />
 
    <TextView
+       android:background="@drawable/border"
        android:id="@+id/txtFoodPrice"
        android:layout_width="51dp"
        android:layout_height="26dp"
@@ -44,6 +47,7 @@
        app:layout_constraintTop_toTopOf="parent" />
 
    <TextView
+       android:background="@drawable/border"
        android:gravity="center"
        android:textColor="@color/red"
        android:id="@+id/txtFoodTotal"

@@ -3,6 +3,7 @@ package adapter.Customer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -79,6 +80,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     textView.setText(". "+fod.getName());
                     textView.setTypeface(Typeface.DEFAULT_BOLD);
                     textView.setTextSize(15);
+                    textView.setTextColor(Color.BLACK);
                     holder.gridLayout.addView(textView);
                 }
             }

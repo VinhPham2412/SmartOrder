@@ -18,11 +18,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:textColor="@color/red"
         android:id="@+id/btnBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/hoadon" />
 </LinearLayout>
 </ScrollView>

@@ -46,7 +46,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
         allViews=new ArrayList<>();
         eventListener=null;
         this.role=role;
-
     }
 
     @NonNull

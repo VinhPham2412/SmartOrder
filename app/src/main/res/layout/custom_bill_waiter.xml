@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:background="@drawable/border"
         android:id="@+id/txtTableName"
         android:layout_width="110dp"
         android:layout_height="33dp"
@@ -16,16 +17,19 @@
         android:textStyle="bold" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/txtCustomerName"
-        android:layout_width="105dp"
-        android:layout_height="29dp"
+        android:layout_width="197dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/txtTableName"
         android:layout_marginStart="15dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="-2dp"
+        android:background="@drawable/border"
         android:textSize="16sp" />
 
     <Button
+        android:background="@drawable/border"
         android:id="@+id/btnWaiterBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

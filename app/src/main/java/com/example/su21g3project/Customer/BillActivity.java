@@ -1,5 +1,6 @@
 package com.example.su21g3project.Customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
+import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -171,8 +173,16 @@ public class BillActivity extends AppCompatActivity {
                                 hashMap.put("id",tableId);
                                 hashMap.put("processOrderId",orderId);
                                 hashMap.put("totalMoney",finalMoney);
-                                hashMap.put("isCheckOut",false);
                                 reference.setValue(hashMap);
+                                for (OrderDetail orderDetail:orderDetailList){
+                                    reference=FirebaseDatabase.getInstance().getReference("TableBill").child(tableId).child("ListOrderDetail").child(orderDetail.getId());
+                                    HashMap hashMap1=new HashMap<String,Object>();
+                                    hashMap1.put("id",orderDetail.getId());
+                                    hashMap1.put("foodId",orderDetail.getFoodId());
+                                    hashMap1.put("quantity",orderDetail.getQuantity());
+                                    reference.setValue(hashMap1);
+                                }
+
 
                             }
                         }
@@ -203,9 +213,8 @@ public class BillActivity extends AppCompatActivity {
             reference.child("status").setValue(true);
             reference = FirebaseDatabase.getInstance().getReference("Table").child(tableId).child("isReadyToPay");
             reference.setValue(true);
-            reference=FirebaseDatabase.getInstance().getReference("TableBill").child(tableId).child("isCheckOut");
-            reference.setValue(true);
             Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainWaiterActivity.class));
         });
     }
 }

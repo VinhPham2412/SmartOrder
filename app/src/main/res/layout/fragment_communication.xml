@@ -5,6 +5,7 @@
     tools:context="Fragments.CommunicationFragment">
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/communication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/communication"
+        android:background="@drawable/border"
         android:hint="@string/nhapnoidung"
         android:inputType="textMultiLine"
         android:textSize="14dp" />
@@ -29,27 +31,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/listview_data"
         android:choiceMode="multipleChoice"/>
-    <Button
+    <ImageButton
+        android:background="@drawable/border"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_marginTop="20dp"
         android:id="@+id/btnSendReason"
         android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_below="@+id/listview_data"
+        android:src="@drawable/ic_baseline_send_24"
         android:textSize="20dp"
-
-        android:background="@drawable/ic_baseline_send_24"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"/>
-
-    <Button
-        android:id="@+id/btnCamera"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/listview_data"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_baseline_camera_enhance_24"
-        android:textSize="20dp" />
 
 </RelativeLayout>

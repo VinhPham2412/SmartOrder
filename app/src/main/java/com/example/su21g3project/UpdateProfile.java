@@ -1,6 +1,7 @@
 package com.example.su21g3project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.scwang.wave.MultiWaveHeader;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,11 +36,22 @@ public class UpdateProfile extends AppCompatActivity {
     private ProgressBar progressBar;
     private User duser;
     private String id;
+    private MultiWaveHeader waveHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
+
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.MAGENTA);
+        waveHeader.setCloseColor(Color.YELLOW);
+
         txtName = findViewById(R.id.txtProfileName);
         txtPhone = findViewById(R.id.txtProfilePhone);
         txtAddress = findViewById(R.id.txtProfileAdress);

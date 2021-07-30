@@ -10,8 +10,9 @@
     tools:context=".Chef.MainChefActivity">
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/txtChefName"
-        android:layout_width="83dp"
+        android:layout_width="wrap_content"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -29,6 +30,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,6 +42,8 @@
         app:layout_constraintTop_toBottomOf="@+id/txtChefName" />
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/textView20"
         android:layout_width="72dp"
         android:layout_height="18dp"

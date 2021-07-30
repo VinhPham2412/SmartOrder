@@ -7,7 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp">
-
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader"
+        android:layout_width="match_parent"
+        android:layout_height="239dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragment_nameAccount"
@@ -36,6 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_nameAccount" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/txtChangeInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_phoneAccount" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/txtTableHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,6 +75,7 @@
         app:layout_constraintStart_toStartOf="@+id/txtChangeInfo" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/txtOrderhistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,6 +90,7 @@
         app:layout_constraintStart_toStartOf="@+id/txtTableHistory" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/txtLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +109,7 @@
         android:id="@+id/navigation1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorPrimaryDark"
+        app:itemBackground="@color/colorAccent"
         app:itemIconTint="@color/color_bottom_nav"
         app:itemTextColor="@color/color_bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"

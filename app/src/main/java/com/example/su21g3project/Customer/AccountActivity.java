@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.scwang.wave.MultiWaveHeader;
 
 import model.User;
 
@@ -29,11 +31,20 @@ public class AccountActivity extends AppCompatActivity {
     private BottomNavigationView mNavigationView;
     FirebaseUser user;
     private DatabaseReference reference;
+    private MultiWaveHeader waveHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.YELLOW);
+        waveHeader.setCloseColor(Color.MAGENTA);
         txtName=findViewById(R.id.fragment_nameAccount);
         txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
