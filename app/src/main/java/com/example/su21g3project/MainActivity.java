@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.scwang.wave.MultiWaveHeader;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,17 +55,37 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private List<Photo> photoList;
     private ActionBar toolbar;
-    private TextView txtUsername;
+    private TextView txtUsername,txtNew;
+    private ImageView newImg;
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private List<ProcessOrder> processOrderList;
-    private ImageView newImg;
-    private TextView txtNew;
+    private MultiWaveHeader waveHeader,waveFooter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        waveFooter=findViewById(R.id.waveFooter);
+        waveHeader=findViewById(R.id.waveHeader);
+
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.RED);
+        waveHeader.setCloseColor(Color.CYAN);
+
+        waveFooter.setVelocity(1);
+        waveFooter.setProgress(1);
+        waveFooter.isRunning();
+        waveFooter.setGradientAngle(45);
+        waveFooter.setWaveHeight(40);
+        waveFooter.setStartColor(Color.MAGENTA);
+        waveFooter.setCloseColor(Color.YELLOW);
+
         txtNotice=findViewById(R.id.txtNotice);
         btnMenu=findViewById(R.id.btnMenu);
         txtUsername = findViewById(R.id.txtUseName);
