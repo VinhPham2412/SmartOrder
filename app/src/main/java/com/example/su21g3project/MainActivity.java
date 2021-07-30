@@ -14,10 +14,12 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.su21g3project.Customer.AccountActivity;
 import com.example.su21g3project.Customer.BookedHistory;
+import com.example.su21g3project.Customer.NewsActivity;
 import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import adapter.PhotoAdapter;
+import model.News;
 import model.Photo;
 import model.ProcessOrder;
 import model.User;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private List<ProcessOrder> processOrderList;
+    private ImageView newImg;
+    private TextView txtNew;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,34 @@ public class MainActivity extends AppCompatActivity {
         btnGetTable = findViewById(R.id.btnGetTable);
         mNavigationView=findViewById(R.id.navigation);
         notify = findViewById(R.id.imageButton);
+        newImg =findViewById(R.id.imageView);
+        txtNew = findViewById(R.id.txtContenNews);
+        //load new
+        reference = FirebaseDatabase.getInstance().getReference("News");
+        reference.orderByChild("time").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot1:snapshot.getChildren()){
+                        News news = dataSnapshot1.getValue(News.class);
+                        new DownloadImageTask(newImg).execute(news.getImage());
+                        txtNew.setText(news.getTitle());
+                        newImg.setOnClickListener(v -> {
+                            Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                            intent.putExtra("content",news.getContent());
+                            intent.putExtra("title",news.getTitle());
+                            intent.putExtra("image",news.getImage());
+                            startActivity(intent);
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
         //init nav
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {

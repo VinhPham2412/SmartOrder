@@ -191,15 +191,13 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="111dp"
-                    android:background="@drawable/custompager"
-                    app:srcCompat="@drawable/buffet4" />
+                    android:background="@drawable/custompager"/>
 
                 <TextView
                     android:id="@+id/txtContenNews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/new1" />
+                    android:gravity="center" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

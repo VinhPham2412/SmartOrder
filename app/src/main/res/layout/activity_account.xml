@@ -61,18 +61,18 @@
         android:text="@string/lichsudatban"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtOrderhistory"
+        app:layout_constraintBottom_toTopOf="@+id/txtLanguage"
         app:layout_constraintEnd_toEndOf="@+id/txtChangeInfo"
         app:layout_constraintStart_toStartOf="@+id/txtChangeInfo" />
 
     <TextView
-        android:id="@+id/txtOrderhistory"
+        android:id="@+id/txtLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="51dp"
-        android:drawableStart="@drawable/ic_baseline_description_24"
+        android:drawableStart="@android:drawable/ic_menu_mapmode"
         android:drawablePadding="25dp"
-        android:text="@string/lichsugoimon"
+        android:text="@string/language"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtLogout"
@@ -89,10 +89,10 @@
         android:text="@string/dangxuat"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtOrderhistory"
+        app:layout_constraintEnd_toEndOf="@+id/txtLanguage"
         app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="@+id/txtOrderhistory"
-        app:layout_constraintTop_toBottomOf="@+id/txtOrderhistory" />
+        app:layout_constraintStart_toStartOf="@+id/txtLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation1"

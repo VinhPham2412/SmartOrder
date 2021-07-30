@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/txtCustomerName"
         android:layout_width="105dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txtTableName"
         android:layout_marginStart="15dp"
         android:layout_marginTop="12dp"

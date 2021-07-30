@@ -56,4 +56,6 @@
     <string name="chefCommunication">Giao tiếp với Quản lí</string>
     <string name="Giaotiep">Giao Tiếp</string>
     <string name="history">Lịch sử</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="selectedLanguage">Tiếng Việt</string>
 </resources>

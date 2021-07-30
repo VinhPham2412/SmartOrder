@@ -1,5 +1,6 @@
 package com.example.su21g3project.Customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
+import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -206,6 +208,8 @@ public class BillActivity extends AppCompatActivity {
             reference=FirebaseDatabase.getInstance().getReference("TableBill").child(tableId).child("isCheckOut");
             reference.setValue(true);
             Toast.makeText(getApplicationContext(),"Thanh toán thành công",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainWaiterActivity.class));
+            finish();
         });
     }
 }

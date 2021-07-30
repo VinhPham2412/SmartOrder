@@ -50,6 +50,7 @@ public class OrderHistory extends AppCompatActivity {
                     if (post.exists()) {
                         OrderDetail orderDetail = post.getValue(OrderDetail.class);
                         //if same user
+                        assert orderDetail != null;
                         if (orderDetail.getUserId().equals(user.getUid())) {
                             String orderId = orderDetail.getOrderId();
                             Date time = orderDetail.getTime();

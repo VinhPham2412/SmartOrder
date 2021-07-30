@@ -3,9 +3,7 @@ package com.example.su21g3project.Customer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -37,7 +35,7 @@ public class AccountActivity extends AppCompatActivity {
         txtName=findViewById(R.id.fragment_nameAccount);
         txtPhone=findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
-        txtOrderHistory =findViewById(R.id.txtOrderhistory);
+        txtOrderHistory =findViewById(R.id.txtLanguage);
         /**
          * get current User in device
          */
@@ -111,7 +109,7 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         txtOrderHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(AccountActivity.this, OrderHistory.class);
+            Intent intent = new Intent(AccountActivity.this, ChangeLanguageActivity.class);
             startActivity(intent);
         });
     }
