@@ -15,10 +15,12 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.su21g3project.Customer.AccountActivity;
 import com.example.su21g3project.Customer.BookedHistory;
+import com.example.su21g3project.Customer.NewsActivity;
 import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import adapter.PhotoAdapter;
+import model.News;
 import model.Photo;
 import model.ProcessOrder;
 import model.User;
@@ -52,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private List<Photo> photoList;
     private ActionBar toolbar;
-    private TextView txtUsername;
+    private TextView txtUsername,txtNew;
+    private ImageView newImg;
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -66,21 +70,21 @@ public class MainActivity extends AppCompatActivity {
         waveFooter=findViewById(R.id.waveFooter);
         waveHeader=findViewById(R.id.waveHeader);
 
-//        waveHeader.setVelocity(1);
-//        waveHeader.setProgress(1);
-//        waveHeader.isRunning();
-//        waveHeader.setGradientAngle(45);
-//        waveHeader.setWaveHeight(40);
-//        waveHeader.setStartColor(Color.BLACK);
-//        waveHeader.setCloseColor(Color.WHITE);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.RED);
+        waveHeader.setCloseColor(Color.CYAN);
 
         waveFooter.setVelocity(1);
         waveFooter.setProgress(1);
         waveFooter.isRunning();
         waveFooter.setGradientAngle(45);
         waveFooter.setWaveHeight(40);
-        waveFooter.setStartColor(Color.WHITE);
-        waveFooter.setCloseColor(Color.BLACK);
+        waveFooter.setStartColor(Color.MAGENTA);
+        waveFooter.setCloseColor(Color.YELLOW);
 
         txtNotice=findViewById(R.id.txtNotice);
         btnMenu=findViewById(R.id.btnMenu);
@@ -91,6 +95,35 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator=findViewById(R.id.circleIndicator);
         btnGetTable = findViewById(R.id.btnGetTable);
         mNavigationView=findViewById(R.id.navigation);
+        notify = findViewById(R.id.imageButton);
+        newImg =findViewById(R.id.imageView);
+        txtNew = findViewById(R.id.txtContenNews);
+        //load new
+        reference = FirebaseDatabase.getInstance().getReference("News");
+        reference.orderByChild("time").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot1:snapshot.getChildren()){
+                        News news = dataSnapshot1.getValue(News.class);
+                        new DownloadImageTask(newImg).execute(news.getImage());
+                        txtNew.setText(news.getTitle());
+                        newImg.setOnClickListener(v -> {
+                            Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                            intent.putExtra("content",news.getContent());
+                            intent.putExtra("title",news.getTitle());
+                            intent.putExtra("image",news.getImage());
+                            startActivity(intent);
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
         //init nav
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -115,23 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
-            mainLogin.setVisibility(View.INVISIBLE);
-            imageButton.setVisibility(View.VISIBLE);
-           reference=FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
-           reference.addValueEventListener(new ValueEventListener() {
-               @Override
-               public void onDataChange(@NonNull DataSnapshot snapshot) {
-                   if (snapshot.exists()){
-                       User user=snapshot.getValue(User.class);
-                       txtUsername.setText(txtUsername.getText()+" " +user.getName());
-                   }
-               }
-
-               @Override
-               public void onCancelled(@NonNull DatabaseError error) {
-
-               }
-           });
            processOrderList =new ArrayList<>();
             reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
             reference.addValueEventListener(new ValueEventListener() {
@@ -161,16 +177,41 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+            imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
+            reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        User user = snapshot.getValue(User.class);
+                        if(user.getRole().equals("waiter")){
+                            Intent intent = new Intent(MainActivity.this, MainWaiterActivity.class);
+                            intent.putExtra("role",user.getRole());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
+                        txtUsername.setText(R.string.welcome);
+                        txtUsername.setText(txtUsername.getText()+" "+user.getName());
+                        mainLogin.setVisibility(View.INVISIBLE);
+                        notify.setVisibility(View.VISIBLE);
+                        btnGetTable.setOnClickListener(v -> {
+                            Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
+                            intent.putExtra("role",user.getRole());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        });
+                    }else{
+                        FirebaseAuth.getInstance().signOut();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
+                }
+            });
         }
-        imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
-        btnGetTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,GetTableActivity.class));
-                finish();
-            }
-        });
+        txtUsername.setText("Xin chào ");
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
@@ -205,9 +246,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private List<Photo> getPhoto(){
         List<Photo> list=new ArrayList<>();
-        list.add(new Photo(R.drawable.phan1));
-        list.add(new Photo(R.drawable.phan3));
-        list.add(new Photo(R.drawable.phan2));
+        list.add(new Photo(R.drawable.buffet));
+        list.add(new Photo(R.drawable.bf3));
+        list.add(new Photo(R.drawable.bf2));
         return list;
     }
 
