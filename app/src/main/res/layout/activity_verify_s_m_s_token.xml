@@ -19,9 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical">
+            <com.scwang.wave.MultiWaveHeader
+                android:id="@+id/waveHeader"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+            </com.scwang.wave.MultiWaveHeader>
 
             <ImageView
-
                 android:id="@+id/imageView7"
                 android:layout_width="129dp"
                 android:layout_height="149dp"
@@ -48,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/otpverify"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold">
 
@@ -62,7 +69,7 @@
             android:layout_marginEnd="50dp"
             android:gravity="center"
             android:text="@string/enterotp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textSize="14dp"
             android:textStyle="bold"></TextView>
 
@@ -74,7 +81,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="50dp"
             android:gravity="center"
-            android:textColor="@color/red"
+            android:textColor="@color/or"
             android:textSize="14dp"
             android:textStyle="bold"></TextView>
 
@@ -182,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/guilaiotp"
-                android:textColor="@color/red"
+                android:textColor="@color/or"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
@@ -194,8 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/or"
             android:text="@string/confirm"
             android:textSize="16dp" />
 

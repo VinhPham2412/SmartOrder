@@ -35,7 +35,7 @@ public class PhotoAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView=new ImageView(mContext);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         Photo photo=mList.get(position);
         imageView.setImageResource(photo.getResourceId());
         container.addView(imageView,0);

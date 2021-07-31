@@ -1,5 +1,6 @@
 package com.example.su21g3project;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -49,8 +50,8 @@ public class GetTableActivity extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.RED);
-        waveHeader.setCloseColor(Color.CYAN);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
 
         date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
         DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
@@ -81,7 +82,7 @@ public class GetTableActivity extends AppCompatActivity {
 
 
         today.setSelected(true);
-        today.setBackgroundColor(Color.YELLOW);
+        today.setBackgroundColor(Color.LTGRAY);
         today1.setBackgroundColor(Color.WHITE);
         today2.setBackgroundColor(Color.WHITE);
         today3.setBackgroundColor(Color.WHITE);
@@ -89,7 +90,7 @@ public class GetTableActivity extends AppCompatActivity {
         selectedDate = format.format(date.getTime());
 
         today.setOnClickListener(v -> {
-            today.setBackgroundColor(Color.YELLOW);
+            today.setBackgroundColor(Color.LTGRAY);
             today1.setBackgroundColor(Color.WHITE);
             today2.setBackgroundColor(Color.WHITE);
             today3.setBackgroundColor(Color.WHITE);
@@ -97,7 +98,7 @@ public class GetTableActivity extends AppCompatActivity {
             slTime.setMin(currentHour*60 + currentMinute);
         });
         today1.setOnClickListener(v -> {
-            today1.setBackgroundColor(Color.YELLOW);
+            today1.setBackgroundColor(Color.LTGRAY);
             today.setBackgroundColor(Color.WHITE);
             today2.setBackgroundColor(Color.WHITE);
             today3.setBackgroundColor(Color.WHITE);
@@ -107,7 +108,7 @@ public class GetTableActivity extends AppCompatActivity {
             slTime.setMin(1);
         });
         today2.setOnClickListener(v -> {
-            today2.setBackgroundColor(Color.YELLOW);
+            today2.setBackgroundColor(Color.LTGRAY);
             today3.setBackgroundColor(Color.WHITE);
             today.setBackgroundColor(Color.WHITE);
             today1.setBackgroundColor(Color.WHITE);
@@ -117,7 +118,7 @@ public class GetTableActivity extends AppCompatActivity {
             slTime.setMin(1);
         });
         today3.setOnClickListener(v -> {
-            today3.setBackgroundColor(Color.YELLOW);
+            today3.setBackgroundColor(Color.LTGRAY);
             today.setBackgroundColor(Color.WHITE);
             today1.setBackgroundColor(Color.WHITE);
             today2.setBackgroundColor(Color.WHITE);

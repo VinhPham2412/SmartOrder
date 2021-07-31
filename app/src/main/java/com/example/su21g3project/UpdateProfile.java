@@ -49,8 +49,8 @@ public class UpdateProfile extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.MAGENTA);
-        waveHeader.setCloseColor(Color.YELLOW);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
 
         txtName = findViewById(R.id.txtProfileName);
         txtPhone = findViewById(R.id.txtProfilePhone);

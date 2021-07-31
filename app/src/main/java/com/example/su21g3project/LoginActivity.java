@@ -46,8 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.BLUE);
-        waveHeader.setCloseColor(Color.YELLOW);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
         phone = findViewById(R.id.txtLoginAccount);
         final ProgressBar progressBar=findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();

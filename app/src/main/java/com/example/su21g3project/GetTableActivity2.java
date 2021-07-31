@@ -55,8 +55,8 @@ public class GetTableActivity2 extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.MAGENTA);
-        waveHeader.setCloseColor(Color.YELLOW);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
 
         txtName = findViewById(R.id.txtCName);
         txtPhone = findViewById(R.id.txtCPhone);
@@ -114,9 +114,11 @@ public class GetTableActivity2 extends AppCompatActivity {
                             "Gửi yêu cầu đặt bàn thành công!",Toast.LENGTH_SHORT).show();
                     btnNext.setVisibility(View.VISIBLE);
                     bar.setVisibility(View.GONE);
+                    startActivity(new Intent(GetTableActivity2.this,MainActivity.class));
                     finish();
                 }
             });
+
         });
     }
 }

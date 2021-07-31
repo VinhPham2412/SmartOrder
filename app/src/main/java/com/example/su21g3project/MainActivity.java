@@ -66,21 +66,21 @@ public class MainActivity extends AppCompatActivity {
         waveFooter=findViewById(R.id.waveFooter);
         waveHeader=findViewById(R.id.waveHeader);
 
-        waveHeader.setVelocity(1);
-        waveHeader.setProgress(1);
-        waveHeader.isRunning();
-        waveHeader.setGradientAngle(45);
-        waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.RED);
-        waveHeader.setCloseColor(Color.CYAN);
+//        waveHeader.setVelocity(1);
+//        waveHeader.setProgress(1);
+//        waveHeader.isRunning();
+//        waveHeader.setGradientAngle(45);
+//        waveHeader.setWaveHeight(40);
+//        waveHeader.setStartColor(Color.BLACK);
+//        waveHeader.setCloseColor(Color.WHITE);
 
         waveFooter.setVelocity(1);
         waveFooter.setProgress(1);
         waveFooter.isRunning();
         waveFooter.setGradientAngle(45);
         waveFooter.setWaveHeight(40);
-        waveFooter.setStartColor(Color.MAGENTA);
-        waveFooter.setCloseColor(Color.YELLOW);
+        waveFooter.setStartColor(Color.WHITE);
+        waveFooter.setCloseColor(Color.BLACK);
 
         txtNotice=findViewById(R.id.txtNotice);
         btnMenu=findViewById(R.id.btnMenu);
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator=findViewById(R.id.circleIndicator);
         btnGetTable = findViewById(R.id.btnGetTable);
         mNavigationView=findViewById(R.id.navigation);
-        notify = findViewById(R.id.imageButton);
         //init nav
         mNavigationView.setSelectedItemId(R.id.navigation_home);
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -116,6 +115,23 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
+            mainLogin.setVisibility(View.INVISIBLE);
+            imageButton.setVisibility(View.VISIBLE);
+           reference=FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
+           reference.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   if (snapshot.exists()){
+                       User user=snapshot.getValue(User.class);
+                       txtUsername.setText(txtUsername.getText()+" " +user.getName());
+                   }
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
+
+               }
+           });
            processOrderList =new ArrayList<>();
             reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
             reference.addValueEventListener(new ValueEventListener() {
@@ -145,41 +161,16 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-            imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
-            reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        User user = snapshot.getValue(User.class);
-                        if(user.getRole().equals("waiter")){
-                            Intent intent = new Intent(MainActivity.this, MainWaiterActivity.class);
-                            intent.putExtra("role",user.getRole());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-                        txtUsername.setText(R.string.welcome);
-                        txtUsername.setText(txtUsername.getText()+" "+user.getName());
-                        mainLogin.setVisibility(View.INVISIBLE);
-                        notify.setVisibility(View.VISIBLE);
-                        btnGetTable.setOnClickListener(v -> {
-                            Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
-                            intent.putExtra("role",user.getRole());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        });
-                    }else{
-                        FirebaseAuth.getInstance().signOut();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
         }
-        txtUsername.setText("Xin chào ");
+        imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
+        btnGetTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,GetTableActivity.class));
+                finish();
+            }
+        });
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
@@ -214,9 +205,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private List<Photo> getPhoto(){
         List<Photo> list=new ArrayList<>();
-        list.add(new Photo(R.drawable.buffet));
-        list.add(new Photo(R.drawable.bf3));
-        list.add(new Photo(R.drawable.bf2));
+        list.add(new Photo(R.drawable.phan1));
+        list.add(new Photo(R.drawable.phan3));
+        list.add(new Photo(R.drawable.phan2));
         return list;
     }
 

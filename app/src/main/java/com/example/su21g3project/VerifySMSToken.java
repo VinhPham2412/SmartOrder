@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.concurrent.TimeUnit;
 
 import com.example.su21g3project.Waiter.MainWaiterActivity;
+import com.scwang.wave.MultiWaveHeader;
+
 import model.User;
 
 import static android.content.ContentValues.TAG;
@@ -139,11 +142,19 @@ public class VerifySMSToken extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithPhoneAuthCredential(credential,type);
     }
-
+    private MultiWaveHeader waveHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_s_m_s_token);
+        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader.setVelocity(1);
+        waveHeader.setProgress(1);
+        waveHeader.isRunning();
+        waveHeader.setGradientAngle(45);
+        waveHeader.setWaveHeight(40);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
         txtPhone = findViewById(R.id.textMobile);
         txtResend = findViewById(R.id.textResendOTP);
         btnVerify = findViewById(R.id.btnVerify);

@@ -24,13 +24,13 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="@string/thongtinkhachhang"
-        android:textColor="@color/red"
+        android:textColor="@color/or"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:gravity="center"
         android:id="@+id/textView11"
         android:layout_width="122dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:gravity="center"
         android:background="@drawable/border"
         android:id="@+id/textView12"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtCName" />
 
     <TextView
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:gravity="center"
         android:background="@drawable/border"
         android:id="@+id/textView13"
@@ -106,14 +106,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txtCPhone" />
 
     <Button
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:id="@+id/btnNext1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="154dp"
         android:layout_marginTop="38dp"
         android:text="@string/confirm"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/or"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtNote" />
 
@@ -122,7 +122,9 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="180dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNote" />
 </androidx.constraintlayout.widget.ConstraintLayout>

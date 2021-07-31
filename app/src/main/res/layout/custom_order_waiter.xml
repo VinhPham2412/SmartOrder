@@ -32,7 +32,6 @@
 
     <Button
         android:backgroundTint="@color/red"
-        android:background="@drawable/border"
         android:id="@+id/btnReject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
 
     <Button
         android:backgroundTint="@color/bgBottomNavigation"
-        android:background="@drawable/border"
         android:id="@+id/btnAccept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

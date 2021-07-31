@@ -29,7 +29,7 @@
         android:textSize="16sp" />
 
     <Button
-        android:background="@drawable/border"
+        android:backgroundTint="@color/or"
         android:id="@+id/btnWaiterBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

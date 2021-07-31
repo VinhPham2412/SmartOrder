@@ -12,7 +12,7 @@
         android:gravity="center"
         android:singleLine="false"
         android:text="@string/giaotiepvoiquanly"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:textSize="20dp" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:choiceMode="multipleChoice"/>
     <ImageButton
         android:background="@drawable/border"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/or"
         android:layout_marginTop="20dp"
         android:id="@+id/btnSendReason"
         android:layout_width="70dp"

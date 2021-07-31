@@ -81,7 +81,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     textView.setText(". "+fod.getName());
                     textView.setTypeface(Typeface.DEFAULT_BOLD);
                     textView.setTextSize(15);
-                    textView.setTextColor(Color.BLACK);
+                    textView.setTextColor(Color.WHITE);
                     holder.gridLayout.addView(textView);
                 }
             }

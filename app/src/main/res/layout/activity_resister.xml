@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/colorPrimary"
     android:fillViewport="true"
     tools:context=".RegisterActivity">
 
@@ -31,7 +30,7 @@
             android:layout_marginTop="74dp"
             android:layout_marginEnd="8dp"
             android:text="@string/app_name"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/or"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -69,11 +68,10 @@
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="177dp"
-            android:layout_height="54dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/or"
             android:text="@string/createAccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +135,7 @@
             android:layout_marginTop="264dp"
             android:text="@string/createAccount"
             android:textAlignment="center"
-            android:textColor="@color/red"
+            android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

@@ -16,5 +16,7 @@
     <color name="green">#E34C1C</color>
     <color name="yellow">#EF940E</color>
     <color name="pink">#E837D0</color>
-    <color name="main">#D8CB54</color>
+    <color name="main">#9CE7FA</color>
+    <color name="gray">#8CAAB1</color>
+    <color name="or">#F3661A</color>
 </resources>

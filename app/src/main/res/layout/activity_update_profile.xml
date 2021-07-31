@@ -14,6 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <EditText
+        android:textColor="@color/or"
         android:id="@+id/txtProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:textColor="@color/or"
         android:id="@+id/txtProfileAdress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,11 +74,12 @@
         android:layout_marginStart="164dp"
         android:layout_marginTop="492dp"
         android:text="@string/btnSave"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/or"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:textColor="@color/or"
         android:id="@+id/txtProfilePhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +98,7 @@
         android:layout_marginTop="57dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/account" />
+        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <ProgressBar
         android:id="@+id/progressBar4"

@@ -55,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.BLUE);
-        waveHeader.setCloseColor(Color.YELLOW);
+        waveHeader.setStartColor(Color.BLACK);
+        waveHeader.setCloseColor(Color.GRAY);
 
         Button btnRegister = findViewById(R.id.btnRegister);
         txtFName = findViewById(R.id.txtfName);

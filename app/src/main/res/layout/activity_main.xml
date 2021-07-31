@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/black"
     tools:context=".MainActivity"
     android:id="@+id/mainScreen">
 
@@ -19,14 +19,7 @@
             android:id="@+id/constrain"
             android:layout_height="wrap_content">
 
-            <com.scwang.wave.MultiWaveHeader
-                android:id="@+id/waveHeader"
-                android:layout_width="match_parent"
-                android:layout_height="239dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/textView4"
@@ -34,20 +27,20 @@
                 android:layout_height="16dp"
                 android:gravity="center_horizontal"
                 android:text="Voucher"
-                android:textColor="#DC2A1A"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/btnVoucher"
                 app:layout_constraintStart_toStartOf="@+id/btnVoucher"
                 app:layout_constraintTop_toBottomOf="@+id/btnVoucher" />
 
             <androidx.viewpager.widget.ViewPager
-                android:backgroundTint="@color/material_on_surface_emphasis_medium"
+                android:backgroundTint="@color/or"
                 android:id="@+id/viewImageResstaurant"
-                android:layout_width="377dp"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="31dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/custompager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +66,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="18dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -92,10 +85,11 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bell" />
+                app:srcCompat="@drawable/ic_baseline_notification_important_24" />
 
             <Button
-                android:background="@drawable/border"
+                android:textColor="@color/or"
+                android:backgroundTint="@color/white"
                 android:id="@+id/mainLogin"
                 android:layout_width="130dp"
                 android:layout_height="46dp"
@@ -107,7 +101,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:id="@+id/txtUseName"
                 android:layout_width="212dp"
                 android:layout_height="26dp"
@@ -125,10 +119,10 @@
                 android:layout_height="65dp"
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/customimage"
+                android:background="@drawable/customimage1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewImageResstaurant"
-                app:srcCompat="@drawable/table123" />
+                app:srcCompat="@drawable/ic_baseline_local_dining_24" />
 
             <ImageButton
                 android:id="@+id/btnMenu"
@@ -140,7 +134,7 @@
                 app:layout_constraintHorizontal_bias="0.462"
                 app:layout_constraintStart_toEndOf="@+id/btnGetTable"
                 app:layout_constraintTop_toBottomOf="@+id/viewImageResstaurant"
-                app:srcCompat="@drawable/image" />
+                app:srcCompat="@drawable/ic_baseline_fastfood_24" />
 
             <ImageButton
                 android:id="@+id/btnVoucher"
@@ -148,10 +142,10 @@
                 android:layout_height="65dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="48dp"
-                android:background="@drawable/customimage"
+                android:background="@drawable/customimage1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewImageResstaurant"
-                app:srcCompat="@drawable/voucher" />
+                app:srcCompat="@drawable/ic_baseline_confirmation_number_24" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -159,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:text="@string/bookatable"
-                android:textColor="#DC2A1A"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/btnGetTable"
                 app:layout_constraintStart_toStartOf="@+id/btnGetTable"
@@ -170,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/menu"
-                android:textColor="#120D0C"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/btnMenu"
                 app:layout_constraintStart_toStartOf="@+id/btnMenu"
@@ -185,7 +179,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/news"
-                android:textColor="@color/red"
+                android:textColor="@color/or"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -194,10 +188,10 @@
             <LinearLayout
                 android:id="@+id/ln"
                 android:layout_width="352dp"
-                android:layout_height="142dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="19dp"
-                android:layout_marginEnd="21dp"
+                android:layout_marginEnd="30dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -207,12 +201,13 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="111dp"
+                    android:layout_height="160dp"
+                    android:scaleType="centerInside"
                     android:background="@drawable/custompager"
-                    app:srcCompat="@drawable/buffet4" />
+                    app:srcCompat="@drawable/bf1"/>
 
                 <TextView
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:id="@+id/txtContenNews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -225,7 +220,7 @@
             <com.scwang.wave.MultiWaveHeader
                 android:id="@+id/waveFooter"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="200dp"
                 android:scaleY="-1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -240,7 +235,7 @@
         android:id="@+id/navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorAccent"
+        app:itemBackground="@color/or"
         android:layout_alignParentBottom="true"
         app:itemIconTint="@color/color_bottom_nav"
         app:itemTextColor="@color/color_bottom_nav"

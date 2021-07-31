@@ -27,11 +27,11 @@
 
     <Button
         android:id="@+id/btnConfirm"
+        android:backgroundTint="@color/or"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="150dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/border"
         android:text="@string/confirm" />
 
 
