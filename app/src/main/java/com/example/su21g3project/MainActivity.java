@@ -49,7 +49,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class MainActivity extends AppCompatActivity {
     private TextView txtNotice;
     private Button mainLogin;
-    private ImageButton btnGetTable,btnMenu,imageButton,notify;
+    private ImageButton btnGetTable,btnMenu,imageButton;
     private CircleIndicator circleIndicator;
     private Timer timer;
     private ViewPager viewPager;
@@ -61,22 +61,13 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private List<ProcessOrder> processOrderList;
-    private MultiWaveHeader waveHeader,waveFooter;
+    private MultiWaveHeader waveFooter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         waveFooter=findViewById(R.id.waveFooter);
-        waveHeader=findViewById(R.id.waveHeader);
-
-        waveHeader.setVelocity(1);
-        waveHeader.setProgress(1);
-        waveHeader.isRunning();
-        waveHeader.setGradientAngle(45);
-        waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.RED);
-        waveHeader.setCloseColor(Color.CYAN);
 
         waveFooter.setVelocity(1);
         waveFooter.setProgress(1);
@@ -95,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator=findViewById(R.id.circleIndicator);
         btnGetTable = findViewById(R.id.btnGetTable);
         mNavigationView=findViewById(R.id.navigation);
-        notify = findViewById(R.id.imageButton);
         newImg =findViewById(R.id.imageView);
         txtNew = findViewById(R.id.txtContenNews);
         //load new
@@ -194,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         txtUsername.setText(R.string.welcome);
                         txtUsername.setText(txtUsername.getText()+" "+user.getName());
                         mainLogin.setVisibility(View.INVISIBLE);
-                        notify.setVisibility(View.VISIBLE);
+                        imageButton.setVisibility(View.VISIBLE);
                         btnGetTable.setOnClickListener(v -> {
                             Intent intent = new Intent(MainActivity.this,GetTableActivity.class);
                             intent.putExtra("role",user.getRole());
@@ -211,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        txtUsername.setText("Xin chào ");
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();

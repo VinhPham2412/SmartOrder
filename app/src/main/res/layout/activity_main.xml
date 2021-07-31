@@ -204,7 +204,7 @@
                     android:layout_height="160dp"
                     android:scaleType="centerInside"
                     android:background="@drawable/custompager"
-                    app:srcCompat="@drawable/bf1"/>
+                    />
 
                 <TextView
                     android:textColor="@color/white"
