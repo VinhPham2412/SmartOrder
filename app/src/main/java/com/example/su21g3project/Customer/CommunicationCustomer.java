@@ -79,9 +79,9 @@ public class CommunicationCustomer extends AppCompatActivity {
         btnSenReason.setOnClickListener(v -> {
             String communicationId = UUID.randomUUID().toString();
             if (role.equals("customer"))
-                reference = FirebaseDatabase.getInstance().getReference("Communication").child("Customer");
+                reference = FirebaseDatabase.getInstance().getReference("Communication").child("customer");
             else
-                reference = FirebaseDatabase.getInstance().getReference("Communication").child("Chef");
+                reference = FirebaseDatabase.getInstance().getReference("Communication").child("chef");
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);

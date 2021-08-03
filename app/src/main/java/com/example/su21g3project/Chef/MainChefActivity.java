@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.su21g3project.Customer.CommunicationCustomer;
 import com.example.su21g3project.LoginActivity;
+import com.example.su21g3project.NoticeActivity;
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +39,7 @@ public class MainChefActivity extends AppCompatActivity {
     private ChefAdapter chefAdapter;
     private TextView txtChefName;
     FirebaseUser user;
+    private String role="";
 
 
     @Override
@@ -58,6 +60,7 @@ public class MainChefActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     User user=snapshot.getValue(User.class);
                     txtChefName.setText(user.getName());
+                    role=user.getRole();
                 }
             }
 
@@ -116,6 +119,9 @@ public class MainChefActivity extends AppCompatActivity {
         int id=item.getItemId();
         switch (id){
             case R.id.Notice:
+               Intent intent= new Intent(MainChefActivity.this, NoticeActivity.class);
+               intent.putExtra("role",role);
+               startActivity(intent);
                 break;
             case R.id.Communication:
                 startActivity(new Intent(MainChefActivity.this, CommunicationCustomer.class));

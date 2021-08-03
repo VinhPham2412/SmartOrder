@@ -59,4 +59,5 @@
     <string name="history">HistoryOrder</string>
     <string name="language">Language</string>
     <string name="selectedLanguage">English</string>
+    <string name="quanly">Manager</string>
 </resources>

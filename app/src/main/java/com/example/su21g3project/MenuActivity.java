@@ -27,8 +27,6 @@ public class MenuActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MenuAdapter menuAdapter;
     private List<Buffet> list;
-    private Button btnBack;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +53,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        btnBack=findViewById(R.id.btnBackMenu);
-        btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(MenuActivity.this,MainActivity.class));
-            finish();
-        });
+
 
     }
 }

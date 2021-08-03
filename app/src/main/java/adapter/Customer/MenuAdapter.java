@@ -1,5 +1,6 @@
 package adapter.Customer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -68,11 +69,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         foods= new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Buffet").child(buffet.getId()).child("foods");
         reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 foods.clear();
                 for(DataSnapshot snap:snapshot.getChildren()){
-
                     Food food = snap.getValue(Food.class);
                     foods.add(food);
                 }
@@ -94,6 +95,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
         new DownloadImageTask((ImageView) (holder.imageViewMenu))
                 .execute(buffet.getImage());
+        holder.imageViewMenu.setClipToOutline(true);
 
 
     }

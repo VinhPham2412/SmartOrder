@@ -91,6 +91,8 @@ public class OrdersFoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders_food);
+
+
         String orderId = getIntent().getStringExtra("orderId");
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.billRecycleView);
@@ -222,6 +224,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, true,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
+                    food.getNumberFood().setText("0");
 
                 }
             }
@@ -234,11 +237,18 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time, role.equals("waiter") ? true : false, role.equals("waiter") ? true : false, false,false);
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
+                    food.getNumberFood().setText("0");
                 }
             }
             int count = allInHolder.size()+ allOutHolder.size();
             Toast.makeText(this, "Gọi thành công "+count+" món", Toast.LENGTH_SHORT).show();
         });
         btnC.setOnClickListener(v -> startActivity(new Intent(OrdersFoodActivity.this, CommunicationCustomer.class)));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
     }
 }

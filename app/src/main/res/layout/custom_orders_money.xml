@@ -10,7 +10,6 @@
 
         <TextView
             android:textColor="@color/black"
-            android:background="@drawable/border"
             android:paddingStart="10dp"
             android:paddingTop="15dp"
             android:id="@+id/tvFoodNameMoney"
@@ -23,12 +22,17 @@
             android:gravity="center"
             android:paddingTop="20dp"
             android:id="@+id/tvMoney"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"/>
+        <ImageButton
+            android:src="@drawable/ic_baseline_remove_24"
+            android:id="@+id/btnRemoveMoney"
+            android:backgroundTint="@color/red"
+            android:layout_width="50dp"
             android:layout_height="match_parent"/>
 
         <EditText
             android:textColor="@color/black"
-            android:background="@drawable/border"
             android:id="@+id/txtNumberFoodMoney"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -37,16 +41,8 @@
             android:text="0" />
         <ImageButton
             android:id="@+id/btnAddMoney"
-            android:background="@drawable/customimage1"
             android:backgroundTint="@color/bgBottomNavigation"
             android:src="@drawable/ic_baseline_add_24"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"/>
-        <ImageButton
-            android:src="@drawable/ic_baseline_remove_24"
-            android:id="@+id/btnRemoveMoney"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/red"
             android:layout_width="50dp"
             android:layout_height="match_parent"/>
 

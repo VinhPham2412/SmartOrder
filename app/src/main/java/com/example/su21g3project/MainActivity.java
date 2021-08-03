@@ -18,9 +18,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.su21g3project.Chef.MainChefActivity;
 import com.example.su21g3project.Customer.AccountActivity;
 import com.example.su21g3project.Customer.BookedHistory;
 import com.example.su21g3project.Customer.NewsActivity;
+import com.example.su21g3project.Customer.NoticeCustomerActivity;
 import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +43,7 @@ import java.util.TimerTask;
 
 import adapter.PhotoAdapter;
 import model.News;
+import model.Notice;
 import model.Photo;
 import model.ProcessOrder;
 import model.User;
@@ -62,20 +65,23 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private List<ProcessOrder> processOrderList;
     private MultiWaveHeader waveFooter;
+    private int countProcess=0;
+    private int countNotice=0;
+    private List<Notice> noticeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        noticeList=new ArrayList<>();
         waveFooter=findViewById(R.id.waveFooter);
-
         waveFooter.setVelocity(1);
         waveFooter.setProgress(1);
         waveFooter.isRunning();
         waveFooter.setGradientAngle(45);
         waveFooter.setWaveHeight(40);
-        waveFooter.setStartColor(Color.MAGENTA);
-        waveFooter.setCloseColor(Color.YELLOW);
+        waveFooter.setStartColor(Color.BLACK);
+        waveFooter.setCloseColor(Color.GRAY);
 
         txtNotice=findViewById(R.id.txtNotice);
         btnMenu=findViewById(R.id.btnMenu);
@@ -97,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     for(DataSnapshot dataSnapshot1:snapshot.getChildren()){
                         News news = dataSnapshot1.getValue(News.class);
                         new DownloadImageTask(newImg).execute(news.getImage());
+                        newImg.setClipToOutline(true);
                         txtNew.setText(news.getTitle());
                         newImg.setOnClickListener(v -> {
                             Intent intent = new Intent(MainActivity.this, NewsActivity.class);
@@ -138,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
-           processOrderList =new ArrayList<>();
+            txtNotice.setVisibility(View.VISIBLE);
+            processOrderList =new ArrayList<>();
             reference=FirebaseDatabase.getInstance().getReference("ProcessOrder");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -146,18 +154,46 @@ public class MainActivity extends AppCompatActivity {
                     processOrderList.clear();
                     for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                         ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
-                        if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid())) ||
-                                (processOrder.getStatus().equals("rejected") && processOrder.getUserId().equals(firebaseUser.getUid()))){
+                        if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid()))){
                             processOrderList.add(processOrder);
                         }
                     }
-                    if(processOrderList.size()>0){
-                        txtNotice.setVisibility(View.VISIBLE);
-                        txtNotice.setText(String.valueOf(processOrderList.size()));
-                        SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor=pref.edit();
-                        editor.putInt("processOrderList",processOrderList.size());
-                        editor.commit();
+                    countProcess=processOrderList.size();
+                    if(countNotice+countProcess>0){
+
+                        txtNotice.setText(String.valueOf(countNotice+countProcess));
+
+                    }
+//                    if(processOrderList.size()>0){
+//
+//                        SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor=pref.edit();
+//                        editor.putInt("processOrderList",processOrderList.size());
+//                        editor.commit();
+//                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            reference=FirebaseDatabase.getInstance().getReference("Communication").child("ManageReply").child("customer");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    noticeList.clear();
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                        Notice notice=dataSnapshot.getValue(Notice.class);
+                        if(!(notice.getIsSeen() && notice.getUserId().equals(firebaseUser.getUid()))){
+                            noticeList.add(notice);
+                        }
+                    }
+                    countNotice=noticeList.size();
+                    if(countNotice+countProcess>0){
+                        txtNotice.setText(String.valueOf(countNotice+countProcess));
                     }
 
                 }
@@ -167,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-            imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BookedHistory.class)));
+
             reference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -176,6 +212,13 @@ public class MainActivity extends AppCompatActivity {
                         User user = snapshot.getValue(User.class);
                         if(user.getRole().equals("waiter")){
                             Intent intent = new Intent(MainActivity.this, MainWaiterActivity.class);
+                            intent.putExtra("role",user.getRole());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
+                        if(user.getRole().equals("chef")){
+                            Intent intent = new Intent(MainActivity.this, MainChefActivity.class);
                             intent.putExtra("role",user.getRole());
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -201,12 +244,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NoticeCustomerActivity.class)));
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         });
         photoList=getPhoto();
         PhotoAdapter photoAdapter =new PhotoAdapter(this,photoList);
+        viewPager.setClipToOutline(true);
         viewPager.setAdapter(photoAdapter);
 
         circleIndicator.setViewPager(viewPager);
@@ -235,9 +280,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private List<Photo> getPhoto(){
         List<Photo> list=new ArrayList<>();
-        list.add(new Photo(R.drawable.buffet));
-        list.add(new Photo(R.drawable.bf3));
-        list.add(new Photo(R.drawable.bf2));
+        list.add(new Photo(R.drawable.phan1));
+        list.add(new Photo(R.drawable.phan2));
+        list.add(new Photo(R.drawable.phan3));
         return list;
     }
 

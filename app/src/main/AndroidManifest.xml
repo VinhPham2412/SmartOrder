@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.su21g3project">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
-        <activity android:name=".Customer.NewsActivity"></activity>
+        <activity android:name=".Customer.NoticeCustomerActivity"></activity>
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".Customer.NewsActivity" />
         <activity android:name=".Customer.ChangeLanguageActivity" />
         <activity android:name=".Chef.MainChefActivity" />
         <activity android:name=".Customer.BillActivity" />

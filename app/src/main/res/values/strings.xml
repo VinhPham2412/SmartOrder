@@ -58,4 +58,6 @@
     <string name="history">Lịch sử</string>
     <string name="language">Ngôn ngữ</string>
     <string name="selectedLanguage">Tiếng Việt</string>
+    <string name="quanly">Quản lý</string>
+    <string name="delete">Xóa</string>
 </resources>
