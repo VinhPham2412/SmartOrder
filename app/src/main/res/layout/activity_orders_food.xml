@@ -14,7 +14,7 @@
         android:id="@+id/buffetName"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -23,51 +23,44 @@
         android:layout_width="match_parent"
         android:layout_height="254dp" />
 
-    <View android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_height="1dp"
-            android:background="@color/black" />
-
     <TextView
+        android:layout_marginTop="3dp"
+        android:background="@drawable/border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/foodanddrink"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="italic" />
+        android:textStyle="bold" />
     <LinearLayout
-        android:backgroundTint="@color/or"
-        android:background="@drawable/border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageButton
-            android:src="@drawable/coca"
+            android:src="@drawable/ic_baseline_water_drop_24"
             android:id="@+id/nuocngot"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="70dp"
-            android:background="@drawable/customimage" />
+            android:layout_marginStart="60dp"
+            android:background="@drawable/customimage1" />
 
         <ImageButton
             android:background="@drawable/customimage1"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="60dp"
             android:id="@+id/ruou"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/ruou"/>
+            android:src="@drawable/ic_baseline_liquor_24"/>
 
         <ImageButton
-            android:src="@drawable/food"
+            android:src="@drawable/ic_baseline_local_dining_24"
             android:id="@+id/doan"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/customimage"
-            android:layout_marginLeft="50dp"
+            android:background="@drawable/customimage1"
+            android:layout_marginLeft="60dp"
             />
 
     </LinearLayout>

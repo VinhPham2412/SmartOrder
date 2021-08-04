@@ -74,14 +74,17 @@ public class VerifySMSToken extends AppCompatActivity {
                                         case "customer":
                                             Intent intent = new Intent(VerifySMSToken.this,MainActivity.class);
                                             startActivity(intent);
+                                            finish();
                                             break;
                                         case "waiter":
                                             Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
                                             startActivity(intent1);
+                                            finish();
                                             break;
                                         case "chef":
                                             Intent intent2 = new Intent(VerifySMSToken.this, MainChefActivity.class);
                                             startActivity(intent2);
+                                            finish();
                                             break;
                                     }
                                 }

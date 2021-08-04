@@ -98,7 +98,6 @@ public class GetTableActivity2 extends AppCompatActivity {
             note = txtNote.getText().toString();
             Date date = null;
             String strDate = getIntent().getStringExtra("date");
-
             DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
             try {
                 date = format.parse(strDate);

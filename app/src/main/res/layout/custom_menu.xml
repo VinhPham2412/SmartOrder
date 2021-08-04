@@ -7,7 +7,6 @@
 
     <TextView
         android:textStyle="bold"
-        android:background="@drawable/border"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:id="@+id/buffet_name"
@@ -18,7 +17,6 @@
 
     </TextView>
     <TextView
-        android:background="@drawable/border"
         android:gravity="center"
         android:id="@+id/bufet_description"
         android:textSize="18dp"

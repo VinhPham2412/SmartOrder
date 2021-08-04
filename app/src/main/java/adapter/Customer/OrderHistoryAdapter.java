@@ -94,7 +94,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 //                    }
 //                });
 //            });
-            holder.getTxtTime().setText(details.get(0).getTimeString());
+            holder.getTxtTime().setText(details.get(0).getStrTime());
 
             if(details.get(0).getIsAccepted()){
                 holder.getTxtStatus().setTextColor(Color.GREEN);

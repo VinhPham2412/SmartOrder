@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         });
         btnMenu.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,MenuActivity.class));
-            finish();
         });
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
@@ -160,10 +159,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     countProcess=processOrderList.size();
                     if(countNotice+countProcess>0){
-
                         txtNotice.setText(String.valueOf(countNotice+countProcess));
 
-                    }
+                    }else
+                        txtNotice.setText("");
+
 //                    if(processOrderList.size()>0){
 //
 //                        SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
@@ -194,7 +194,8 @@ public class MainActivity extends AppCompatActivity {
                     countNotice=noticeList.size();
                     if(countNotice+countProcess>0){
                         txtNotice.setText(String.valueOf(countNotice+countProcess));
-                    }
+                    }else
+                        txtNotice.setText("");
 
                 }
 

@@ -51,7 +51,7 @@ public class OrderHistory extends AppCompatActivity {
                         OrderDetail orderDetail = post.getValue(OrderDetail.class);
                         //if same user
                         assert orderDetail != null;
-                        if (orderDetail.getUserId().equals(user.getUid())) {
+                        orderDetail.getUserId().equals(user.getUid());
                             String orderId = orderDetail.getOrderId();
                             Date time = orderDetail.getTime();
                             boolean isFoundPlace = false;
@@ -75,7 +75,7 @@ public class OrderHistory extends AppCompatActivity {
                             }
                         }
 
-                    }
+
                 }
                 OrderHistoryAdapter adapter = new OrderHistoryAdapter(result);
                 RecyclerView view = findViewById(R.id.container_customer_order_history);

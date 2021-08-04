@@ -115,14 +115,13 @@ public class OrderDetail {
     public Date getTime() {
         return time;
     }
-    public String getTimeString(){
-        DateFormat format = new SimpleDateFormat("dd/MM/YYYY HH:mm");
+
+    public String getStrTime() {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return format.format(time);
     }
-
     public void setTime(String time) {
-
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         try{
             this.time = format.parse(time);
         }catch (ParseException e){
@@ -137,7 +136,7 @@ public class OrderDetail {
         result.put("userId", userId);
         result.put("foodId", foodId);
         result.put("quantity", quantity);
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_hhmm a");
+        DateFormat format = new SimpleDateFormat("YYYYMMdd_HHmm");
         String d = format.format(time);
         result.put("time", d);
         result.put("isSeen",isSeen);

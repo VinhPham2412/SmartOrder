@@ -70,6 +70,7 @@ public class GetBuffetActivity extends AppCompatActivity {
                 intent.putExtra("orderId", getIntent().getStringExtra("orderId"));
                 intent.putExtra("buffetId",buffet.getId());
                 startActivity(intent);
+                finish();
             } else {
                 ShowToast("No buffet is choose!");
             }

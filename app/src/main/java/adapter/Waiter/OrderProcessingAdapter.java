@@ -98,7 +98,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
             }
         });
-        holder.getTxtTime().setText(details.get(0).getTimeString());
+        holder.getTxtTime().setText(details.get(0).getStrTime());
     }
 
     @Override

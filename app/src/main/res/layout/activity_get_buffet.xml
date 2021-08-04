@@ -11,13 +11,12 @@
     tools:context=".OrdersFoodActivity"
     android:orientation="vertical">
     <TextView
-        android:background="@drawable/border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Buffet"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView

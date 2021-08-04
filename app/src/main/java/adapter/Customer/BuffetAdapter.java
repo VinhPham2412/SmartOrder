@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.su21g3project.DownloadImageTask;
 import com.example.su21g3project.R;
 
 import java.io.InputStream;
@@ -69,6 +70,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
 
         new DownloadImageTask((ImageView) (holder.imageViewBuffet))
                 .execute(buffet.getImage());
+        holder.imageView.setClipToOutline(true);
     }
 
 
@@ -96,29 +98,6 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         }
         return null;
     }
-    private   class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
 }
