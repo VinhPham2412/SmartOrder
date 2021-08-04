@@ -36,7 +36,7 @@ public class NoticeActivity extends AppCompatActivity {
         noticeList=new ArrayList<>();
         recyclerView=findViewById(R.id.noticeRecyeceView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        reference= FirebaseDatabase.getInstance().getReference("Communication").child(role);
+        reference= FirebaseDatabase.getInstance().getReference("Communication").child("ManageReply").child(role);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -53,7 +53,6 @@ public class NoticeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 

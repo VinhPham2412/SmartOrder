@@ -1,18 +1,22 @@
 package com.example.su21g3project.Customer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.su21g3project.LoginActivity;
 import com.example.su21g3project.MainActivity;
 import com.example.su21g3project.R;
 import com.example.su21g3project.UpdateProfile;
+import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -80,9 +84,31 @@ public class AccountActivity extends AppCompatActivity {
          * action when click on Text Logout
          */
         txtLogout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-            startActivity(intent);
+            AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.this);
+
+            builder.setTitle("Confirm");
+            builder.setMessage("Do you want logout?");
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing but close the dialog
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(AccountActivity.this, LoginActivity.class));
+                    finish();
+                }
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
             finish();
         });
         mNavigationView=findViewById(R.id.navigation1);

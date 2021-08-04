@@ -17,15 +17,15 @@
         android:textStyle="bold" />
 
     <TextView
-        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/txtCustomerName"
         android:layout_width="197dp"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txtTableName"
         android:layout_marginStart="15dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="-2dp"
-        android:background="@drawable/border"
         android:textSize="16sp" />
 
     <Button

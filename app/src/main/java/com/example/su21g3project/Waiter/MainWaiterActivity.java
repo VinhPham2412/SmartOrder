@@ -38,7 +38,6 @@ public class MainWaiterActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private TextView txtWaiterName;
     private FirebaseUser user;
-    private ImageButton btnSingOut;
     private String role="";
     private DatabaseReference reference;
 
@@ -49,7 +48,6 @@ public class MainWaiterActivity extends AppCompatActivity {
 
 
 
-        btnSingOut=findViewById(R.id.imageButtonSingOut);
         txtWaiterName=findViewById(R.id.waiterName);
         user= FirebaseAuth.getInstance().getCurrentUser();
         txtWaiterName.setText(user.getDisplayName());
@@ -90,9 +88,30 @@ public class MainWaiterActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
-        btnSingOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+
+    }
+    /**
+     * add options Menu in activity
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.waiter_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        switch (id){
+            case R.id.Notice:
+                Intent intent= new Intent(MainWaiterActivity.this, NoticeActivity.class);
+                intent.putExtra("role",role);
+                startActivity(intent);
+                break;
+            case R.id.logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainWaiterActivity.this);
 
                 builder.setTitle("Confirm");
@@ -118,33 +137,6 @@ public class MainWaiterActivity extends AppCompatActivity {
 
                 AlertDialog alert = builder.create();
                 alert.show();
-            }
-        });
-
-    }
-    /**
-     * add options Menu in activity
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.waiter_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        switch (id){
-            case R.id.Notice:
-                Intent intent= new Intent(MainWaiterActivity.this, NoticeActivity.class);
-                intent.putExtra("role",role);
-                startActivity(intent);
-                break;
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainWaiterActivity.this, LoginActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

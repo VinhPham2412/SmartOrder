@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.su21g3project.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,7 @@ public class BillFragment extends Fragment {
     private RecyclerView recyclerView;
     private WaiterBillAdapter adapter;
     private int dvHeight;
+    private FirebaseUser user;
     public BillFragment(FragmentActivity fragmentActivity) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -45,6 +48,7 @@ public class BillFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_waiter, container, false);
+        user= FirebaseAuth.getInstance().getCurrentUser();
         recyclerView  = view.findViewById(R.id.bill_waiter_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
@@ -55,7 +59,7 @@ public class BillFragment extends Fragment {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
-                    if (processOrder.getStatus().equals("confirmed")) {
+                    if (processOrder.getStatus().equals("confirmed") && processOrder.getWaiterId().equals(user.getUid())) {
                         list.add(processOrder);
                     }
 
