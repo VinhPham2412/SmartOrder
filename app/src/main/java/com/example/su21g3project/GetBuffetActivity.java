@@ -24,6 +24,10 @@ import java.util.List;
 import adapter.Customer.BuffetAdapter;
 import model.Buffet;
 
+/**
+ * Activity for choosing buffet
+ * Get buffet from rtdb and innit BuffetAdapter using for a RecyclerView
+ */
 public class GetBuffetActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Buffet> list;
@@ -39,9 +43,9 @@ public class GetBuffetActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.billRecycleView);
         btnConfirm = findViewById(R.id.btnConfirm);
         list = new ArrayList<>();
-        //get all buffet
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Buffet");
-        reference1.addValueEventListener(new ValueEventListener() {
+        //get all buffet from rtdb
+        reference = FirebaseDatabase.getInstance().getReference("Buffet");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
@@ -64,8 +68,9 @@ public class GetBuffetActivity extends AppCompatActivity {
             if (buffetAdapter.getSelected() != null) {
                 Buffet buffet = buffetAdapter.getSelected();
                 //insert buffet id to order
-                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId).child("buffetId");
-                reference2.setValue(buffet.getId());
+                reference = FirebaseDatabase.getInstance().getReference("ProcessOrder")
+                        .child(orderId).child("buffetId");
+                reference.setValue(buffet.getId());
                 Intent intent = new Intent(GetBuffetActivity.this, OrdersFoodActivity.class);
                 intent.putExtra("orderId", getIntent().getStringExtra("orderId"));
                 intent.putExtra("buffetId",buffet.getId());

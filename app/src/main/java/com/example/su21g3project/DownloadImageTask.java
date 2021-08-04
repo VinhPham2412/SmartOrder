@@ -7,7 +7,10 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
-
+/**
+ * Class for download image from internet
+ * and set imageBitmap for argument ImageView
+ */
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
 

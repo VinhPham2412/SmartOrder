@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         });
         btnMenu.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,MenuActivity.class));
+            finish();
         });
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
@@ -153,24 +154,17 @@ public class MainActivity extends AppCompatActivity {
                     processOrderList.clear();
                     for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                         ProcessOrder processOrder=dataSnapshot.getValue(ProcessOrder.class);
-                        if((processOrder.getStatus().equals("confirmed") && processOrder.getUserId().equals(firebaseUser.getUid()))){
+                        if((processOrder.getStatus().equals("confirmed") &&
+                                processOrder.getUserId().equals(firebaseUser.getUid()))){
                             processOrderList.add(processOrder);
                         }
                     }
-                    countProcess=processOrderList.size();
+                    countProcess = processOrderList.size();
                     if(countNotice+countProcess>0){
+
                         txtNotice.setText(String.valueOf(countNotice+countProcess));
 
-                    }else
-                        txtNotice.setText("");
-
-//                    if(processOrderList.size()>0){
-//
-//                        SharedPreferences pref=getSharedPreferences("main", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor=pref.edit();
-//                        editor.putInt("processOrderList",processOrderList.size());
-//                        editor.commit();
-//                    }
+                    }
 
                 }
 
@@ -187,15 +181,14 @@ public class MainActivity extends AppCompatActivity {
                     noticeList.clear();
                     for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                         Notice notice=dataSnapshot.getValue(Notice.class);
-                        if(!(notice.getIsSeen() && notice.getUserId().equals(firebaseUser.getUid()))){
+                        if(!notice.getIsSeen() && notice.getUserId().equals(firebaseUser.getUid())){
                             noticeList.add(notice);
                         }
                     }
                     countNotice=noticeList.size();
                     if(countNotice+countProcess>0){
                         txtNotice.setText(String.valueOf(countNotice+countProcess));
-                    }else
-                        txtNotice.setText("");
+                    }
 
                 }
 

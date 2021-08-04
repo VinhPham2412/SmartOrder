@@ -6,36 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".Customer.NewsActivity">
 
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="266dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="545dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        android:layout_width="225dp"
+        android:layout_height="203dp"
+        app:layout_constraintEnd_toEndOf="@+id/waveHeader1"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/waveHeader1"
+        app:layout_constraintTop_toBottomOf="@+id/waveHeader1"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginBottom="105dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txtContent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <TextView
         android:id="@+id/txtContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="58dp"
-        android:text="TextView"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveFooter1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleY="-1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

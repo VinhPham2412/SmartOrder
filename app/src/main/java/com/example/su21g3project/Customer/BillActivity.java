@@ -87,6 +87,10 @@ public class BillActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String orderId = getIntent().getStringExtra("orderId");
         String tableId = getIntent().getStringExtra("tableId");
+        if(tableId==null){
+            Toast.makeText(BillActivity.this,"Your order has not been accept",Toast.LENGTH_SHORT).show();
+            return;
+        }
         String buffetId=getIntent().getStringExtra("buffetId");
         int numPeople=getIntent().getIntExtra("numPeople",0);
         txtTableName = findViewById(R.id.txtTableName);

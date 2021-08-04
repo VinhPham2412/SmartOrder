@@ -1,5 +1,7 @@
 package model;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
@@ -14,6 +16,9 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class ProcessOrder {
+    @Exclude
+    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
     private String id;
     private String userId;
     private String name;
@@ -101,16 +106,15 @@ public class ProcessOrder {
         return date;
     }
     public String getStrDate(){
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return format.format(date);
     }
 
     public void setDate(String date) {
-        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         try{
             this.date = format.parse(date);
+            Log.println(Log.INFO,"parse info - ","date = "+this.date.toString());
         }catch (ParseException e){
-
+            Log.println(Log.ERROR,"parse error",e.getMessage());
         }
     }
 
@@ -136,7 +140,6 @@ public class ProcessOrder {
         result.put("userId", userId);
         result.put("name", name);
         result.put("phone", phone);
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_HHmm");
         String d = format.format(date);
         result.put("date",d);
         result.put("numberOfPeople", numberOfPeople);

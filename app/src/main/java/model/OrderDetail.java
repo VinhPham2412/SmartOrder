@@ -13,6 +13,8 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class OrderDetail {
+    @Exclude
+    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     private String id;
     private String userId;
     private String orderId;
@@ -115,17 +117,14 @@ public class OrderDetail {
     public Date getTime() {
         return time;
     }
-
-    public String getStrTime() {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    public String getTimeString(){
         return format.format(time);
     }
+
     public void setTime(String time) {
-        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
         try{
             this.time = format.parse(time);
         }catch (ParseException e){
-
         }
     }
     @Exclude
@@ -136,7 +135,6 @@ public class OrderDetail {
         result.put("userId", userId);
         result.put("foodId", foodId);
         result.put("quantity", quantity);
-        DateFormat format = new SimpleDateFormat("YYYYMMdd_HHmm");
         String d = format.format(time);
         result.put("time", d);
         result.put("isSeen",isSeen);

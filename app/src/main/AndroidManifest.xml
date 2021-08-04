@@ -33,13 +33,13 @@
         <activity android:name=".GetTableActivity" />
         <activity android:name=".UpdateProfile" />
         <activity android:name=".Customer.AccountActivity" />
-        <activity android:name=".VerifySMSToken" />
+        <activity android:name=".VerifySMSToken" >
+        </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

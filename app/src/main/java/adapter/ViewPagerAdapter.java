@@ -10,6 +10,10 @@ import Fragments.BillFragment;
 import Fragments.OrderFragment;
 import Fragments.WaiterOrderFragment;
 
+/**
+ * ViewPageAdapter for waiter's main screen
+ * 
+ */
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private FragmentActivity fragmentActivity;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
