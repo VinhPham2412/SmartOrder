@@ -49,7 +49,7 @@
     <string name="donthaveacc">Chưa có tài khoản ?</string>
     <string name="FoodName">Tên món</string>
     <string name="FoodQuantity">Số lượng</string>
-    <string name="FoodPrice">Gía</string>
+    <string name="FoodPrice">Đơn giá</string>
     <string name="FoodTotal">Tổng</string>
     <string name="done">Làm</string>
     <string name="chefNotice">Thông Báo</string>

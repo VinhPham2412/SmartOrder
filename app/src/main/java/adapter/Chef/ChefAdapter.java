@@ -23,7 +23,11 @@ import java.util.List;
 import adapter.Customer.BillAdapter;
 import model.Food;
 import model.OrderDetail;
-
+/**
+ * Adapter for
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
 public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
     private List<OrderDetail> orderDetailList;
     private Context mContext;
@@ -64,23 +68,21 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
 
             }
         });
-        holder.btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reference=FirebaseDatabase.getInstance().getReference("OrderDetail").child(orderDetail.getId()).child("doing");
-                reference.setValue(true);
-            }
+        holder.btnDone.setOnClickListener(v -> {
+            reference=FirebaseDatabase.getInstance().getReference("OrderDetail")
+                    .child(orderDetail.getId()).child("doing");
+            reference.setValue(true);
         });
-
-
-
     }
 
     @Override
     public int getItemCount() {
         return orderDetailList.size();
     }
-
+    /**
+     * View holder for ChefAdapter.
+     * Define components for each adapter view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView txtFoodName,txtQuantity;
         public ImageButton btnDone;

@@ -91,30 +91,28 @@ public class OrderHistory extends AppCompatActivity {
             }
         });
         btnBill=findViewById(R.id.btnBill);
-        btnBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            ProcessOrder processOrder = snapshot.getValue(ProcessOrder.class);
-                            Intent intent = new Intent(getApplicationContext(), BillActivity.class);
-                            intent.putExtra("orderId", orderId);
-                            intent.putExtra("tableId", processOrder.getTableId());
-                            intent.putExtra("buffetId",processOrder.getBuffetId());
-                            intent.putExtra("numPeople",processOrder.getNumberOfPeople());
-                            startActivity(intent);
-                        }
+        btnBill.setOnClickListener(v -> {
+            reference = FirebaseDatabase.getInstance().getReference("ProcessOrder").child(orderId);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        ProcessOrder processOrder = snapshot.getValue(ProcessOrder.class);
+                        Intent intent = new Intent(getApplicationContext(), BillActivity.class);
+                        intent.putExtra("orderId", orderId);
+                        intent.putExtra("tableId", processOrder.getTableId());
+                        intent.putExtra("buffetId",processOrder.getBuffetId());
+                        intent.putExtra("numPeople",processOrder.getNumberOfPeople());
+                        startActivity(intent);
+                        finish();
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                    }
-                });
-            }
+                }
+            });
         });
     }
 
