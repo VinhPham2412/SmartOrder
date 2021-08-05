@@ -29,12 +29,30 @@ public class ProcessOrder {
     private String status;
     private String buffetId ;
     private String tableId;
+    private String messageReject;
+    private String waiterId;
+
+    public String getWaiterId() {
+        return waiterId;
+    }
+
+    public void setWaiterId(String waiterId) {
+        this.waiterId = waiterId;
+    }
+
+    public String getMessageReject() {
+        return messageReject;
+    }
+
+    public void setMessageReject(String messageReject) {
+        this.messageReject = messageReject;
+    }
 
     public ProcessOrder() {
     }
 
     public ProcessOrder(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId) {
+                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId,@Nullable  String messageReject, @Nullable  String waiterId) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -44,6 +62,8 @@ public class ProcessOrder {
         this.note = note;
         this.status=status;
         this.tableId = tableId;
+        this.messageReject=messageReject;
+        this.waiterId=waiterId;
     }
 
     public String getTableId() {
@@ -146,7 +166,6 @@ public class ProcessOrder {
         result.put("note", note);
         result.put("status",status);
         result.put("tableId",null);
-
         return result;
     }
 }

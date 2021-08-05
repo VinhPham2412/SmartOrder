@@ -1,16 +1,19 @@
 package com.example.su21g3project.Chef;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.su21g3project.Customer.AccountActivity;
 import com.example.su21g3project.Customer.CommunicationCustomer;
 import com.example.su21g3project.LoginActivity;
 import com.example.su21g3project.NoticeActivity;
@@ -127,8 +130,31 @@ public class MainChefActivity extends AppCompatActivity {
                 startActivity(new Intent(MainChefActivity.this, CommunicationCustomer.class));
                 break;
             case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainChefActivity.this, LoginActivity.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainChefActivity.this);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Do you want logout?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(MainChefActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
                 break;
         }
         return super.onOptionsItemSelected(item);

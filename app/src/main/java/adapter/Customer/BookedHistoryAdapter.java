@@ -24,6 +24,7 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
     private List<ProcessOrder> list;
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView txtText;
+        public TextView txtMessageReject;
         private final TextView txtStatus;
         private final Button btngetFood;
         public ViewHolder(View itemView) {
@@ -31,6 +32,7 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             txtText = itemView.findViewById(R.id.txtBookedHistory);
             txtStatus = itemView.findViewById(R.id.txtBHStatus);
             btngetFood = itemView.findViewById(R.id.btnGetFood);
+            txtMessageReject=itemView.findViewById(R.id.txtMessageReject);
         }
 
         public TextView getTxtText() {
@@ -73,6 +75,8 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             holder.getTxtStatus().setTextColor(Color.GREEN);
         }
         else if (order.getStatus().equals("rejected")) {
+            holder.txtMessageReject.setVisibility(View.VISIBLE);
+            holder.txtMessageReject.setText(order.getMessageReject());
             holder.getTxtStatus().setText("Đã Từ chối");
             holder.getTxtStatus().setTextColor(Color.RED);
         }
