@@ -17,7 +17,7 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class ProcessOrder {
     @Exclude
-    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
 
     private String id;
     private String userId;
@@ -106,7 +106,7 @@ public class ProcessOrder {
         return date;
     }
     public String getStrDate(){
-        return format.format(date);
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
     }
 
     public void setDate(String date) {

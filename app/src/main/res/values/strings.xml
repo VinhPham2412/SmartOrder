@@ -60,4 +60,9 @@
     <string name="selectedLanguage">Tiếng Việt</string>
     <string name="quanly">Quản lý</string>
     <string name="delete">Xóa</string>
+    <string name="today">Hôm nay</string>
+    <string name="tomorrow">Ngày mai</string>
+    <string name="tomorrow1">Ngày kia</string>
+    <string name="tomorrow2">Ngày kìa</string>
+    <string name="toastGettable">Vui lòng nhập số người</string>
 </resources>

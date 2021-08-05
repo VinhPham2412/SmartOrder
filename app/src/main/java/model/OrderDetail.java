@@ -14,7 +14,7 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class OrderDetail {
     @Exclude
-    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
     private String id;
     private String userId;
     private String orderId;
@@ -118,7 +118,7 @@ public class OrderDetail {
         return time;
     }
     public String getTimeString(){
-        return format.format(time);
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(time);
     }
 
     public void setTime(String time) {

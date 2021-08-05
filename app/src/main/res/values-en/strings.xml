@@ -31,8 +31,7 @@
     <string name="login">Sign in</string>
     <string name="bookatable">Book</string>
     <string name="menu">Menu</string>
-    <string name="news">News</string>
-    <string name="new1">Nhà hàng tuyển dụng nhân viên</string>
+    <string name="news">Tin tức</string>
     <string name="notification">Notification</string>
     <string name="foodanddrink">Food + Drink </string>
     <string name="firstname">First name</string>
@@ -60,4 +59,10 @@
     <string name="language">Language</string>
     <string name="selectedLanguage">English</string>
     <string name="quanly">Manager</string>
+    <string name="delete">Delete</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="tomorrow1">Two days later</string>
+    <string name="tomorrow2">Three days later</string>
+    <string name="toastGettable">Please enter number of people</string>
 </resources>

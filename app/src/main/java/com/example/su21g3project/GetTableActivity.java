@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,10 +32,12 @@ public class GetTableActivity extends AppCompatActivity {
     private Calendar date;
     private int hour,minute,currentMinute,currentHour;
     private MultiWaveHeader waveHeader;
+    private DateFormat format;
 
     private String getTime(Calendar date){
         int day = date.get(Calendar.DAY_OF_MONTH);
         int month = date.get(Calendar.MONTH);
+        //because january was 0 then need add by 1
         month++;
         int year = date.get(Calendar.YEAR);
         return day+"/"+month+"/"+year;
@@ -54,7 +57,7 @@ public class GetTableActivity extends AppCompatActivity {
         waveHeader.setCloseColor(Color.GRAY);
 
         date = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00"));
-        DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm");
+        format = new SimpleDateFormat("yyyyMMdd_HHmm");
         currentMinute = date.get(Calendar.MINUTE);
         currentHour = date.get(Calendar.HOUR_OF_DAY);
         currentHour+=7;
@@ -67,16 +70,20 @@ public class GetTableActivity extends AppCompatActivity {
         slTime = findViewById(R.id.seekBar_slTime);
         slTime.setMax(1440);
         date.add(Calendar.DAY_OF_MONTH,3);
-        today3.setText("Ngày kìa"+
+        String td = getString(R.string.today);
+        String td1 = getString(R.string.tomorrow);
+        String td2 = getString(R.string.tomorrow1);
+        String td3 = getString(R.string.tomorrow2);
+        today3.setText(td3+
                 "\n"+getTime(date));
         date.add(Calendar.DAY_OF_MONTH,-1);
-        today2.setText("Ngày kia"+
+        today2.setText(td2+
                 "\n"+getTime(date));
         date.add(Calendar.DAY_OF_MONTH,-1);
-        today1.setText("Ngày mai"+
+        today1.setText(td1+
                 "\n"+getTime(date));
         date.add(Calendar.DAY_OF_MONTH,-1);
-        today.setText("Hôm nay"+
+        today.setText(td+
                 "\n"+getTime(date));
 
 
@@ -86,8 +93,11 @@ public class GetTableActivity extends AppCompatActivity {
         today1.setBackgroundColor(Color.WHITE);
         today2.setBackgroundColor(Color.WHITE);
         today3.setBackgroundColor(Color.WHITE);
-        slTime.setMin(1);
+        slTime.setMin(currentHour*60 + currentMinute + 30);
         selectedDate = format.format(date.getTime());
+        hour = slTime.getProgress() / 60;
+        minute = slTime.getProgress() - (hour*60);
+        prTime.setText(hour+" : "+minute);
 
         today.setOnClickListener(v -> {
             today.setBackgroundColor(Color.LTGRAY);
@@ -148,13 +158,19 @@ public class GetTableActivity extends AppCompatActivity {
             }
         });
         btnNext.setOnClickListener(v -> {
-            Intent intent = new Intent(GetTableActivity.this,GetTableActivity2.class);
-            //transfer date,time,number of people to next view
-            //combine date and time to date type
-            intent.putExtra("date",selectedDate);
-            intent.putExtra("noPP",noPp.getText().toString());
-
-            startActivity(intent);
+            String numberOfPeople = noPp.getText().toString();
+            if(numberOfPeople!=null&&!numberOfPeople.trim().isEmpty()){
+                Intent intent = new Intent(GetTableActivity.this,GetTableActivity2.class);
+                //transfer date,time,number of people to next view
+                //combine date and time to date type
+                intent.putExtra("date",selectedDate);
+                intent.putExtra("noPP",numberOfPeople);
+                startActivity(intent);
+            }else {
+                Toast.makeText(this,getString(R.string.toastGettable)
+                        ,Toast.LENGTH_SHORT).show();
+                noPp.requestFocus();
+            }
         });
     }
 }
