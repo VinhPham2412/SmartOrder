@@ -103,7 +103,7 @@ public class GetTableActivity2 extends AppCompatActivity {
             }
             int noPP = Integer.parseInt(getIntent().getStringExtra("noPP"));
             String orderId = reference.push().getKey();
-            Order order = new Order(orderId,userId,name,phone,date,noPP,note,"new",null,null);
+            Order order = new Order(orderId,userId,name,phone,date,noPP,note,"new",null,null,false);
             reference.child(orderId).setValue(order.toMap()).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(GetTableActivity2.this,

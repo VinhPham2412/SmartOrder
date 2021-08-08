@@ -5,6 +5,11 @@ public class Notice {
     private String messageReply;
     private String userId;
     private boolean isSeen;
+    private boolean isNotify;
+
+    public void setIsNotify(boolean notify) {
+        isNotify = notify;
+    }
 
     public String getId() {
         return id;
@@ -46,5 +51,9 @@ public class Notice {
     }
 
     public Notice() {
+    }
+
+    public boolean getIsNotify() {
+        return isNotify;
     }
 }

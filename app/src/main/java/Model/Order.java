@@ -31,7 +31,7 @@ public class Order {
     private String tableId;
     private String waiterId;
     private String reason;
-
+    private boolean isNotify;
     public String getWaiterId() {
         return waiterId;
     }
@@ -44,7 +44,7 @@ public class Order {
     }
 
     public Order(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId, @Nullable  String waiterId) {
+                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId, @Nullable  String waiterId,boolean isNotify) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -55,6 +55,7 @@ public class Order {
         this.status=status;
         this.tableId = tableId;
         this.waiterId=waiterId;
+        this.isNotify =isNotify;
     }
 
     public String getTableId() {
@@ -157,6 +158,7 @@ public class Order {
         result.put("note", note);
         result.put("status",status);
         result.put("tableId",null);
+        result.put("isNotify",isNotify);
         return result;
     }
 
@@ -165,5 +167,13 @@ public class Order {
     }
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public boolean getIsNotify() {
+        return isNotify;
+    }
+
+    public void setIsNotify(boolean notify) {
+        isNotify = notify;
     }
 }

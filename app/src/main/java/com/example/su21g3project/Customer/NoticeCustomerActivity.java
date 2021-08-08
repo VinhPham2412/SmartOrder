@@ -51,7 +51,8 @@ public class NoticeCustomerActivity extends AppCompatActivity {
                 processOrderList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Order processOrder = dataSnapshot.getValue(Order.class);
-                    if (processOrder.getUserId().equals(user.getUid()) && processOrder.getStatus().equals("accepted")) {
+                    if (processOrder.getUserId().equals(user.getUid())
+                            && processOrder.getStatus().equals("accepted")) {
                         processOrderList.add(processOrder);
                     }
 

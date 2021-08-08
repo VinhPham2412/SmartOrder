@@ -43,6 +43,7 @@ import Model.Notice;
 import Model.Order;
 import Model.Photo;
 import Model.User;
+import SOService.NotificationService;
 import adapter.PhotoAdapter;
 import me.relex.circleindicator.CircleIndicator;
 
@@ -141,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
+            Intent intent = new Intent(getApplicationContext(),NotificationService.class);
+            startForegroundService(intent);
             txtNotice.setVisibility(View.VISIBLE);
             processOrderList = new ArrayList<>();
             reference = FirebaseDatabase.getInstance().getReference("Orders");

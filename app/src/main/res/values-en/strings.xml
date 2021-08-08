@@ -72,4 +72,6 @@
     <string name="waitingaccept">Waiting</string>
     <string name="cooked">Cooked</string>
     <string name="rejected">Rejected with reason: </string>
+    <string name="channel_name">notify_order</string>
+    <string name="channel_description">listen and notify when new order being accept</string>
 </resources>
