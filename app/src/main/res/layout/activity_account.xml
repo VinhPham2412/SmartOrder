@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp">
+
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
-        android:layout_width="match_parent"
-        android:layout_height="239dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:textColor="@color/white"
-        android:id="@+id/fragment_nameAccount"
-        android:layout_width="355dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="35dp"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="57dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_nameAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/fragment_nameAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_phoneAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waveHeader" />
+
+    <TextView
 
         android:id="@+id/fragment_phoneAccount"
-        android:layout_width="351dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="152dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_nameAccount"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fragment_nameAccount"
+        app:layout_constraintBottom_toTopOf="@+id/txtChangeInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_nameAccount" />
 
     <TextView
-        android:textColor="@color/or"
         android:id="@+id/txtChangeInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="75dp"
         android:drawablePadding="25dp"
+        android:gravity="center"
         android:text="@string/thongtintaikhoan"
+        android:textColor="@color/or"
         android:textSize="20dp"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/ic_baseline_settings_24"
@@ -62,50 +66,38 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_phoneAccount" />
 
     <TextView
-        android:textColor="@color/or"
         android:id="@+id/txtTableHistory"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="81dp"
         android:drawableStart="@drawable/ic_baseline_access_alarm_24"
         android:drawablePadding="25dp"
+        android:gravity="center"
         android:text="@string/lichsudatban"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtOrderhistory"
-        app:layout_constraintEnd_toEndOf="@+id/txtChangeInfo"
-        app:layout_constraintStart_toStartOf="@+id/txtChangeInfo" />
-
-    <TextView
         android:textColor="@color/or"
-        android:id="@+id/txtOrderhistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="51dp"
-        android:drawableStart="@drawable/ic_baseline_description_24"
-        android:drawablePadding="25dp"
-        android:text="@string/lichsugoimon"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtLogout"
-        app:layout_constraintEnd_toEndOf="@+id/txtTableHistory"
-        app:layout_constraintStart_toStartOf="@+id/txtTableHistory" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtChangeInfo" />
 
     <TextView
-        android:textColor="@color/or"
         android:id="@+id/txtLogout"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
+        android:layout_marginBottom="205dp"
         android:drawableStart="@drawable/ic_baseline_login_24"
         android:drawablePadding="25dp"
+        android:gravity="center"
         android:text="@string/dangxuat"
+        android:textColor="@color/or"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtOrderhistory"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="@+id/txtOrderhistory"
-        app:layout_constraintTop_toBottomOf="@+id/txtOrderhistory" />
+        app:layout_constraintBottom_toTopOf="@+id/navigation1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTableHistory" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation1"
@@ -117,5 +109,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogout"
         app:menu="@menu/navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,12 @@
 package com.example.su21g3project.Customer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.su21g3project.DownloadImageTask;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.su21g3project.General.DownloadImageTask;
 import com.example.su21g3project.R;
 
 public class NewsActivity extends AppCompatActivity {

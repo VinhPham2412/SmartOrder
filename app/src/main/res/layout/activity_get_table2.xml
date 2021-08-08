@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".GetTableActivity2"
+    tools:context=".General.GetTableActivity2"
     tools:layout_editor_absoluteY="81dp">
 
     <com.scwang.wave.MultiWaveHeader

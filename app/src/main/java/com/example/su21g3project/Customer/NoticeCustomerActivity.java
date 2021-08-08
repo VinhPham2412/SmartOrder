@@ -1,11 +1,11 @@
 package com.example.su21g3project.Customer;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
 
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,15 +19,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.Customer.BookedHistoryAdapter;
+import Model.Notice;
+import Model.Order;
+import adapter.General.BookedHistoryAdapter;
 import adapter.NoticeAdapter;
-import model.Notice;
-import model.ProcessOrder;
 
 public class NoticeCustomerActivity extends AppCompatActivity {
     private RecyclerView tableRe,noticeRe;
     private DatabaseReference reference;
-    private List<ProcessOrder> processOrderList;
+    private List<Order> processOrderList;
     private FirebaseUser user;
     private List<Notice> noticeList;
     @Override
@@ -41,7 +41,7 @@ public class NoticeCustomerActivity extends AppCompatActivity {
         noticeRe=findViewById(R.id.recycleViewNotice);
         tableRe.setLayoutManager(new LinearLayoutManager(this));
         noticeRe.setLayoutManager(new LinearLayoutManager(this));
-        reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+        reference = FirebaseDatabase.getInstance().getReference("Orders");
         /**
          * get all ProcessOrder of currentUser
          */
@@ -50,8 +50,8 @@ public class NoticeCustomerActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 processOrderList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ProcessOrder processOrder = dataSnapshot.getValue(ProcessOrder.class);
-                    if (processOrder.getUserId().equals(user.getUid()) && processOrder.getStatus().equals("confirmed")) {
+                    Order processOrder = dataSnapshot.getValue(Order.class);
+                    if (processOrder.getUserId().equals(user.getUid()) && processOrder.getStatus().equals("accepted")) {
                         processOrderList.add(processOrder);
                     }
 
@@ -68,7 +68,7 @@ public class NoticeCustomerActivity extends AppCompatActivity {
             }
         });
 
-        reference=FirebaseDatabase.getInstance().getReference("Communication").child("ManageReply").child("customer");
+        reference=FirebaseDatabase.getInstance().getReference("Communications").child("ManageReply").child("customer");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

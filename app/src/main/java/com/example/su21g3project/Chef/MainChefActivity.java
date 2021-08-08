@@ -1,11 +1,5 @@
 package com.example.su21g3project.Chef;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.su21g3project.Customer.AccountActivity;
-import com.example.su21g3project.Customer.CommunicationCustomer;
-import com.example.su21g3project.LoginActivity;
-import com.example.su21g3project.NoticeActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.su21g3project.Customer.CommunicationActivity;
+import com.example.su21g3project.General.LoginActivity;
+import com.example.su21g3project.General.NoticeActivity;
 import com.example.su21g3project.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,23 +26,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-import adapter.Chef.ChefAdapter;
-import model.OrderDetail;
-import model.User;
+import Model.User;
+import adapter.Chef.ChefViewPagerAdapter;
 
 public class MainChefActivity extends AppCompatActivity {
-    DatabaseReference reference;
-    private RecyclerView recyclerView;
-    private List<OrderDetail> list;
-    private ChefAdapter chefAdapter;
+    private DatabaseReference reference;
+    private TabLayout tabLayout;
     private TextView txtChefName;
     FirebaseUser user;
     private String role="";
+    private ViewPager2 viewPager2;
 
 
     @Override
@@ -50,10 +43,9 @@ public class MainChefActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chef);
         user= FirebaseAuth.getInstance().getCurrentUser();
-        recyclerView=findViewById(R.id.chefRecyclerView);
-        txtChefName=findViewById(R.id.txtChefName);
-
-        reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        txtChefName=findViewById(R.id.chefName);
+        tabLayout=findViewById(R.id.tabLayout);
+        reference=FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         /**
          * get info of Chef user
          */
@@ -72,32 +64,19 @@ public class MainChefActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list=new ArrayList<>();
-
-        reference= FirebaseDatabase.getInstance().getReference("OrderDetail");
-        /**
-         * get all OrderDetail with accepted and have't done
-         */
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    OrderDetail orderDetail=dataSnapshot.getValue(OrderDetail.class);
-                    if (orderDetail.getIsAccepted() && !orderDetail.isDoing()){
-                        list.add(orderDetail);
-                    }
-                }
-                chefAdapter=new ChefAdapter(list,getApplicationContext());
-                recyclerView.setAdapter(chefAdapter);
+        viewPager2=findViewById(R.id.viewPager);
+        ChefViewPagerAdapter viewPagerAdapter=new ChefViewPagerAdapter(this);
+        viewPager2.setAdapter(viewPagerAdapter);
+        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+            switch (position){
+                case 0:
+                    tab.setText(R.string.trangchu);
+                    break;
+                case 1:
+                    tab.setText(R.string.order);
+                    break;
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        }).attach();
 
     }
 
@@ -127,7 +106,7 @@ public class MainChefActivity extends AppCompatActivity {
                startActivity(intent);
                 break;
             case R.id.Communication:
-                startActivity(new Intent(MainChefActivity.this, CommunicationCustomer.class));
+                startActivity(new Intent(MainChefActivity.this, CommunicationActivity.class));
                 break;
             case R.id.logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainChefActivity.this);

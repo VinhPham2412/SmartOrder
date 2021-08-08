@@ -1,16 +1,12 @@
 package adapter.Customer;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,11 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
-import model.Food;
-import model.OrderDetail;
+import Model.Food;
+import Model.OrderDetail;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private List<OrderDetail> orderDetailList;
@@ -42,7 +37,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     public BillAdapter(List<OrderDetail> orderDetailList, Context mContext,String role) {
         this.orderDetailList = orderDetailList;
         this.mContext = mContext;
-        reference = FirebaseDatabase.getInstance().getReference("Food");
+        reference = FirebaseDatabase.getInstance().getReference("Foods");
         allViews=new ArrayList<>();
         eventListener=null;
         this.role=role;
@@ -83,7 +78,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
                         holder.getTxtFoodPrice().setText((int)food.getPrice()+"");
                         holder.getTxtFoodTotal().setText(total+ "");
                         finalSum += total;
-                        reference = FirebaseDatabase.getInstance().getReference("SubTotal");
+                        reference = FirebaseDatabase.getInstance().getReference("SubTotals");
                         reference.child(orderDetail.getOrderId()).setValue(finalSum);
                         editFood(holder.getEtFoodQuantity(),food.getPrice(),holder.getTxtFoodTotal(),orderDetail.getOrderId());
                     }
@@ -175,7 +170,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
                     totalPrice= (int)(new Integer(a).intValue()* price);
                     total.setText(totalPrice+"");
                     int newTotal=Integer.parseInt(total.getText().toString());
-                    reference = FirebaseDatabase.getInstance().getReference("SubTotal").child(orderId);
+                    reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderId);
                     eventListener=new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

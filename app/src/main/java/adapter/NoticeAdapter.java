@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-import model.Notice;
+import Model.Notice;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
     private List<Notice>  noticeList;
@@ -30,7 +30,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     public NoticeAdapter(List<Notice> noticeList, Context mContext,String role) {
         this.noticeList = noticeList;
         this.mContext = mContext;
-        reference= FirebaseDatabase.getInstance().getReference("Communication").child("ManageReply").child(role);
+        reference= FirebaseDatabase.getInstance().getReference("Communications").child("ManageReply").child(role);
     }
 
     @NonNull

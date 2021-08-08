@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import Fragments.CommunicationFragment;
-import Fragments.BillFragment;
-import Fragments.OrderFragment;
-import Fragments.WaiterOrderFragment;
+import Fragments.Chef.CommunicationFragment;
+import Fragments.Waiter.BillFragment;
+import Fragments.Waiter.OrderFragment;
+import Fragments.Waiter.WaiterOrderFragment;
 
 /**
  * ViewPageAdapter for waiter's main screen
@@ -26,7 +26,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new OrderFragment(fragmentActivity);
+                return new OrderFragment(fragmentActivity,"new");
             case 1:
                 return new BillFragment(fragmentActivity);
             case 2:

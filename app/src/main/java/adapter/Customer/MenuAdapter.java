@@ -2,12 +2,8 @@ package adapter.Customer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.DownloadImageTask;
+import com.example.su21g3project.General.DownloadImageTask;
 import com.example.su21g3project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,12 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Buffet;
-import model.Food;
+import Model.Buffet;
+import Model.Food;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private List<Buffet> buffetList;
@@ -67,7 +62,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.buffet_description.setText(buffet.getDescription());
         //get food id in this buffet
         foods= new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("Buffet").child(buffet.getId()).child("foods");
+        reference = FirebaseDatabase.getInstance().getReference("Buffets").child(buffet.getId()).child("foods");
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("ResourceAsColor")
             @Override

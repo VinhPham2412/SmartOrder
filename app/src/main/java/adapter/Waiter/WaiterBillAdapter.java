@@ -23,18 +23,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import model.ProcessOrder;
-import model.Table;
+import Model.Order;
+import Model.Table;
 
 public class WaiterBillAdapter extends RecyclerView.Adapter<WaiterBillAdapter.ViewHolder> {
-    private List<ProcessOrder> list;
+    private List<Order> list;
     private Context context;
     private DatabaseReference reference;
 
-    public WaiterBillAdapter(List<ProcessOrder> list, Context context) {
+    public WaiterBillAdapter(List<Order> list, Context context) {
         this.list = list;
         this.context = context;
-        reference = FirebaseDatabase.getInstance().getReference("ProcessOrder");
+        reference = FirebaseDatabase.getInstance().getReference("Orders");
     }
 
     @NonNull
@@ -50,8 +50,8 @@ public class WaiterBillAdapter extends RecyclerView.Adapter<WaiterBillAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        ProcessOrder processOrder = list.get(position);
-        reference = FirebaseDatabase.getInstance().getReference("Table").
+        Order processOrder = list.get(position);
+        reference = FirebaseDatabase.getInstance().getReference("Tables").
                 child(processOrder.getTableId());
         reference.addValueEventListener(new ValueEventListener() {
             @Override

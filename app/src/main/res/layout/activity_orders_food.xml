@@ -1,105 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
     xmlns:android="http://schemas.android.com/apk/res/android" />
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".OrdersFoodActivity"
-    android:orientation="vertical">
-    <TextView
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:id="@+id/buffetName"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/billRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="254dp" />
-
-    <TextView
-        android:layout_marginTop="3dp"
-        android:background="@drawable/border"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/foodanddrink"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:src="@drawable/ic_baseline_water_drop_24"
-            android:id="@+id/nuocngot"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="60dp"
-            android:background="@drawable/customimage1" />
-
-        <ImageButton
-            android:background="@drawable/customimage1"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/ruou"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_baseline_liquor_24"/>
-
-        <ImageButton
-            android:src="@drawable/ic_baseline_local_dining_24"
-            android:id="@+id/doan"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/customimage1"
-            android:layout_marginLeft="60dp"
-            />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewMoney"
-        android:layout_width="400dp"
-        android:layout_height="278dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-        <Button
-            android:backgroundTint="@color/or"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/btnCommunication"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Giaotiep"/>
-        <Button
-            android:backgroundTint="@color/or"
-            android:id="@+id/btnOrder"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/goimon"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Customer.OrdersFoodActivity">
 
-        <Button
-            android:backgroundTint="@color/or"
-            android:id="@+id/btnHistory"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/buffetName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history" />
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/billRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="254dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/foodanddrink"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/nuocngot"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="60dp"
+                android:background="@drawable/customimage1"
+                android:src="@drawable/ic_baseline_water_drop_24" />
+
+            <ImageButton
+                android:id="@+id/ruou"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/customimage1"
+                android:src="@drawable/ic_baseline_liquor_24" />
+
+            <ImageButton
+                android:id="@+id/doan"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/customimage1"
+                android:src="@drawable/ic_baseline_local_dining_24" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewMoney"
+            android:layout_width="400dp"
+            android:layout_height="278dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCommunication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="@color/or"
+                android:text="@string/Giaotiep"
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/btnOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/or"
+                android:text="@string/goimon"
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/or"
+                android:text="@string/history"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
 </ScrollView>

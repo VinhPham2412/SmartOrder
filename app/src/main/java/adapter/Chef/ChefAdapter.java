@@ -1,10 +1,10 @@
 package adapter.Chef;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,9 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-import adapter.Customer.BillAdapter;
-import model.Food;
-import model.OrderDetail;
+import Model.Food;
+import Model.OrderDetail;
 /**
  * Adapter for
  *
@@ -36,7 +35,7 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
     public ChefAdapter(List<OrderDetail> orderDetailList, Context mContext) {
         this.orderDetailList = orderDetailList;
         this.mContext = mContext;
-        reference= FirebaseDatabase.getInstance().getReference("Food");
+        reference= FirebaseDatabase.getInstance().getReference("Foods");
     }
 
     @NonNull
@@ -51,15 +50,16 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //get current orderDetail and display info
         final OrderDetail orderDetail=orderDetailList.get(position);
-        holder.txtQuantity.setText(orderDetail.getQuantity()+"");
-        reference=FirebaseDatabase.getInstance().getReference("Food").child(orderDetail.getFoodId());
+        holder.getTxtQuantity().setText(orderDetail.getQuantity()+"");
+        reference=FirebaseDatabase.getInstance().getReference("Foods").child(orderDetail.getFoodId());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     Food food=snapshot.getValue(Food.class);
-                    holder.txtFoodName.setText(food.getName());
+                    holder.getTxtFoodName().setText(food.getName());
                 }
             }
 
@@ -68,10 +68,11 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
 
             }
         });
-        holder.btnDone.setOnClickListener(v -> {
-            reference=FirebaseDatabase.getInstance().getReference("OrderDetail")
-                    .child(orderDetail.getId()).child("doing");
-            reference.setValue(true);
+        holder.getBtnDone().setOnClickListener(v -> {
+            reference=FirebaseDatabase.getInstance().getReference("OrderDetails")
+                    .child(orderDetail.getId()).child("status");
+            reference.setValue("cooked").addOnCompleteListener(task ->
+                    Log.println(Log.INFO, "cooking", "Cooked"));
         });
     }
 
@@ -83,14 +84,26 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
      * View holder for ChefAdapter.
      * Define components for each adapter view
      */
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView txtFoodName,txtQuantity;
-        public ImageButton btnDone;
-        public ViewHolder(@NonNull View itemView) {
+    protected class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView txtFoodName,txtQuantity;
+        private ImageButton btnDone;
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtFoodName=itemView.findViewById(R.id.txtFoodName);
             txtQuantity=itemView.findViewById(R.id.txtQuantity);
             btnDone=itemView.findViewById(R.id.btnDone);
+        }
+
+        public TextView getTxtFoodName() {
+            return txtFoodName;
+        }
+
+        public TextView getTxtQuantity() {
+            return txtQuantity;
+        }
+
+        public ImageButton getBtnDone() {
+            return btnDone;
         }
     }
 

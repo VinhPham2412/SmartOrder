@@ -10,7 +10,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-import model.Photo;
+import Model.Photo;
 
 public class PhotoAdapter extends PagerAdapter {
     private Context mContext;

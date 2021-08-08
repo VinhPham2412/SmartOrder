@@ -6,11 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
@@ -25,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Food;
-import model.OrderDetail;
+import Model.Food;
+import Model.OrderDetail;
 
 public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessingAdapter.ViewHolder> {
     List<List<OrderDetail>> orderDetailList;
@@ -38,14 +39,14 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
     public OrderProcessingAdapter(List<List<OrderDetail>> orderDetailList, Context mContext) {
         this.orderDetailList = orderDetailList;
         this.mContext = mContext;
-        reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
+        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        mContext = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         View uView = inflater.inflate(R.layout.custom_order_waiter, parent, false);
         ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;
@@ -56,9 +57,9 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
         final List<OrderDetail> details = orderDetailList.get(position);
         ids = new ArrayList<>();
         for (OrderDetail od : details) {
-            if(!od.getIsSeen()){
+            if(od.getStatus().equals("new")){
                 ids.add(od.getId());
-                reference = FirebaseDatabase.getInstance().getReference("Food").child(od.getFoodId());
+                reference = FirebaseDatabase.getInstance().getReference("Foods").child(od.getFoodId());
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -80,23 +81,42 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
         holder.getBtnAccept().setOnClickListener(v -> {
             //update isSeen and isAccepted
             //push data to rtdb
-            reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
+            reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
             for (String id : ids) {
-                reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
+                reference.child(id).child("status").setValue("accepted").addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set seen ok"));
-                reference.child(id).child("isAccepted").setValue(true).addOnCompleteListener(
-                        task -> Log.println(Log.INFO, "Update to rtdb", "Set accepted ok"));
-                reference.child(id).child("doing").setValue(false);
             }
+            reference = FirebaseDatabase.getInstance().getReference("Orders").
+                    child(details.get(0).getOrderId());
+            reference.child("status").setValue("accepted").addOnCompleteListener
+                    (task ->  Log.println(Log.INFO, "Update to rtdb", "Set order reject ok"));
         });
         holder.getBtnReject().setOnClickListener(v -> {
             //update isSeen and isAccepted
-            //push data to rtdb
-            reference = FirebaseDatabase.getInstance().getReference("OrderDetail");
-            for (String id : ids) {
-                reference.child(id).child("isSeen").setValue(true).addOnCompleteListener(
-                        task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
-            }
+            //input the reason
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            View view = inflater.inflate(R.layout.dialog_reason,null);
+            builder.setView(view);
+            EditText text = view.findViewById(R.id.txtRs);
+            TextView title = view.findViewById(R.id.textView22);
+            title.setText("Lý do từ chối.");
+            builder.setPositiveButton(R.string.reject, (dialog, which) -> {
+                //push data to rtdb
+                if(text.getText().toString().trim().isEmpty()){
+                    Toast.makeText(mContext,"Reason cannot empty",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
+                for (String id : ids) {
+                    reference.child(id).child("status").setValue("rejected").addOnCompleteListener(
+                            task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
+                    reference.child(id).child("reason").setValue(text.getText().toString()).addOnCompleteListener
+                            (task -> Log.println(Log.INFO, "Insert reason to rtdb", "Set detail reason ok"));
+                }
+            }).setNegativeButton(R.string.cancel,((dialog, which) -> {
+                dialog.cancel();
+            })).create().show();
         });
         holder.getTxtTime().setText(details.get(0).getTimeString());
     }

@@ -1,10 +1,6 @@
 package adapter.Customer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.DownloadImageTask;
+import com.example.su21g3project.General.DownloadImageTask;
 import com.example.su21g3project.R;
 
-import java.io.InputStream;
 import java.util.List;
 
-import model.Buffet;
+import Model.Buffet;
 
 public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder> {
     private int checkedPosition=0;

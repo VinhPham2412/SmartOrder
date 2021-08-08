@@ -33,7 +33,7 @@
     <string name="menu">Menu</string>
     <string name="news">Tin tức</string>
     <string name="notification">Notification</string>
-    <string name="foodanddrink">Food + Drink </string>
+    <string name="foodanddrink">Addition</string>
     <string name="firstname">First name</string>
     <string name="lastname">Last name</string>
     <string name="address">Address</string>
@@ -51,7 +51,8 @@
     <string name="FoodQuantity">Quantity</string>
     <string name="FoodPrice">Price</string>
     <string name="FoodTotal">Total</string>
-    <string name="done">Do</string>
+    <string name="done">Done</string>
+    <string name="lam">Cook</string>
     <string name="chefNotice">Notice</string>
     <string name="chefCommunication">Contact to Manager</string>
     <string name="Giaotiep">Communication</string>
@@ -65,4 +66,10 @@
     <string name="tomorrow1">Two days later</string>
     <string name="tomorrow2">Three days later</string>
     <string name="toastGettable">Please enter number of people</string>
+    <string name="order">Order</string>
+    <string name="cancel">Back</string>
+    <string name="accepted">Accepted</string>
+    <string name="waitingaccept">Waiting</string>
+    <string name="cooked">Cooked</string>
+    <string name="rejected">Rejected with reason: </string>
 </resources>
