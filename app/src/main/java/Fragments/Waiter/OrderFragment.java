@@ -95,7 +95,6 @@ public class OrderFragment extends Fragment {
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
-
         return view;
     }
 

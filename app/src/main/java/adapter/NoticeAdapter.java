@@ -30,7 +30,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     public NoticeAdapter(List<Notice> noticeList, Context mContext,String role) {
         this.noticeList = noticeList;
         this.mContext = mContext;
-        reference= FirebaseDatabase.getInstance().getReference("Communications").child("ManageReply").child(role);
+        reference= FirebaseDatabase.getInstance().getReference("Communications").child(role);
     }
 
     @NonNull
@@ -50,6 +50,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Notice notice=noticeList.get(position);
+        holder.txtYourMessage.setText(notice.getMessage());
         holder.txtMessage.setText(notice.getMessageReply());
         viewBinderHelper.bind(holder.swipeRevealLayout,notice.getId());
         holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView txtMessage;
+        public TextView txtMessage,txtYourMessage;
         public SwipeRevealLayout swipeRevealLayout;
         public LinearLayout layoutDelete;
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +76,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             txtMessage=itemView.findViewById(R.id.txtMessage);
             swipeRevealLayout=itemView.findViewById(R.id.SwipeRevealLayout);
             layoutDelete=itemView.findViewById(R.id.layoutDelete);
+            txtYourMessage=itemView.findViewById(R.id.txtYourMessgae);
 
 
         }

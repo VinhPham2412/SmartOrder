@@ -2,13 +2,29 @@ package Model;
 
 public class Notice {
     private String id;
+    private String message;
     private String messageReply;
     private String userId;
     private boolean isSeen;
+    private boolean isReply;
     private boolean isNotify;
 
-    public void setIsNotify(boolean notify) {
-        isNotify = notify;
+    public Notice(String id, String message, String messageReply, String userId, boolean isSeen, boolean isReply, boolean isNotify) {
+        this.id = id;
+        this.message = message;
+        this.messageReply = messageReply;
+        this.userId = userId;
+        this.isSeen = isSeen;
+        this.isReply = isReply;
+        this.isNotify = isNotify;
+    }
+
+    public boolean getIsNotify() {
+        return isNotify;
+    }
+
+    public void setIsNotify(boolean isNotify) {
+        this.isNotify = isNotify;
     }
 
     public String getId() {
@@ -43,17 +59,25 @@ public class Notice {
         isSeen = seen;
     }
 
-    public Notice(String id, String messageReply, String userId, boolean isSeen) {
-        this.id = id;
-        this.messageReply = messageReply;
-        this.userId = userId;
-        this.isSeen = isSeen;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
+    public boolean getIsReply() {
+        return isReply;
+    }
+
+    public void setReply(boolean reply) {
+        isReply = reply;
     }
 
     public Notice() {
     }
 
-    public boolean getIsNotify() {
-        return isNotify;
-    }
+
 }

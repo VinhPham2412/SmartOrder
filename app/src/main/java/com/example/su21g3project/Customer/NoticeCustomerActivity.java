@@ -69,7 +69,7 @@ public class NoticeCustomerActivity extends AppCompatActivity {
             }
         });
 
-        reference=FirebaseDatabase.getInstance().getReference("Communications").child("ManageReply").child("customer");
+        reference=FirebaseDatabase.getInstance().getReference("Communications").child("customer");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

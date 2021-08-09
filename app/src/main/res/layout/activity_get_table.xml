@@ -7,8 +7,8 @@
 
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:layout_marginBottom="45dp"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,20 +17,18 @@
 
     <Button
         android:id="@+id/btnNextAfterTomorrow"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="69dp"
         android:textColor="@color/or"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAfterTomorrow"
         app:layout_constraintTop_toBottomOf="@+id/btnTomorrow" />
 
     <Button
         android:id="@+id/btnAfterTomorrow"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
         android:layout_marginStart="80dp"
         android:layout_marginEnd="45dp"
         android:textColor="@color/or"
@@ -41,8 +39,8 @@
 
     <Button
         android:id="@+id/btnTomorrow"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="9dp"
         android:textColor="@color/or"
@@ -53,8 +51,8 @@
 
     <Button
         android:id="@+id/btnToday"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="45dp"
@@ -69,67 +67,61 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="27dp"
         android:text="@string/selectDate"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/btnTomorrow"
-        app:layout_constraintStart_toStartOf="@+id/btnToday"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waveHeader" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="71dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="52dp"
         android:text="@string/selectTime"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_slTime"
-        app:layout_constraintEnd_toStartOf="@+id/txtPreviewTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNextAfterTomorrow" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAfterTomorrow" />
 
     <SeekBar
         android:id="@+id/seekBar_slTime"
         android:layout_width="322dp"
         android:layout_height="0dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginBottom="66dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/txtPreviewTime"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/border"
         android:gravity="center"
         android:textColor="@color/or"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_slTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8" />
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/btnNextAfterTomorrow" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="31dp"
         android:layout_marginEnd="72dp"
-        android:layout_marginBottom="83dp"
         android:text="@string/sl_nopeople"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toStartOf="@+id/txtNoPP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar_slTime" />
 
     <EditText
         android:id="@+id/txtNoPP"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginEnd="123dp"
         android:background="@drawable/border"
@@ -146,11 +138,14 @@
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
         android:layout_marginBottom="115dp"
         android:backgroundTint="@color/or"
         android:text="@string/btnNext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNoPP"
+        app:layout_constraintVertical_bias="0.507" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.su21g3project.Customer.BookedHistoryActivity;
 import com.example.su21g3project.Customer.NoticeCustomerActivity;
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,9 +74,14 @@ public class NotificationService extends Service {
 
     private void startOwnForeground() {
         createChannel();
+
+
         notificationManager = NotificationManagerCompat.from(getApplicationContext());
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
+
+
+
         reference = FirebaseDatabase.getInstance().getReference("Orders");
         reference.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,9 +89,8 @@ public class NotificationService extends Service {
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
                     if(snapshot1.exists()){
                         Order order = snapshot1.getValue(Order.class);
-                        if(order.getStatus().equals("accepted")
-                                && !order.getIsNotify()){
-                            notifiedOrder(order.getId());
+                        if((order.getStatus().equals("accepted")|| order.getStatus().equals("rejected")) && !order.getIsNotify()){
+                            notifiedOrder(order.getId(),order.getStatus());
                         }
                     }
                 }
@@ -96,26 +101,26 @@ public class NotificationService extends Service {
 
             }
         });
-        reference = FirebaseDatabase.getInstance().getReference("Communications");
+
+        reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
         reference.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
                     if(snapshot1.exists()){
                         Notice notice = snapshot1.getValue(Notice.class);
-                        if(!notice.getMessageReply().isEmpty()&&
-                                !notice.getIsNotify()){
-                            notifiedMess(notice.getId());
+                        if(notice.getIsReply() && !notice.getIsNotify()){
+                            notifiedMess(notice.getId(),notice.getMessageReply(),"customer");
                         }
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
         });
+
         //this for display only
         int notificationId = new Random().nextInt(99999);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
@@ -127,27 +132,27 @@ public class NotificationService extends Service {
         startForeground(notificationId, notification);
     }
 
-    private void notifiedOrder(String id) {
+    private void notifiedOrder(String id,String status) {
         int notificationId = new Random().nextInt(99999);
         reference = FirebaseDatabase.getInstance().getReference("Orders").child(id).child("isNotify");
         reference.setValue(true);
-        Intent intent = new Intent(getApplicationContext(), NoticeCustomerActivity.class);
+        Intent intent = new Intent(getApplicationContext(), BookedHistoryActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_ic)
                 .setContentTitle("Smart Order")
-                .setContentText("Your order has been accepted")
+                .setContentText("Your order has been :"+status)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(notificationId, builder.build());
-        Log.println(Log.INFO,"show notofy","showing notify");
+        Log.println(Log.INFO,"show notify","showing notify");
     }
-    private void notifiedMess(String id) {
-        reference = FirebaseDatabase.getInstance().getReference("Communications").child(id).child("isNotify");
+    private void notifiedMess(String id,String messageReply,String path) {
+        reference = FirebaseDatabase.getInstance().getReference("Communications").child(path).child(id).child("isNotify");
         reference.setValue(true);
         int notificationId = new Random().nextInt(99999);
         Intent intent = new Intent(getApplicationContext(), NoticeCustomerActivity.class);
@@ -156,7 +161,7 @@ public class NotificationService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_ic)
                 .setContentTitle("Smart Order")
-                .setContentText("Your order has been accepted")
+                .setContentText("Manager:\n"+messageReply)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)

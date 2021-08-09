@@ -1,6 +1,7 @@
 package Fragments.Chef;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +27,6 @@ import java.util.List;
 import Model.OrderDetail;
 import adapter.Chef.ChefAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainChefFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainChefFragment extends Fragment {
     DatabaseReference reference;
     private RecyclerView recyclerView;
@@ -38,37 +35,15 @@ public class MainChefFragment extends Fragment {
     private TextView txtChefName;
     FirebaseUser user;
     private String role="";
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private int dvHeight;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public MainChefFragment() {
-        // Required empty public constructor
+    public MainChefFragment(FragmentActivity fragmentActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        dvHeight = displayMetrics.heightPixels;
     }
     // TODO: Rename and change types and number of parameters
-    public static MainChefFragment newInstance(String param1, String param2) {
-        MainChefFragment fragment = new MainChefFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

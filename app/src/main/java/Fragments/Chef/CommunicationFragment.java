@@ -61,12 +61,14 @@ private int dvHeight;
         listviewdata.setAdapter(adapter);
         btnSenReason.setOnClickListener(v -> {
             String communicationId = UUID.randomUUID().toString();
-            reference = FirebaseDatabase.getInstance().getReference("Communications").child("Waiter");
+            reference = FirebaseDatabase.getInstance().getReference("Communications").child("waiter");
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);
             hashMap.put("message", txtReason.getText().toString());
             hashMap.put("isSeen", false);
+            hashMap.put("isReply",false);
+            hashMap.put("isNotify",false);
             reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
                     task -> Toast.makeText(getContext(),"Gửi ý kiến thành công",
                             Toast.LENGTH_SHORT).show());

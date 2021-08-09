@@ -161,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                     countProcess = processOrderList.size();
                     if (countNotice + countProcess > 0) {
                         txtNotice.setText(String.valueOf(countNotice + countProcess));
-                    }
+                    }else
+                        txtNotice.setText("");
 
                 }
 
@@ -171,21 +172,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            reference = FirebaseDatabase.getInstance().getReference("Communications").child("ManageReply").child("customer");
+            reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     noticeList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Notice notice = dataSnapshot.getValue(Notice.class);
-                        if (!notice.getIsSeen() && notice.getUserId().equals(firebaseUser.getUid())) {
+                        if (!notice.getIsSeen() && notice.getUserId().equals(firebaseUser.getUid()) && notice.getIsReply()) {
                             noticeList.add(notice);
                         }
                     }
                     countNotice = noticeList.size();
                     if (countNotice + countProcess > 0) {
                         txtNotice.setText(String.valueOf(countNotice + countProcess));
-                    }
+                    }else
+                        txtNotice.setText("");
 
                 }
 

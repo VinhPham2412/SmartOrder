@@ -72,7 +72,7 @@ public class MainChefActivity extends AppCompatActivity {
                 case 0:
                     tab.setText(R.string.trangchu);
                     break;
-                case 1:
+                default:
                     tab.setText(R.string.order);
                     break;
             }

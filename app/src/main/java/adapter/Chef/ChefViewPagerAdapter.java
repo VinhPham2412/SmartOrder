@@ -23,7 +23,7 @@ public class ChefViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new ChefOrderFragment(fragmentActivity);
             default:
-                return new MainChefFragment();
+                return new MainChefFragment(fragmentActivity);
 
         }
     }

@@ -87,6 +87,8 @@ public class CommunicationActivity extends AppCompatActivity {
             hashMap.put("userId", userId);
             hashMap.put("message", txtReason.getText().toString());
             hashMap.put("isSeen", false);
+            hashMap.put("isReply",false);
+            hashMap.put("isNotify",false);
             reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
                     task -> Toast.makeText(CommunicationActivity.this, "Gửi ý kiến thành công",
                             Toast.LENGTH_SHORT).show());
