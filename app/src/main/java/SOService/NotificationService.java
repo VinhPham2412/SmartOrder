@@ -35,12 +35,14 @@ import java.util.Random;
 
 import Model.Notice;
 import Model.Order;
+import Model.User;
 
 public class NotificationService extends Service {
     private static final String CHANNEL_ID = "SmartOrderChanel";
     private DatabaseReference reference;
     private FirebaseUser user;
     private NotificationManagerCompat notificationManager;
+    private String role="";
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
@@ -80,7 +82,21 @@ public class NotificationService extends Service {
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
 
+        reference=FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    User user=snapshot.getValue(User.class);
+                    role=user.getRole();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         reference = FirebaseDatabase.getInstance().getReference("Orders");
         reference.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
@@ -102,7 +118,7 @@ public class NotificationService extends Service {
             }
         });
 
-        reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
+        reference = FirebaseDatabase.getInstance().getReference("Communications").child(role);
         reference.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -110,7 +126,7 @@ public class NotificationService extends Service {
                     if(snapshot1.exists()){
                         Notice notice = snapshot1.getValue(Notice.class);
                         if(notice.getIsReply() && !notice.getIsNotify()){
-                            notifiedMess(notice.getId(),notice.getMessageReply(),"customer");
+                            notifiedMess(notice.getId(),notice.getMessageReply(),role);
                         }
                     }
                 }

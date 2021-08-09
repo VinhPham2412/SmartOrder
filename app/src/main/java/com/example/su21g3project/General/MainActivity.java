@@ -238,7 +238,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        imageButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NoticeCustomerActivity.class)));
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1=new Intent(MainActivity.this,NoticeActivity.class);
+                intent1.putExtra("role","customer");
+                startActivity(intent1);
+            }
+        });
         mainLogin.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();

@@ -37,14 +37,14 @@ public class NoticeActivity extends AppCompatActivity {
         noticeList=new ArrayList<>();
         recyclerView=findViewById(R.id.container);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        reference= FirebaseDatabase.getInstance().getReference("Communication").child("ManageReply").child(role);
+        reference= FirebaseDatabase.getInstance().getReference("Communications").child(role);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 noticeList.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Notice notice=dataSnapshot.getValue(Notice.class);
-                    if (!notice.getIsSeen()&& notice.getUserId().equals(user.getUid())){
+                    if (!notice.getIsSeen()&& notice.getUserId().equals(user.getUid()) && notice.getIsReply()){
                         noticeList.add(notice);
                     }
                 }
