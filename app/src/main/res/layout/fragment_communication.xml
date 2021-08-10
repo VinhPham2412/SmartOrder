@@ -25,12 +25,12 @@
         android:inputType="textMultiLine"
         android:textSize="14dp" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/txtReason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_data"
-        android:choiceMode="multipleChoice"/>
+/>
     <ImageButton
         android:background="@drawable/border"
         android:backgroundTint="@color/or"

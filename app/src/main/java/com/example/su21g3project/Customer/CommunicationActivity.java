@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,24 +22,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import Model.User;
+import adapter.General.CommunicationAdapter;
 
 public class CommunicationActivity extends AppCompatActivity {
     private EditText txtReason;
-    private ListView listviewdata;
-    ArrayAdapter<String> adapter;
+    private RecyclerView listviewdata;
     private ImageButton btnSenReason;
     private DatabaseReference reference;
     private String userId;
     private String role = "customer";
-    String[] chefNotice = {"Bếp gặp sự cố", "Nguyên liệu có vấn đề", "Có người bị thương trong bếp",
-            "Cần bổ xung thêm người làm"};
-    String[] customerNotice = {"Đồ ăn ra quá chậm", "Đồ ăn ra không đúng với Order", "Chất lượng đồ ăn có vấn đề",
-            "Thái độ nhân viên không được chuẩn mực", "Vệ sinh bàn còn rất bẩn"};
-
+    List<String> chefNotice =new ArrayList<>();
+    List<String> customerNotice = new ArrayList<>();
+    private CommunicationAdapter communicationAdapter;
     /**
      * create View
      *
@@ -47,10 +49,20 @@ public class CommunicationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_communication_customer);
+        chefNotice.add("Bếp gặp sự cố");
+        chefNotice.add("Nguyên liệu có vấn đề");
+        chefNotice.add("Có người bị thương trong bếp");
+        chefNotice.add("Cần bổ xung thêm người làm");
+        customerNotice.add("Đồ ăn ra quá chậm");
+        customerNotice.add("Đồ ăn ra không đúng với Order");
+        customerNotice.add("Chất lượng đồ ăn có vấn đề");
+        customerNotice.add("Thái độ nhân viên không được chuẩn mực");
+        customerNotice.add("Vệ sinh bàn còn rất bẩn");
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         btnSenReason = findViewById(R.id.btnSendReason);
         txtReason = findViewById(R.id.txtReason);
         listviewdata = findViewById(R.id.listview_data);
+        listviewdata.setLayoutManager(new LinearLayoutManager(this));
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         // check role user then display reason allow role
@@ -61,11 +73,11 @@ public class CommunicationActivity extends AppCompatActivity {
                     User user = snapshot.getValue(User.class);
                     role = user.getRole();
                     if (role.equals("customer")) {
-                        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice, customerNotice);
-                        listviewdata.setAdapter(adapter);
+                        communicationAdapter = new CommunicationAdapter(customerNotice,getApplicationContext());
+                        listviewdata.setAdapter(communicationAdapter);
                     } else {
-                        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice, chefNotice);
-                        listviewdata.setAdapter(adapter);
+                        communicationAdapter = new CommunicationAdapter(chefNotice,getApplicationContext());
+                        listviewdata.setAdapter(communicationAdapter);
                     }
                 }
             }
@@ -119,9 +131,10 @@ public class CommunicationActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.item_done) {
             String itemSelected = "";
-            for (int i = 0; i < listviewdata.getCount(); i++) {
-                if (listviewdata.isItemChecked(i)) {
-                    itemSelected += listviewdata.getItemAtPosition(i) + "\n";
+            List<CommunicationAdapter.ViewHolder> viewHolders=communicationAdapter.getViewHolders();
+            for (CommunicationAdapter.ViewHolder v:viewHolders){
+                if (v.checkBox.isChecked()){
+                    itemSelected+=v.txtReason.getText()+"\n";
                 }
             }
             txtReason.setText(itemSelected);
