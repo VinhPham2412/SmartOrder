@@ -91,40 +91,40 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         tableId = order.getTableId();
         buffetId = order.getBuffetId();
         if (tableId == null) {
-            Log.d("tableId null", "Don't set tableId for order yet");
-            return;
-        }
-        reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    //got table name
-                    Table table = snapshot.getValue(Table.class);
-                    reference = FirebaseDatabase.getInstance().getReference("Floors").child(table.getFloorId());
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                //got floor name
-                                Floor floor = snapshot.getValue(Floor.class);
-                                holder.getTxtTableAndFloor().setText(table.getName() + ", " + floor.getName());
+            holder.getTxtTableAndFloor().setText("Chưa xếp bàn");
+        }else{
+            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        //got table name
+                        Table table = snapshot.getValue(Table.class);
+                        reference = FirebaseDatabase.getInstance().getReference("Floors").child(table.getFloorId());
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    //got floor name
+                                    Floor floor = snapshot.getValue(Floor.class);
+                                    holder.getTxtTableAndFloor().setText(table.getName() + ", " + floor.getName());
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
         if(buffetId==null){
             holder.getTxtBuffet().setText("Chưa chọn buffet");
         }else{

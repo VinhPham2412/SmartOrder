@@ -39,16 +39,15 @@ public class BookedHistoryActivity extends AppCompatActivity {
         /**
          * get all ProcessOrder of currentUser
          */
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("userId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Order processOrder = dataSnapshot.getValue(Order.class);
-                    if (processOrder.getUserId().equals(user.getUid())) {
-                        list.add(processOrder);
+                if(snapshot.exists()){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Order processOrder = dataSnapshot.getValue(Order.class);
+                            list.add(processOrder);
                     }
-
                 }
                 //show list processOrder by apdater
                 BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistoryActivity.this);

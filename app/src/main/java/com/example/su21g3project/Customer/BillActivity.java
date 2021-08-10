@@ -85,28 +85,28 @@ public class BillActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.billRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if(tableId==null){
-            Toast.makeText(BillActivity.this,"Your order has not been accept",Toast.LENGTH_SHORT).show();
-            return;
-        }
         int numPeople=getIntent().getIntExtra("numPeople",0);
         txtTableName = findViewById(R.id.txtTableName);
 
         /**
          * get tableName
          */
-        reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Table table = snapshot.getValue(Table.class);
-                txtTableName.setText("Bàn "+table.getName());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        if(tableId==null){
+            txtTableName.setText("Chưa xếp bàn.");
+        }else{
+            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Table table = snapshot.getValue(Table.class);
+                    txtTableName.setText(table.getName());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
         /**
          * Display all orderDetail in recyclerView
          */
