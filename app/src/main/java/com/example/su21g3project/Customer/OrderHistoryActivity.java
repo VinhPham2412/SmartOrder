@@ -31,7 +31,6 @@ import adapter.General.OrderHistoryAdapter;
 
 public class OrderHistoryActivity extends AppCompatActivity {
     private DatabaseReference reference;
-    private FirebaseUser user;
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
     private Button btnBill;
@@ -40,19 +39,16 @@ public class OrderHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_order_history);
         String orderId=getIntent().getStringExtra("orderId");
-        user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
-        reference.orderByChild("orderId").equalTo(orderId).addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 result.clear();
                 for (DataSnapshot post : snapshot.getChildren()) {
                     if (post.exists()) {
                         OrderDetail orderDetail = post.getValue(OrderDetail.class);
-                        //if same user
-                        assert orderDetail != null;
-                        orderDetail.getUserId().equals(user.getUid());
-                            String orderId = orderDetail.getOrderId();
+                            String iorderId = orderDetail.getOrderId();
+                        if(orderId.equals(iorderId)){
                             Date time = orderDetail.getTime();
                             boolean isFoundPlace = false;
 
@@ -74,7 +70,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                 result.add(subResult);
                             }
                         }
-
+                    }
 
                 }
                 OrderHistoryAdapter adapter = new OrderHistoryAdapter(result);
@@ -89,7 +85,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
             }
         });
-        btnBill=findViewById(R.id.btnBill);
+        btnBill=findViewById(R.id.btnCBill);
         btnBill.setOnClickListener(v -> {
             reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -115,11 +111,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
         });
     }
 
-
-
     private boolean isBelong(List<OrderDetail> list,  Date time) {
         if (!list.isEmpty() && list != null) {
-            return list.get(0).getTime().toString().equals(time.toString());
+            return list.get(0).getTime().toString()
+                    .equals(time.toString());
         }
         return false;
     }

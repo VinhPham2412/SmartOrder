@@ -1,25 +1,15 @@
 package Model;
 
-public class Table {
+public class Floor {
     private String id;
     private String name;
-    private String floorId;
 
-    public Table() {
+    public Floor() {
     }
 
-    public Table(String id, String name, String floorId) {
+    public Floor(String id, String name) {
         this.id = id;
         this.name = name;
-        this.floorId = floorId;
-    }
-
-    public String getFloorId() {
-        return floorId;
-    }
-
-    public void setFloorId(String floorId) {
-        this.floorId = floorId;
     }
 
     public String getId() {

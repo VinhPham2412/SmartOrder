@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Model.Order;
 import Model.OrderDetail;
 import adapter.Waiter.OrderProcessingAdapter;
 
@@ -35,12 +38,14 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference reference;
     private OrderProcessingAdapter orderProcessingAdapter;
+    private List<String> orderIds = new ArrayList<>();
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
     private int dvHeight;
     private String status;
+    private FirebaseUser user;
 
-    public OrderFragment(FragmentActivity fragmentActivity,String status) {
+    public OrderFragment(FragmentActivity fragmentActivity, String status) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         dvHeight = displayMetrics.heightPixels;
@@ -52,19 +57,44 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.custom_recylerview, container, false);
-        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
         recyclerView = view.findViewById(R.id.container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setMinimumHeight(dvHeight);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        //get orderId which belong to this waiter responsibility
+        if (user != null) {
+            reference = FirebaseDatabase.getInstance().getReference("Orders");
+            reference.orderByChild("waiterId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        if (snapshot1.exists()) {
+                            Order order = snapshot1.getValue(Order.class);
+                            if (order.getStatus().equals("accepted")) {
+                                orderIds.add(order.getId());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        }
+        //get details
+        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 //orderDetails from rtdb
                 result.clear();
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
                     //if not seen
-                    if(orderDetail.getStatus().equals(status)){
+                    if (orderDetail.getStatus().equals(status) &&
+                            orderIds.contains(orderDetail.getOrderId())) {
                         String orderId = orderDetail.getOrderId();
                         Date time = orderDetail.getTime();
                         boolean isFoundPlace = false;
@@ -74,7 +104,7 @@ public class OrderFragment extends Fragment {
 
                             //get list contain elements with same orderId
                             subResult = result.get(i);
-                            if (isBelong(subResult, orderId,time)) {
+                            if (isBelong(subResult, orderId, time)) {
                                 subResult.add(orderDetail);
                                 isFoundPlace = true;
                             }
@@ -91,6 +121,7 @@ public class OrderFragment extends Fragment {
                 orderProcessingAdapter = new OrderProcessingAdapter(result, getContext());
                 recyclerView.setAdapter(orderProcessingAdapter);
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
@@ -100,9 +131,9 @@ public class OrderFragment extends Fragment {
 
     //belong is same orderId and time
     private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
-        if (!list.isEmpty()&&list.get(0)!=null) {
+        if (!list.isEmpty() && list.get(0) != null) {
             return list.get(0).getOrderId().equals(orderId)
-                    &&list.get(0).getTime().equals(time);
+                    && list.get(0).getTime().equals(time);
         }
         return false;
     }

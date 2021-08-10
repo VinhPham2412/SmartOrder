@@ -50,6 +50,10 @@ public class BillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
         user= FirebaseAuth.getInstance().getCurrentUser();
+        //get from intent
+        String orderId = getIntent().getStringExtra("orderId");
+        String tableId = getIntent().getStringExtra("tableId");
+        String buffetId=getIntent().getStringExtra("buffetId");
 
         reference=FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         /**
@@ -81,13 +85,11 @@ public class BillActivity extends AppCompatActivity {
         orderDetailList = new ArrayList<>();
         recyclerView = findViewById(R.id.billRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        String orderId = getIntent().getStringExtra("orderId");
-        String tableId = getIntent().getStringExtra("tableId");
+
         if(tableId==null){
             Toast.makeText(BillActivity.this,"Your order has not been accept",Toast.LENGTH_SHORT).show();
             return;
         }
-        String buffetId=getIntent().getStringExtra("buffetId");
         int numPeople=getIntent().getIntExtra("numPeople",0);
         txtTableName = findViewById(R.id.txtTableName);
 

@@ -21,7 +21,7 @@ import java.util.List;
 
 import Model.Notice;
 import Model.Order;
-import adapter.General.BookedHistoryAdapter;
+import adapter.Waiter.BookedHistoryAdapter;
 import adapter.NoticeAdapter;
 
 public class NoticeCustomerActivity extends AppCompatActivity {

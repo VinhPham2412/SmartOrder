@@ -71,12 +71,9 @@ public class MainWaiterActivity extends AppCompatActivity {
                     tab.setText(R.string.trangchu);
                     break;
                 case 1:
-                    tab.setText(R.string.bill);
-                    break;
-                case 2:
                     tab.setText(R.string.goimon);
                     break;
-                case 3:
+                case 2:
                     tab.setText(R.string.communication);
                     break;
             }

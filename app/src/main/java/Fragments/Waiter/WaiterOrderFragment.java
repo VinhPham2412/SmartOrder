@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Order;
-import adapter.General.BookedHistoryAdapter;
+import adapter.Waiter.BookedHistoryAdapter;
 
 
 public class WaiterOrderFragment extends Fragment {
@@ -53,15 +53,14 @@ public class WaiterOrderFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Orders");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("waiterId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Order processOrder = dataSnapshot.getValue(Order.class);
-                    if (processOrder.getStatus().equals("accepted") &&
-                            processOrder.getWaiterId().equals(user.getUid())) {
-                        list.add(processOrder);
+                    Order order = dataSnapshot.getValue(Order.class);
+                    if (order.getStatus().equals("accepted")) {
+                        list.add(order);
                     }
 
                 }

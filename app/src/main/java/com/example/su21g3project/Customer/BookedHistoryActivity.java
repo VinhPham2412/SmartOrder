@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Order;
-import adapter.General.BookedHistoryAdapter;
+import adapter.Waiter.BookedHistoryAdapter;
 
 public class BookedHistoryActivity extends AppCompatActivity {
     private DatabaseReference reference;

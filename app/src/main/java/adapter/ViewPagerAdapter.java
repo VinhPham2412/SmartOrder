@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import Fragments.Chef.CommunicationFragment;
-import Fragments.Waiter.BillFragment;
 import Fragments.Waiter.OrderFragment;
 import Fragments.Waiter.WaiterOrderFragment;
 
@@ -24,20 +23,21 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        Fragment fragment;
         switch (position){
             case 0:
-                return new OrderFragment(fragmentActivity,"new");
+                fragment = new OrderFragment(fragmentActivity,"new");
+                break;
             case 1:
-                return new BillFragment(fragmentActivity);
-            case 2:
-                return new WaiterOrderFragment(fragmentActivity);
+                fragment= new WaiterOrderFragment(fragmentActivity);
+                break;
             default:
-                return new CommunicationFragment(fragmentActivity);
-
+                fragment= new CommunicationFragment(fragmentActivity);
         }
+        return fragment;
     }
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }
