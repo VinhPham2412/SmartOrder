@@ -75,7 +75,6 @@ public class BillActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
         btnConfirmBill=findViewById(R.id.btnConfirmBill);
         billBuffetName=findViewById(R.id.billBuffetName);
         billBuffetNumPeople=findViewById(R.id.billBuffetNumpeople);

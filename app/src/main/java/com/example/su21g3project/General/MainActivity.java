@@ -61,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private List<Order> processOrderList;
     private MultiWaveHeader waveFooter;
-    private int countProcess = 0;
+
     private int countNotice = 0;
     private List<Notice> noticeList;
 
@@ -145,33 +144,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),NotificationService.class);
             startForegroundService(intent);
             txtNotice.setVisibility(View.VISIBLE);
-            processOrderList = new ArrayList<>();
-            reference = FirebaseDatabase.getInstance().getReference("Orders");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    processOrderList.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Order processOrder = dataSnapshot.getValue(Order.class);
-                        if ((processOrder.getStatus().equals("accepted") &&
-                                processOrder.getUserId().equals(firebaseUser.getUid()))) {
-                            processOrderList.add(processOrder);
-                        }
-                    }
-                    countProcess = processOrderList.size();
-                    if (countNotice + countProcess > 0) {
-                        txtNotice.setText(String.valueOf(countNotice + countProcess));
-                    }else
-                        txtNotice.setText("");
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
             reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -184,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     countNotice = noticeList.size();
-                    if (countNotice + countProcess > 0) {
-                        txtNotice.setText(String.valueOf(countNotice + countProcess));
+                    if (countNotice> 0) {
+                        txtNotice.setText(String.valueOf(countNotice));
                     }else
                         txtNotice.setText("");
 

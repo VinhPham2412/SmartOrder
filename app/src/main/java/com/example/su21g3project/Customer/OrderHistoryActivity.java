@@ -102,7 +102,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
