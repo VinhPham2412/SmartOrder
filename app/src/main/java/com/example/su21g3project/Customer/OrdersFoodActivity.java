@@ -1,6 +1,7 @@
 package com.example.su21g3project.Customer;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ import java.util.TimeZone;
 
 import Model.Buffet;
 import Model.Food;
+import Model.Order;
 import Model.OrderDetail;
 import Model.User;
 import adapter.Customer.OrdersFoodAdapter;
@@ -42,7 +44,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
     private OrdersFoodAdapter inBuffetAdapter, outBuffetAdapter;
     private List<Food> list;
     private List<Food> foodListMoney;
-    private TextView buffetName;
+    private TextView buffetName,txtHistoryOrder;
     private Button btnOrder, btnC, btnHistory;
     private FirebaseUser user;
     private String userId;
@@ -89,9 +91,20 @@ public class OrdersFoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders_food);
+        txtHistoryOrder=findViewById(R.id.txtHistoryOrder);
+        txtHistoryOrder.setPaintFlags(txtHistoryOrder.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
 
         String orderId = getIntent().getStringExtra("orderId");
+        txtHistoryOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrdersFoodActivity.this, OrderHistoryActivity.class);
+                intent.putExtra("orderId", orderId);
+                startActivity(intent);
+            }
+        });
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.billRecycleView);
         btnHistory = findViewById(R.id.btnHistory);
@@ -103,9 +116,26 @@ public class OrdersFoodActivity extends AppCompatActivity {
         role = "customer";
 
         btnHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(OrdersFoodActivity.this, OrderHistoryActivity.class);
-            intent.putExtra("orderId", orderId);
-            startActivity(intent);
+            reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Order processOrder = snapshot.getValue(Order.class);
+                        Intent intent = new Intent(getApplicationContext(), BillActivity.class);
+                        intent.putExtra("orderId", orderId);
+                        intent.putExtra("tableId", processOrder.getTableId());
+                        intent.putExtra("buffetId",processOrder.getBuffetId());
+                        intent.putExtra("numPeople",processOrder.getNumberOfPeople());
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
         });
 
         if (user != null) {

@@ -101,10 +101,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/or"
-                android:text="@string/history"
+                android:text="@string/bill"
                 android:textSize="12dp" />
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/txtHistoryOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lịch sử gọi món"
+            android:textSize="16dp"
+            android:textColor="@color/red"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 </ScrollView>

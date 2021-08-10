@@ -2,6 +2,7 @@ package com.example.su21g3project.General;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -89,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         };
         btnLogin=findViewById(R.id.btnLogin);
         txtRegister =findViewById(R.id.txtRegister);
+        txtRegister.setPaintFlags(txtRegister.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnLogin.setOnClickListener(v -> {
 
             if (phone.getText().toString().trim().isEmpty()){

@@ -78,8 +78,6 @@ public class MainWaiterActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
-
-
     }
     /**
      * add options Menu in activity
