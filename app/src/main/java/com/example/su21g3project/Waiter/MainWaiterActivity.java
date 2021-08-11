@@ -74,6 +74,9 @@ public class MainWaiterActivity extends AppCompatActivity {
                     tab.setText(R.string.goimon);
                     break;
                 case 2:
+                    tab.setText(R.string.waitingbill);
+                    break;
+                default:
                     tab.setText(R.string.communication);
                     break;
             }

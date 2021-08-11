@@ -27,7 +27,6 @@ import java.util.List;
 
 import Model.OrderDetail;
 import adapter.Chef.ChefOrderAdapter;
-import adapter.Waiter.OrderProcessingAdapter;
 
 public class ChefOrderFragment extends Fragment {
     private RecyclerView recyclerView;

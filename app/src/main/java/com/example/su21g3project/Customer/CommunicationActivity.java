@@ -3,10 +3,8 @@ package com.example.su21g3project.Customer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,8 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-
 import Model.User;
 import adapter.General.CommunicationAdapter;
 
@@ -37,9 +33,11 @@ public class CommunicationActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private String userId;
     private String role = "customer";
-    List<String> chefNotice =new ArrayList<>();
-    List<String> customerNotice = new ArrayList<>();
+    private List<String> chefNotice =new ArrayList<>();
+    private List<String> customerNotice = new ArrayList<>();
     private CommunicationAdapter communicationAdapter;
+    private List<CommunicationAdapter.ViewHolder> viewHolders;
+
     /**
      * create View
      *
@@ -73,15 +71,13 @@ public class CommunicationActivity extends AppCompatActivity {
                     User user = snapshot.getValue(User.class);
                     role = user.getRole();
                     if (role.equals("customer")) {
-                        communicationAdapter = new CommunicationAdapter(customerNotice,getApplicationContext());
-                        listviewdata.setAdapter(communicationAdapter);
+                        communicationAdapter = new CommunicationAdapter(customerNotice,getApplicationContext(),txtReason);
                     } else {
-                        communicationAdapter = new CommunicationAdapter(chefNotice,getApplicationContext());
-                        listviewdata.setAdapter(communicationAdapter);
+                        communicationAdapter = new CommunicationAdapter(chefNotice,getApplicationContext(),txtReason);
                     }
+                    listviewdata.setAdapter(communicationAdapter);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -89,11 +85,11 @@ public class CommunicationActivity extends AppCompatActivity {
         });
         // action when click send reason
         btnSenReason.setOnClickListener(v -> {
-            String communicationId = UUID.randomUUID().toString();
             if (role.equals("customer"))
                 reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
             else
                 reference = FirebaseDatabase.getInstance().getReference("Communications").child("chef");
+            String communicationId = reference.push().getKey();
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);
@@ -106,39 +102,5 @@ public class CommunicationActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show());
         });
 
-
-    }
-    /**
-     * create optionMenu in activity
-     *
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_communication, menu);
-        return true;
-    }
-
-    /**
-     * action when click item in Menu
-     *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.item_done) {
-            String itemSelected = "";
-            List<CommunicationAdapter.ViewHolder> viewHolders=communicationAdapter.getViewHolders();
-            for (CommunicationAdapter.ViewHolder v:viewHolders){
-                if (v.checkBox.isChecked()){
-                    itemSelected+=v.txtReason.getText()+"\n";
-                }
-            }
-            txtReason.setText(itemSelected);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

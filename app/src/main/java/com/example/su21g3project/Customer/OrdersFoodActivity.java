@@ -94,16 +94,11 @@ public class OrdersFoodActivity extends AppCompatActivity {
         txtHistoryOrder=findViewById(R.id.txtHistoryOrder);
         txtHistoryOrder.setPaintFlags(txtHistoryOrder.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-
-
         String orderId = getIntent().getStringExtra("orderId");
-        txtHistoryOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OrdersFoodActivity.this, OrderHistoryActivity.class);
-                intent.putExtra("orderId", orderId);
-                startActivity(intent);
-            }
+        txtHistoryOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(OrdersFoodActivity.this, OrderHistoryActivity.class);
+            intent.putExtra("orderId", orderId);
+            startActivity(intent);
         });
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.billRecycleView);
@@ -254,7 +249,6 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
                             Log.println(Log.INFO, "addOk", "Add ok"));
                     food.getNumberFood().setText("0");
-
                 }
             }
             //get food and quantity from food out of buffet

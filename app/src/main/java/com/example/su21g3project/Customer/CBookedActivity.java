@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Order;
-import adapter.Waiter.BookedHistoryAdapter;
+import adapter.Customer.CBookedHistoryAdapter;
 
-public class BookedHistoryActivity extends AppCompatActivity {
+public class CBookedActivity extends AppCompatActivity {
+
     private DatabaseReference reference;
     private FirebaseUser user;
     private List<Order> list;
@@ -46,13 +47,12 @@ public class BookedHistoryActivity extends AppCompatActivity {
                 if(snapshot.exists()){
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Order processOrder = dataSnapshot.getValue(Order.class);
-                            list.add(processOrder);
+                        list.add(processOrder);
                     }
                 }
-                //show list processOrder by apdater
-                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistoryActivity.this);
+                //show list processOrder by adapter
+                CBookedHistoryAdapter adapter = new CBookedHistoryAdapter(list, CBookedActivity.this);
                 view.setAdapter(adapter);
-
             }
 
             @Override

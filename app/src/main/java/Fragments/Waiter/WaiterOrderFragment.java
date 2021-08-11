@@ -34,13 +34,9 @@ public class WaiterOrderFragment extends Fragment {
     private List<Order> list;
     private RecyclerView recyclerView;
     private BookedHistoryAdapter adapter;
-    private int dvWidth;
     private FirebaseUser user;
 
-    public WaiterOrderFragment(FragmentActivity fragmentActivity) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        dvWidth = displayMetrics.widthPixels;
+    public WaiterOrderFragment() {
     }
 
     @Override
@@ -53,19 +49,19 @@ public class WaiterOrderFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Orders");
-        reference.orderByChild("waiterId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Order order = dataSnapshot.getValue(Order.class);
-                    if (order.getStatus().equals("accepted")) {
+                    if (order.getStatus().equals("accepted")&&
+                            order.getWaiterId().equals(user.getUid())) {
                         list.add(order);
                     }
 
                 }
                 adapter = new BookedHistoryAdapter(list, getContext());
-                recyclerView.setMinimumHeight(dvWidth);
                 recyclerView.setAdapter(adapter);
             }
 

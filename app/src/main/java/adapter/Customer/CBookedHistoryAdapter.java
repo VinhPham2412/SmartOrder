@@ -1,7 +1,8 @@
-package adapter.Waiter;
+package adapter.Customer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.Customer.BillActivity;
 import com.example.su21g3project.Customer.OrdersFoodActivity;
 import com.example.su21g3project.General.GetBuffetActivity;
 import com.example.su21g3project.R;
@@ -25,49 +25,49 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import Model.Buffet;
 import Model.Floor;
 import Model.Order;
 import Model.Table;
 
-public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdapter.ViewHolder> {
+public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAdapter.ViewHolder> {
     private Context context;
     private List<Order> list;
     private DatabaseReference reference;
     private String tableId;
     private String buffetId;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTableAndFloor;
-        private TextView txtBuffet;
-        private Button btnGetFood;
-        private Button btnBill;
+        private TextView txtInfo;
+        private TextView txtStatus;
+        private Button btnOrder;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            txtTableAndFloor = itemView.findViewById(R.id.txtTableAndFloor);
-            txtBuffet = itemView.findViewById(R.id.txtBuffet);
-            btnGetFood = itemView.findViewById(R.id.btnGetFood);
-            btnBill = itemView.findViewById(R.id.btnBill);
-        }
-
-        public Button getBtnBill() {
-            return btnBill;
+            txtTableAndFloor = itemView.findViewById(R.id.txtCTable);
+            txtInfo = itemView.findViewById(R.id.txtBookedInfo);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
+            btnOrder = itemView.findViewById(R.id.btnCOrder);
         }
 
         public TextView getTxtTableAndFloor() {
             return txtTableAndFloor;
         }
 
-        public TextView getTxtBuffet() {
-            return txtBuffet;
+        public TextView getTxtInfo() {
+            return txtInfo;
         }
 
-        public Button getBtnGetFood() {
-            return btnGetFood;
+        public TextView getTxtStatus() {
+            return txtStatus;
+        }
+
+        public Button getBtnOrder() {
+            return btnOrder;
         }
     }
 
-    public BookedHistoryAdapter(List<Order> list, Context context) {
+    public CBookedHistoryAdapter(List<Order> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -78,20 +78,20 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View uView =
-                inflater.inflate(R.layout.booked_history, parent, false);
+                inflater.inflate(R.layout.cbooked_history, parent, false);
 
         return new ViewHolder(uView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(CBookedHistoryAdapter.ViewHolder holder, int position) {
         Order order = list.get(position);
         //get and display tableName+floor
         tableId = order.getTableId();
-        buffetId = order.getBuffetId();
+        //display table info
         if (tableId == null) {
             holder.getTxtTableAndFloor().setText("Chưa xếp bàn");
-        }else{
+        } else {
             reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -124,27 +124,31 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
                 }
             });
         }
-        if(buffetId==null){
-            holder.getTxtBuffet().setText("Chưa chọn buffet");
-        }else{
-            reference = FirebaseDatabase.getInstance().getReference("Buffets").child(buffetId);
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        Buffet buffet = snapshot.getValue(Buffet.class);
-                        holder.getTxtBuffet().setText(buffet.getName());
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                }
-            });
+        //display booked info
+        holder.getTxtInfo().setText(context.getString(R.string.tennguoidat) +": "+ order.getName()+"\n"
+                + context.getString(R.string.sodienthoai) +" "+order.getPhone()+ "\n"
+                + context.getString(R.string.gioan) +": "+order.getStrDate()+ "\n"
+                + context.getString(R.string.sl_nopeople) +": "+order.getNumberOfPeople()+ "\n"
+                + context.getString(R.string.ghichu) +": "+order.getNote()+ "\n");
+        //display status info
+        String status = order.getStatus();
+        switch (status) {
+            case "accepted":
+                holder.getTxtStatus().setText(context.getString(R.string.accepted));
+                holder.getTxtStatus().setTextColor(Color.GREEN);
+                holder.getBtnOrder().setEnabled(true);
+                break;
+            default:
+                holder.getTxtStatus().setText(context.getString(R.string.waitingaccept));
+                holder.getTxtStatus().setTextColor(Color.RED);
+                holder.getBtnOrder().setEnabled(false);
+                break;
         }
         //btn order work
-        holder.getBtnGetFood().setOnClickListener(v -> {
+        buffetId = order.getBuffetId();
+        holder.getBtnOrder().setOnClickListener(v -> {
             Intent intent;
-            if (order.getBuffetId() == null) {
+            if (buffetId == null) {
                 intent = new Intent(context, GetBuffetActivity.class);
                 intent.putExtra("orderId", order.getId());
             } else {
@@ -154,14 +158,6 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             }
             context.startActivity(intent);
         });
-        //btnBill
-        holder.getBtnBill().setOnClickListener(v -> {
-            Intent intent = new Intent(context, BillActivity.class);
-            intent.putExtra("orderId",order.getId());
-            intent.putExtra("tableId",order.getTableId());
-            intent.putExtra("buffetId",order.getBuffetId());
-            context.startActivity(intent);
-        });
     }
 
     @Override
@@ -169,3 +165,4 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         return list.size();
     }
 }
+

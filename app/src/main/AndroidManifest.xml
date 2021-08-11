@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.su21g3project">
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Su21G3Project">
+        <activity android:name=".Customer.CBookedActivity"></activity>
+
         <receiver
             android:name="SOService.Restarter"
             android:enabled="true"
@@ -23,14 +30,16 @@
                 <action android:name="restartservice" />
             </intent-filter>
         </receiver>
+
         <service android:name="SOService.NotificationService" />
-        <activity android:name=".Customer.NoticeCustomerActivity"></activity>
+
+        <activity android:name=".Customer.NoticeCustomerActivity" />
         <activity android:name=".General.NoticeActivity" />
         <activity android:name=".Customer.NewsActivity" />
         <activity android:name=".Customer.ChangeLanguageActivity" />
         <activity android:name=".Chef.MainChefActivity" />
         <activity android:name=".Customer.BillActivity" />
-        <activity android:name=".Customer.BookedHistoryActivity" />
+        <activity android:name=".Waiter.BookedHistoryActivity" />
         <activity android:name=".Customer.OrderHistoryActivity" />
         <activity android:name=".Waiter.MainWaiterActivity" />
         <activity android:name=".Customer.CommunicationActivity" />
@@ -41,13 +50,13 @@
         <activity android:name=".General.GetTableActivity" />
         <activity android:name=".Customer.ProfileActivity" />
         <activity android:name=".General.AccountActivity" />
-        <activity android:name=".General.VerifySMSToken" >
-        </activity>
+        <activity android:name=".General.VerifySMSToken"></activity>
         <activity android:name=".General.RegisterActivity" />
         <activity android:name=".General.LoginActivity" />
         <activity android:name=".General.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

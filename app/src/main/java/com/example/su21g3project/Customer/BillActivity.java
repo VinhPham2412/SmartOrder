@@ -25,8 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import Model.Buffet;
 import Model.OrderDetail;
@@ -54,27 +57,8 @@ public class BillActivity extends AppCompatActivity {
         String orderId = getIntent().getStringExtra("orderId");
         String tableId = getIntent().getStringExtra("tableId");
         String buffetId=getIntent().getStringExtra("buffetId");
+        int numPeople=getIntent().getIntExtra("numPeople",0);
 
-        reference=FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        /**
-         * get current info User
-         */
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    currentUser=snapshot.getValue(User.class);
-                    role=currentUser.getRole();
-                    if (currentUser.getRole().equals("waiter")){
-                        btnConfirmBill.setVisibility(View.VISIBLE);
-                    }else
-                        btnConfirmBill.setVisibility(View.INVISIBLE);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
         btnConfirmBill=findViewById(R.id.btnConfirmBill);
         billBuffetName=findViewById(R.id.billBuffetName);
         billBuffetNumPeople=findViewById(R.id.billBuffetNumpeople);
@@ -85,7 +69,6 @@ public class BillActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.billRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int numPeople=getIntent().getIntExtra("numPeople",0);
         txtTableName = findViewById(R.id.txtTableName);
 
         /**
@@ -111,14 +94,13 @@ public class BillActivity extends AppCompatActivity {
          * Display all orderDetail in recyclerView
          */
         reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("status").equalTo("delivered").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 orderDetailList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     OrderDetail orderDetail = dataSnapshot.getValue(OrderDetail.class);
-                    if (orderDetail.getStatus().equals("accepted") &&
-                        !orderDetail.getIsInBuffet() &&
+                    if (!orderDetail.getIsInBuffet() &&
                          orderDetail.getOrderId().equals(orderId))
                     {
                         orderDetailList.add(orderDetail);
@@ -169,15 +151,14 @@ public class BillActivity extends AppCompatActivity {
                                 Long finalSum = snapshot.getValue(Long.class);
                                 finalMoney=finalSum+buffetSum;
                                 txtTotal.setText("Tổng : "+finalMoney+"K");
-                                reference=FirebaseDatabase.getInstance().getReference("TableBills").child(tableId);
+                                reference=FirebaseDatabase.getInstance().getReference("Bills").child(orderId);
                                 HashMap hashMap=new HashMap<String,Object>();
-                                hashMap.put("id",tableId);
-                                hashMap.put("processOrderId",orderId);
+                                hashMap.put("orderId",orderId);
                                 hashMap.put("totalMoney",finalMoney);
                                 reference.setValue(hashMap);
                                 for (OrderDetail orderDetail:orderDetailList){
-                                    reference=FirebaseDatabase.getInstance().getReference("TableBills").child(tableId).
-                                            child("ListOrderDetail").child(orderDetail.getId());
+                                    reference=FirebaseDatabase.getInstance().getReference("Bills").child(orderId).
+                                            child("details").child(orderDetail.getId());
                                     HashMap hashMap1=new HashMap<String,Object>();
                                     hashMap1.put("id",orderDetail.getId());
                                     hashMap1.put("foodId",orderDetail.getFoodId());
@@ -210,7 +191,7 @@ public class BillActivity extends AppCompatActivity {
                 reference.setValue(Integer.parseInt(viewHolder.getEtFoodQuantity().getText().toString()));
             }
             reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
-            reference.child("status").setValue("done");
+            reference.child("status").setValue("readytopay");
             reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
             reference.child("status").setValue(true);
             reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId).child("isReadyToPay");

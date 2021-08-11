@@ -21,8 +21,8 @@ import java.util.List;
 
 import Model.Notice;
 import Model.Order;
-import adapter.Waiter.BookedHistoryAdapter;
 import adapter.NoticeAdapter;
+import adapter.Waiter.BookedHistoryAdapter;
 
 public class NoticeCustomerActivity extends AppCompatActivity {
     private RecyclerView tableRe,noticeRe;

@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.su21g3project.Customer.BookedHistoryActivity;
+import com.example.su21g3project.Customer.CBookedActivity;
 import com.example.su21g3project.Customer.ProfileActivity;
 import com.example.su21g3project.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +26,7 @@ import Model.User;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView txtLogout,txtPhone,txtChange,txtName,txtBookedHistory;
+    private TextView txtLogout, txtPhone, txtChange, txtName, txtBookedHistory;
     private BottomNavigationView mNavigationView;
     FirebaseUser user;
     private DatabaseReference reference;
@@ -36,7 +36,7 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader = findViewById(R.id.waveHeader);
         waveHeader.setVelocity(1);
         waveHeader.setProgress(1);
         waveHeader.isRunning();
@@ -44,26 +44,26 @@ public class AccountActivity extends AppCompatActivity {
         waveHeader.setWaveHeight(40);
         waveHeader.setStartColor(Color.GREEN);
         waveHeader.setCloseColor(Color.GRAY);
-        txtName=findViewById(R.id.fragment_nameAccount);
-        txtPhone=findViewById(R.id.fragment_phoneAccount);
+        txtName = findViewById(R.id.fragment_nameAccount);
+        txtPhone = findViewById(R.id.fragment_phoneAccount);
         txtBookedHistory = findViewById(R.id.txtTableHistory);
-        mNavigationView=findViewById(R.id.navigation1);
-        txtLogout=findViewById(R.id.txtLogout);
+        mNavigationView = findViewById(R.id.navigation1);
+        txtLogout = findViewById(R.id.txtLogout);
         txtChange = findViewById(R.id.txtChangeInfo);
         /**
          * get current User in device
          */
-        user=FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
             /**
              * get info User
              */
-            reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        User user =snapshot.getValue(User.class);
+                    if (snapshot.exists()) {
+                        User user = snapshot.getValue(User.class);
                         txtName.setText(user.getName());
                         txtPhone.setText(user.getPhone());
                     }
@@ -86,7 +86,7 @@ public class AccountActivity extends AppCompatActivity {
              * intent to BookedHistoryActivity
              */
             txtBookedHistory.setOnClickListener(v -> {
-                Intent intent = new Intent(AccountActivity.this, BookedHistoryActivity.class);
+                Intent intent = new Intent(AccountActivity.this, CBookedActivity.class);
                 startActivity(intent);
             });
             /**
@@ -118,12 +118,12 @@ public class AccountActivity extends AppCompatActivity {
          * set action when choose item in NavigationView
          */
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Intent intent=new Intent(AccountActivity.this, MainActivity.class);
+                    Intent intent = new Intent(AccountActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.navigation_account:
                     return true;

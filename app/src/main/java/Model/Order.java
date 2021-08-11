@@ -27,11 +27,12 @@ public class Order {
     private int numberOfPeople;
     private String note;
     private String status;
-    private String buffetId ;
+    private String buffetId;
     private String tableId;
     private String waiterId;
     private String reason;
     private boolean isNotify;
+
     public String getWaiterId() {
         return waiterId;
     }
@@ -43,8 +44,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(String id,@Nullable String userId, String name, String phone,
-                        Date date, int numberOfPeople, String note,String status, @Nullable String tableId, @Nullable  String waiterId,boolean isNotify) {
+    public Order(String id, @Nullable String userId, String name, String phone,
+                 Date date, int numberOfPeople, String note, String status, @Nullable String tableId
+            , @Nullable String waiterId, boolean isNotify) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -52,10 +54,10 @@ public class Order {
         this.date = date;
         this.numberOfPeople = numberOfPeople;
         this.note = note;
-        this.status=status;
+        this.status = status;
         this.tableId = tableId;
-        this.waiterId=waiterId;
-        this.isNotify =isNotify;
+        this.waiterId = waiterId;
+        this.isNotify = isNotify;
     }
 
     public String getTableId() {
@@ -117,16 +119,16 @@ public class Order {
     public Date getDate() {
         return date;
     }
-    public String getStrDate(){
+
+    public String getStrDate() {
         return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
     }
 
     public void setDate(String date) {
-        try{
+        try {
             this.date = format.parse(date);
-            Log.println(Log.INFO,"parse info - ","date = "+this.date.toString());
-        }catch (ParseException e){
-            Log.println(Log.ERROR,"parse error",e.getMessage());
+        } catch (ParseException e) {
+            Log.println(Log.ERROR, "parse error", e.getMessage());
         }
     }
 
@@ -145,26 +147,28 @@ public class Order {
     public void setNote(String note) {
         this.note = note;
     }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id",id);
+        result.put("id", id);
         result.put("userId", userId);
         result.put("name", name);
         result.put("phone", phone);
         String d = format.format(date);
-        result.put("date",d);
+        result.put("date", d);
         result.put("numberOfPeople", numberOfPeople);
         result.put("note", note);
-        result.put("status",status);
-        result.put("tableId",null);
-        result.put("isNotify",isNotify);
+        result.put("status", status);
+        result.put("tableId", null);
+        result.put("isNotify", isNotify);
         return result;
     }
 
     public String getReason() {
         return reason;
     }
+
     public void setReason(String reason) {
         this.reason = reason;
     }

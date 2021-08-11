@@ -72,5 +72,8 @@
     <string name="cooked">Đã sẵn sàng</string>
     <string name="rejected">Bị từ chối với lý do :</string>
     <string name="channel_name">notify_order</string>
-    <string name="channel_description">listen and notify when new order being accept</string>
+    <string name="channel_description">thông báo khi yêu cầu được duyệt</string>
+    <string name="gioan">Giờ ăn</string>
+    <string name="waitingbill">Chờ thanh toán</string>
+    <string name="edit">Chỉnh sửa</string>
 </resources>

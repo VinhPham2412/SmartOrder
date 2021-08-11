@@ -18,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.su21g3project.Chef.MainChefActivity;
 import com.example.su21g3project.Customer.NewsActivity;
-import com.example.su21g3project.Customer.NoticeCustomerActivity;
 import com.example.su21g3project.R;
 import com.example.su21g3project.Waiter.MainWaiterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,16 +33,12 @@ import com.scwang.wave.MultiWaveHeader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import Model.News;
 import Model.Notice;
-import Model.Order;
 import Model.Photo;
 import Model.User;
 import SOService.NotificationService;

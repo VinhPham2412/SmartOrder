@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,26 +27,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import adapter.General.CommunicationAdapter;
 
 public class CommunicationFragment extends Fragment {
     private EditText txtReason;
     private RecyclerView listviewdata;
-    ArrayAdapter<String> adapter;
     private ImageButton btnSenReason,btnCamera;
     private DatabaseReference reference;
     private String userId;
     private CommunicationAdapter communicationAdapter;
-    List<String> stringList;
-
-
-private int dvHeight;
-    public CommunicationFragment(FragmentActivity fragmentActivity) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        dvHeight = displayMetrics.heightPixels;
+    private List<String> stringList;
+    private List<CommunicationAdapter.ViewHolder> viewHolders;
+    public CommunicationFragment() {
     }
 
     @Override
@@ -55,7 +47,6 @@ private int dvHeight;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_communication, container, false);
-        setHasOptionsMenu(true);
         stringList=new ArrayList<>();
         stringList.add("Khách yêu cầu gặp quản lí");
         stringList.add("Khách có thái độ không tốt,mất kiểm soát");
@@ -66,11 +57,12 @@ private int dvHeight;
         txtReason=view.findViewById(R.id.txtReason);
         listviewdata=view.findViewById(R.id.listview_data);
         listviewdata.setLayoutManager(new LinearLayoutManager(getContext()));
-        communicationAdapter=new CommunicationAdapter(stringList,getContext());
+        communicationAdapter=new CommunicationAdapter(stringList,getContext(),txtReason);
         listviewdata.setAdapter(communicationAdapter);
+        viewHolders=communicationAdapter.getViewHolders();
         btnSenReason.setOnClickListener(v -> {
-            String communicationId = UUID.randomUUID().toString();
             reference = FirebaseDatabase.getInstance().getReference("Communications").child("waiter");
+            String communicationId = reference.push().getKey();
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);
@@ -82,29 +74,17 @@ private int dvHeight;
                     task -> Toast.makeText(getContext(),"Gửi ý kiến thành công",
                             Toast.LENGTH_SHORT).show());
         });
+        for(CommunicationAdapter.ViewHolder viewHolder:viewHolders){
+            viewHolder.checkBox.setOnClickListener(v -> {
+                String itemSelected = "";
+                for (CommunicationAdapter.ViewHolder viewh:viewHolders){
+                    if (viewh.checkBox.isChecked()){
+                        itemSelected+=viewh.checkBox.getText()+"\n";
+                    }
+                }
+                txtReason.setText(itemSelected);
+            });
+        }
         return view;
     }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.main_communication,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.item_done) {
-            String itemSelected = "";
-            List<CommunicationAdapter.ViewHolder> viewHolders=communicationAdapter.getViewHolders();
-            for (CommunicationAdapter.ViewHolder v:viewHolders){
-                if (v.checkBox.isChecked()){
-                    itemSelected+=v.txtReason.getText()+"\n";
-                }
-            }
-            txtReason.setText(itemSelected);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

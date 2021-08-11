@@ -16,9 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.su21g3project.Customer.BookedHistoryActivity;
 import com.example.su21g3project.Customer.NoticeCustomerActivity;
 import com.example.su21g3project.R;
+import com.example.su21g3project.Waiter.BookedHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

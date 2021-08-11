@@ -41,14 +41,10 @@ public class OrderFragment extends Fragment {
     private List<String> orderIds = new ArrayList<>();
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
-    private int dvHeight;
     private String status;
     private FirebaseUser user;
 
-    public OrderFragment(FragmentActivity fragmentActivity, String status) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        fragmentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        dvHeight = displayMetrics.heightPixels;
+    public OrderFragment(String status) {
         this.status = status;
     }
 
@@ -59,7 +55,6 @@ public class OrderFragment extends Fragment {
         View view = inflater.inflate(R.layout.custom_recylerview, container, false);
         recyclerView = view.findViewById(R.id.container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setMinimumHeight(dvHeight);
         user = FirebaseAuth.getInstance().getCurrentUser();
         //get orderId which belong to this waiter responsibility
         if (user != null) {

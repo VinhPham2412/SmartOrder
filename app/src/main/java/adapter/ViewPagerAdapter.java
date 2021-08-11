@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import Fragments.Chef.CommunicationFragment;
+import Fragments.Waiter.WaitingBillFragment;
 import Fragments.Waiter.OrderFragment;
 import Fragments.Waiter.WaiterOrderFragment;
 
@@ -14,10 +15,8 @@ import Fragments.Waiter.WaiterOrderFragment;
  * 
  */
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    private FragmentActivity fragmentActivity;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.fragmentActivity =fragmentActivity;
     }
 
     @NonNull
@@ -26,18 +25,21 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         Fragment fragment;
         switch (position){
             case 0:
-                fragment = new OrderFragment(fragmentActivity,"new");
+                fragment = new OrderFragment("new");
                 break;
             case 1:
-                fragment= new WaiterOrderFragment(fragmentActivity);
+                fragment= new WaiterOrderFragment();
+                break;
+            case 2:
+                fragment = new WaitingBillFragment();
                 break;
             default:
-                fragment= new CommunicationFragment(fragmentActivity);
+                fragment= new CommunicationFragment();
         }
         return fragment;
     }
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

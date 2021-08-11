@@ -74,4 +74,7 @@
     <string name="rejected">Rejected with reason: </string>
     <string name="channel_name">notify_order</string>
     <string name="channel_description">listen and notify when new order being accept</string>
+    <string name="gioan">Time </string>
+    <string name="waitingbill">Waiting Bill</string>
+    <string name="edit">Chỉnh sửa</string>
 </resources>
