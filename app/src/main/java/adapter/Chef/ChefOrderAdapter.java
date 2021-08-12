@@ -159,7 +159,7 @@ public class ChefOrderAdapter extends RecyclerView.Adapter<ChefOrderAdapter.View
             txtFood = itemView.findViewById(R.id.txtDetails);
             btnChefDone = itemView.findViewById(R.id.btnChefDone);
             txtTableName = itemView.findViewById(R.id.txtChefTable);
-            txtTime = itemView.findViewById(R.id.txtChefStatus);
+            txtTime = itemView.findViewById(R.id.txtChefTime);
         }
 
         public TextView getTxtTableName() {

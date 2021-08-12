@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
@@ -49,6 +50,7 @@ public class WaitingBillFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.custom_recylerview, container, false);
         recyclerView = view.findViewById(R.id.container);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //get orderIds that belong to this waiter responsibility
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Orders");

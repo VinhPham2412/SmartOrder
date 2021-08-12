@@ -34,7 +34,6 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
     private List<Order> list;
     private DatabaseReference reference;
     private String tableId;
-    private String buffetId;
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTableAndFloor;
@@ -145,9 +144,9 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
                 break;
         }
         //btn order work
-        buffetId = order.getBuffetId();
         holder.getBtnOrder().setOnClickListener(v -> {
             Intent intent;
+            String buffetId = order.getBuffetId();
             if (buffetId == null) {
                 intent = new Intent(context, GetBuffetActivity.class);
                 intent.putExtra("orderId", order.getId());

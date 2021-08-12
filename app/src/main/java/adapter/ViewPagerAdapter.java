@@ -25,7 +25,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         Fragment fragment;
         switch (position){
             case 0:
-                fragment = new OrderFragment("new");
+                fragment = new OrderFragment();
                 break;
             case 1:
                 fragment= new WaiterOrderFragment();

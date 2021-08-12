@@ -5,10 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
@@ -18,24 +21,59 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import Model.Floor;
 import Model.Food;
+import Model.Order;
 import Model.OrderDetail;
-/**
- * Adapter for
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
+import Model.Table;
+
 public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
-    private List<OrderDetail> orderDetailList;
+    private List<List<OrderDetail>> orderDetailList;
     private Context mContext;
     private DatabaseReference reference;
+    private List<String> ids;
+    private String foodName;
 
-    public ChefAdapter(List<OrderDetail> orderDetailList, Context mContext) {
-        this.orderDetailList = orderDetailList;
+    public ChefAdapter(List<List<OrderDetail>> detailList, Context mContext) {
+        this.orderDetailList = detailList;
         this.mContext = mContext;
-        reference= FirebaseDatabase.getInstance().getReference("Foods");
+        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
+    }
+
+    protected class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView txtTableName;
+        private final TextView txtTime;
+        private TextView txtFood;
+        private Button btnAccept;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtFood = itemView.findViewById(R.id.txtDetails);
+            btnAccept = itemView.findViewById(R.id.btnChefDone);
+            txtTableName = itemView.findViewById(R.id.txtChefTable);
+            txtTime = itemView.findViewById(R.id.txtChefTime);
+        }
+
+        public TextView getTxtTableName() {
+            return txtTableName;
+        }
+
+        public TextView getTxtTime() {
+            return txtTime;
+        }
+
+        public TextView getTxtFood() {
+            return txtFood;
+        }
+
+        public Button getBtnAccept() {
+            return btnAccept;
+        }
     }
 
     @NonNull
@@ -43,69 +81,100 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View uView = inflater.from(parent.getContext()).inflate(R.layout.custom__main_chef, parent, false);
+        View uView = inflater.inflate(R.layout.custom_order_chef, parent, false);
         ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //get current orderDetail and display info
-        final OrderDetail orderDetail=orderDetailList.get(position);
-        holder.getTxtQuantity().setText(orderDetail.getQuantity()+"");
-        reference=FirebaseDatabase.getInstance().getReference("Foods").child(orderDetail.getFoodId());
+        final List<OrderDetail> details = orderDetailList.get(position);
+        ids = new ArrayList<>();
+        for (OrderDetail od : details) {
+            ids.add(od.getId());
+            reference = FirebaseDatabase.getInstance().getReference("Foods").child(od.getFoodId());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    //get foodName and display
+                    if (snapshot.exists()) {
+                        Food food = snapshot.getValue(Food.class);
+                        foodName = food.getName();
+                        TextView textView = holder.getTxtFood();
+                        textView.setText(textView.getText() + "\n" + foodName + " : " + od.getQuantity());
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+
+        }
+        holder.getBtnAccept().setOnClickListener(v -> {
+            /**
+             * update order details status to delivered
+             */
+            reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
+            for (String id : ids) {
+                reference.child(id).child("status").setValue("delivered").addOnCompleteListener(
+                        task -> Log.println(Log.INFO, "Update to rtdb", "Set delivered ok"));
+            }
+        });
+        holder.getTxtTime().setText(details.get(0).getTimeString());
+        //set text for table and floor
+        String orderId = details.get(0).getOrderId();
+        reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    Food food=snapshot.getValue(Food.class);
-                    holder.getTxtFoodName().setText(food.getName());
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Order order = snapshot.getValue(Order.class);
+                    String tableId = order.getTableId();
+                    reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                //got table name
+                                Table table = snapshot.getValue(Table.class);
+                                reference = FirebaseDatabase.getInstance().getReference("Floors").child(table.getFloorId());
+                                reference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            //got floor name
+                                            Floor floor = snapshot.getValue(Floor.class);
+                                            holder.getTxtTableName().setText(table.getName() + ", " + floor.getName());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
         });
-        holder.getBtnDone().setOnClickListener(v -> {
-            reference=FirebaseDatabase.getInstance().getReference("OrderDetails")
-                    .child(orderDetail.getId()).child("status");
-            reference.setValue("cooked").addOnCompleteListener(task ->
-                    Log.println(Log.INFO, "cooking", "Cooked"));
-        });
+
     }
 
     @Override
     public int getItemCount() {
         return orderDetailList.size();
     }
-    /**
-     * View holder for ChefAdapter.
-     * Define components for each adapter view
-     */
-    protected class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtFoodName,txtQuantity;
-        private ImageButton btnDone;
-        private ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtFoodName=itemView.findViewById(R.id.txtFoodName);
-            txtQuantity=itemView.findViewById(R.id.txtQuantity);
-            btnDone=itemView.findViewById(R.id.btnDone);
-        }
-
-        public TextView getTxtFoodName() {
-            return txtFoodName;
-        }
-
-        public TextView getTxtQuantity() {
-            return txtQuantity;
-        }
-
-        public ImageButton getBtnDone() {
-            return btnDone;
-        }
-    }
-
 }
-

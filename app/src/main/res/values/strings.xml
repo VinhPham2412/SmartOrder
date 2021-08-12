@@ -70,10 +70,16 @@
     <string name="accepted">Đã duyệt</string>
     <string name="waitingaccept">Chờ duyệt</string>
     <string name="cooked">Đã sẵn sàng</string>
-    <string name="rejected">Bị từ chối với lý do :</string>
-    <string name="channel_name">notify_order</string>
-    <string name="channel_description">thông báo khi yêu cầu được duyệt</string>
+    <string name="rejected">Bị từ chối</string>
+    <string name="channel_name">Smart Order Notification</string>
+    <string name="channel_description">Thông báo khi yêu cầu được duyệt</string>
     <string name="gioan">Giờ ăn</string>
     <string name="waitingbill">Chờ thanh toán</string>
     <string name="edit">Chỉnh sửa</string>
+    <string name="thanhtien">Thành tiền: </string>
+    <string name="floor">" - Tầng "</string>
+    <string name="sendpayrequest">Bạn muốn thanh toán ?</string>
+    <string name="waitforwaiter">Vui lòng chờ nhân viên phục vụ</string>
+    <string name="delivered">Đã ra đồ</string>
+    <string name="reason">Lý do : </string>
 </resources>
