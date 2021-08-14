@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+
 @IgnoreExtraProperties
 public class Bill {
     @Exclude
@@ -19,8 +21,49 @@ public class Bill {
     private Float totalMoney;
     private HashMap<String,Object> details;
     private Date time;
+    private String tableId;
+    private String buffetId;
 
     public Bill() {
+    }
+
+    public Bill(String id, String orderId, Float totalMoney, HashMap<String, Object> details, Date time, String tableId,String buffetId) {
+        this.id = id;
+        this.orderId = orderId;
+        this.totalMoney = totalMoney;
+        this.details = details;
+        this.time = time;
+        this.tableId = tableId;
+        this.buffetId = buffetId;
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("orderId", orderId);
+        result.put("totalMoney", totalMoney);
+        result.put("details", details);
+        String d = format.format(time);
+        result.put("time", d);
+        result.put("tableId", tableId);
+        result.put("buffetId", buffetId);
+        return result;
+    }
+
+    public String getBuffetId() {
+        return buffetId;
+    }
+
+    public void setBuffetId(String buffetId) {
+        this.buffetId = buffetId;
+    }
+
+    public String getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(String tableId) {
+        this.tableId = tableId;
     }
 
     public String getId() {
@@ -68,6 +111,6 @@ public class Bill {
     }
 
     public String getStrTime() {
-        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(time);
+        return time!= null? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(time):"Lỗi khi xử lý thời gian";
     }
 }

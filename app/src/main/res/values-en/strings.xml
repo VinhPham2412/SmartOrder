@@ -71,10 +71,16 @@
     <string name="accepted">Accepted</string>
     <string name="waitingaccept">Waiting</string>
     <string name="cooked">Cooked</string>
-    <string name="rejected">Rejected with reason: </string>
-    <string name="channel_name">notify_order</string>
-    <string name="channel_description">listen and notify when new order being accept</string>
+    <string name="rejected">Rejected</string>
+    <string name="channel_name">Smart Order Notification</string>
+    <string name="channel_description">Listen and notify when new order being accept</string>
     <string name="gioan">Time </string>
     <string name="waitingbill">Waiting Bill</string>
-    <string name="edit">Chỉnh sửa</string>
+    <string name="edit">Edit</string>
+    <string name="thanhtien">Total: </string>
+    <string name="floor">" - Floor: "</string>
+    <string name="sendpayrequest">Do you want check out ?</string>
+    <string name="waitforwaiter">Please wait for waiter to come.</string>
+    <string name="delivered">Delivered</string>
+    <string name="reason">Because : </string>
 </resources>
