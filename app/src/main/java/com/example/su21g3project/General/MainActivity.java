@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 import Model.News;
 import Model.Notice;
 import Model.Photo;
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
-            Intent intent = new Intent(getApplicationContext(),NotificationService.class);
+            Intent intent = new Intent(getApplicationContext(), NotificationService.class);
             startForegroundService(intent);
             txtNotice.setVisibility(View.VISIBLE);
             reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");

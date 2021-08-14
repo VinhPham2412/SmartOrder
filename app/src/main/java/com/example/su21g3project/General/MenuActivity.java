@@ -22,6 +22,7 @@ import java.util.List;
 import Model.Buffet;
 import adapter.Customer.MenuAdapter;
 
+
 public class MenuActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MenuAdapter menuAdapter;
