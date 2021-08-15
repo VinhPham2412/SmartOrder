@@ -24,7 +24,6 @@
 
         <TextView
 
-            android:id="@+id/txtHaveAcc"
             android:layout_width="151dp"
             android:layout_height="45dp"
             android:layout_marginTop="74dp"
@@ -129,7 +128,6 @@
             app:srcCompat="@drawable/buffet" />
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:layout_marginTop="264dp"

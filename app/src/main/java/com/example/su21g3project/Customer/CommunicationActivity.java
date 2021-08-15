@@ -1,8 +1,6 @@
 package com.example.su21g3project.Customer;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -37,6 +35,8 @@ public class CommunicationActivity extends AppCompatActivity {
     private List<String> customerNotice = new ArrayList<>();
     private CommunicationAdapter communicationAdapter;
     private List<CommunicationAdapter.ViewHolder> viewHolders;
+    private String messageContents;
+
 
     /**
      * create View
@@ -46,7 +46,7 @@ public class CommunicationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_communication_customer);
+        setContentView(R.layout.custom_communication);
         chefNotice.add("Bếp gặp sự cố");
         chefNotice.add("Nguyên liệu có vấn đề");
         chefNotice.add("Có người bị thương trong bếp");
@@ -63,7 +63,7 @@ public class CommunicationActivity extends AppCompatActivity {
         listviewdata.setLayoutManager(new LinearLayoutManager(this));
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-        // check role user then display reason allow role
+        // check role user then display reason of that role
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,35 +71,45 @@ public class CommunicationActivity extends AppCompatActivity {
                     User user = snapshot.getValue(User.class);
                     role = user.getRole();
                     if (role.equals("customer")) {
-                        communicationAdapter = new CommunicationAdapter(customerNotice,getApplicationContext(),txtReason);
+                        communicationAdapter = new CommunicationAdapter(customerNotice,getApplicationContext());
                     } else {
-                        communicationAdapter = new CommunicationAdapter(chefNotice,getApplicationContext(),txtReason);
+                        communicationAdapter = new CommunicationAdapter(chefNotice,getApplicationContext());
                     }
                     listviewdata.setAdapter(communicationAdapter);
+                    // action when click send reason
+                    btnSenReason.setOnClickListener(v -> {
+                        viewHolders = communicationAdapter.getViewHolders();
+                        messageContents = "";
+                        for (CommunicationAdapter.ViewHolder viewh : viewHolders) {
+                            if (viewh.checkBox.isChecked()) {
+                                messageContents += viewh.checkBox.getText() + "\n";
+                            }
+                        }
+                        if (txtReason.getText() != null) {
+                            messageContents += txtReason.getText().toString();
+                        }
+                        if (role.equals("customer"))
+                            reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
+                        else
+                            reference = FirebaseDatabase.getInstance().getReference("Communications").child("chef");
+                        String communicationId = reference.push().getKey();
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("id", communicationId);
+                        hashMap.put("userId", userId);
+                        hashMap.put("message", messageContents);
+                        hashMap.put("isSeen", false);
+                        hashMap.put("isReply",false);
+                        hashMap.put("isNotify",false);
+                        reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
+                                task -> Toast.makeText(CommunicationActivity.this, "Gửi ý kiến thành công",
+                                        Toast.LENGTH_SHORT).show());
+                    });
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
-        // action when click send reason
-        btnSenReason.setOnClickListener(v -> {
-            if (role.equals("customer"))
-                reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
-            else
-                reference = FirebaseDatabase.getInstance().getReference("Communications").child("chef");
-            String communicationId = reference.push().getKey();
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", communicationId);
-            hashMap.put("userId", userId);
-            hashMap.put("message", txtReason.getText().toString());
-            hashMap.put("isSeen", false);
-            hashMap.put("isReply",false);
-            hashMap.put("isNotify",false);
-            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
-                    task -> Toast.makeText(CommunicationActivity.this, "Gửi ý kiến thành công",
-                            Toast.LENGTH_SHORT).show());
         });
 
     }

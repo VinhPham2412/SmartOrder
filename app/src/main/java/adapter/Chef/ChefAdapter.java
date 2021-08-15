@@ -6,12 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.R;
@@ -117,7 +114,7 @@ public class ChefAdapter extends RecyclerView.Adapter<ChefAdapter.ViewHolder> {
              */
             reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
             for (String id : ids) {
-                reference.child(id).child("status").setValue("delivered").addOnCompleteListener(
+                reference.child(id).child("status").setValue("cooked").addOnCompleteListener(
                         task -> Log.println(Log.INFO, "Update to rtdb", "Set delivered ok"));
             }
         });

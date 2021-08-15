@@ -39,6 +39,12 @@ import Model.OrderDetail;
 import Model.User;
 import adapter.Customer.OrdersFoodAdapter;
 
+/**
+ * Class OrderFoodActivity
+ * this class using for select food and order food
+ * there are two actor using this class
+ * waiter and customer
+ */
 public class OrdersFoodActivity extends AppCompatActivity {
     private RecyclerView recyclerView, recycler1;
     private OrdersFoodAdapter inBuffetAdapter, outBuffetAdapter;

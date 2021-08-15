@@ -50,7 +50,7 @@ public class BookedHistoryActivity extends AppCompatActivity {
                     }
                 }
                 //show list processOrder by adapter
-                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list, BookedHistoryActivity.this);
+                BookedHistoryAdapter adapter = new BookedHistoryAdapter(list);
                 view.setAdapter(adapter);
 
             }

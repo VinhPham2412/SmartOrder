@@ -32,67 +32,32 @@ import Model.Order;
 import Model.OrderDetail;
 import Model.Table;
 
-public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessingAdapter.ViewHolder> {
-    private List<List<OrderDetail>> orderDetailList;
-    private Context mContext;
+public class CookedOrderAdapter extends RecyclerView.Adapter<CookedOrderAdapter.ViewHolder> {
+
+    private List<List<OrderDetail>> result;
+    private Context context;
     private DatabaseReference reference;
     private List<String> ids;
     private String foodName;
 
-    public OrderProcessingAdapter(List<List<OrderDetail>> detailList) {
-        this.orderDetailList = detailList;
-        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
-    }
-
-    protected class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView txtTableName;
-        private final TextView txtTime;
-        private TextView txtFood;
-        private Button btnReject, btnAccept;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtFood = itemView.findViewById(R.id.txtWaiterFood);
-            btnAccept = itemView.findViewById(R.id.btnAccept);
-            btnReject = itemView.findViewById(R.id.btnReject);
-            txtTableName = itemView.findViewById(R.id.txtTable);
-            txtTime = itemView.findViewById(R.id.txtTime);
-        }
-
-        public TextView getTxtTableName() {
-            return txtTableName;
-        }
-
-        public TextView getTxtTime() {
-            return txtTime;
-        }
-
-        public TextView getTxtFood() {
-            return txtFood;
-        }
-
-        public Button getBtnReject() {
-            return btnReject;
-        }
-
-        public Button getBtnAccept() {
-            return btnAccept;
-        }
+    public CookedOrderAdapter(List<List<OrderDetail>> result) {
+        this.result = result;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View uView = inflater.inflate(R.layout.custom_order_waiter, parent, false);
-        ViewHolder viewHolder = new ViewHolder(uView);
-        return viewHolder;
+        context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View uView =
+                inflater.inflate(R.layout.cooked_order, parent, false);
+        return new CookedOrderAdapter.ViewHolder(uView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final List<OrderDetail> details = orderDetailList.get(position);
+        final List<OrderDetail> details = result.get(position);
         ids = new ArrayList<>();
         //display food and quantity
         for (OrderDetail od : details) {
@@ -117,47 +82,15 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
 
         }
         //btn accept
-        holder.getBtnAccept().setOnClickListener(v -> {
-            //update isSeen and isAccepted
-            //push data to rtdb
+        holder.getBtnDelivery().setOnClickListener(v -> {
+            //update details status to delivered ,push data to rtdb
             reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
             for (String id : ids) {
-                reference.child(id).child("status").setValue("accepted").addOnCompleteListener(
-                        task -> Log.println(Log.INFO, "Update to rtdb", "Set seen ok"));
+                reference.child(id).child("status").setValue("delivered").addOnCompleteListener(
+                        task -> Log.println(Log.INFO, "Update to rtdb", "Set delivered ok"));
             }
-            reference = FirebaseDatabase.getInstance().getReference("Orders").
-                    child(details.get(0).getOrderId());
-            reference.child("status").setValue("accepted").addOnCompleteListener
-                    (task -> Log.println(Log.INFO, "Update to rtdb", "Set order reject ok"));
         });
-        //btn reject
-        holder.getBtnReject().setOnClickListener(v -> {
-            //update isSeen and isAccepted
-            //input the reason
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            View view = inflater.inflate(R.layout.dialog_reason, null);
-            builder.setView(view);
-            EditText text = view.findViewById(R.id.txtRs);
-            TextView title = view.findViewById(R.id.textView22);
-            title.setText("Lý do từ chối.");
-            builder.setPositiveButton(R.string.reject, (dialog, which) -> {
-                //push data to rtdb
-                if (text.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(mContext, "Reason cannot empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
-                for (String id : ids) {
-                    reference.child(id).child("status").setValue("rejected").addOnCompleteListener(
-                            task -> Log.println(Log.INFO, "Update to rtdb", "Set reject ok"));
-                    reference.child(id).child("reason").setValue(text.getText().toString()).addOnCompleteListener
-                            (task -> Log.println(Log.INFO, "Insert reason to rtdb", "Set detail reason ok"));
-                }
-            }).setNegativeButton(R.string.cancel, ((dialog, which) -> {
-                dialog.cancel();
-            })).create().show();
-        });
+        //set text for time
         holder.getTxtTime().setText(details.get(0).getTimeString());
         //set text for table and floor
         String orderId = details.get(0).getOrderId();
@@ -182,7 +115,7 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
                                         if (snapshot.exists()) {
                                             //got floor name
                                             Floor floor = snapshot.getValue(Floor.class);
-                                            holder.getTxtTableName().setText(table.getName() + ", " + floor.getName());
+                                            holder.getTxtTable().setText(table.getName() + ", " + floor.getName());
                                         }
                                     }
 
@@ -207,11 +140,40 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
 
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return orderDetailList.size();
+        return result.size();
+    }
+
+    protected class ViewHolder extends RecyclerView.ViewHolder {
+        private Button btnDelivery;
+        private TextView txtTable;
+        private TextView txtTime;
+        private TextView txtFood;
+        public ViewHolder(View uView) {
+            super(uView);
+            btnDelivery = uView.findViewById(R.id.btnDelivery);
+            txtTable = uView.findViewById(R.id.txtCookedTable);
+            txtTime = uView.findViewById(R.id.txtCookedTime);
+            txtFood = uView.findViewById(R.id.txtCookedFood);
+        }
+
+        public Button getBtnDelivery() {
+            return btnDelivery;
+        }
+
+        public TextView getTxtTable() {
+            return txtTable;
+        }
+
+        public TextView getTxtTime() {
+            return txtTime;
+        }
+
+        public TextView getTxtFood() {
+            return txtFood;
+        }
     }
 }

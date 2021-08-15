@@ -1,118 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/buffetName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Customer.OrdersFoodActivity">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/buffetName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/billRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="254dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/billRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buffetName" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/foodanddrink"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="166dp"
+        android:layout_marginEnd="166dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="@string/foodanddrink"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billRecycleView" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/nuocngot"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/customimage1"
+        android:src="@drawable/ic_baseline_water_drop_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-            <ImageButton
-                android:id="@+id/nuocngot"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="60dp"
-                android:background="@drawable/customimage1"
-                android:src="@drawable/ic_baseline_water_drop_24" />
+    <ImageButton
+        android:id="@+id/ruou"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/customimage1"
+        android:src="@drawable/ic_baseline_liquor_24"
+        app:layout_constraintEnd_toStartOf="@+id/doan"
+        app:layout_constraintStart_toEndOf="@+id/nuocngot"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-            <ImageButton
-                android:id="@+id/ruou"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="60dp"
-                android:background="@drawable/customimage1"
-                android:src="@drawable/ic_baseline_liquor_24" />
+    <ImageButton
+        android:id="@+id/doan"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/customimage1"
+        android:src="@drawable/ic_baseline_local_dining_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-            <ImageButton
-                android:id="@+id/doan"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="60dp"
-                android:background="@drawable/customimage1"
-                android:src="@drawable/ic_baseline_local_dining_24" />
 
-        </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewMoney"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ruou" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleViewMoney"
-            android:layout_width="400dp"
-            android:layout_height="278dp" />
+    <Button
+        android:id="@+id/btnCommunication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/or"
+        android:text="@string/Giaotiep"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleViewMoney" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/btnOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/or"
+        android:text="@string/goimon"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnHistory"
+        app:layout_constraintStart_toEndOf="@+id/btnCommunication"
+        app:layout_constraintTop_toBottomOf="@+id/recycleViewMoney" />
 
-            <Button
-                android:id="@+id/btnCommunication"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:backgroundTint="@color/or"
-                android:text="@string/Giaotiep"
-                android:textSize="12dp" />
+    <Button
+        android:id="@+id/btnHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="@color/or"
+        android:text="@string/bill"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleViewMoney" />
 
-            <Button
-                android:id="@+id/btnOrder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/or"
-                android:text="@string/goimon"
-                android:textSize="12dp" />
+    <TextView
+        android:id="@+id/txtHistoryOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Lịch sử gọi món"
+        android:textColor="@color/red"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/btnHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/or"
-                android:text="@string/bill"
-                android:textSize="12dp" />
 
-        </LinearLayout>
-        <TextView
-            android:id="@+id/txtHistoryOrder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lịch sử gọi món"
-            android:textSize="16dp"
-            android:textColor="@color/red"
-            android:layout_gravity="center_horizontal"/>
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,21 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".General.MainActivity"
-    android:id="@+id/mainScreen">
+    tools:context=".General.MainActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:id="@+id/constrain"
             android:layout_height="wrap_content">
 
 
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="64dp"
                 android:layout_height="16dp"
                 android:gravity="center_horizontal"
@@ -186,7 +183,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <LinearLayout
-                android:id="@+id/ln"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="8dp"

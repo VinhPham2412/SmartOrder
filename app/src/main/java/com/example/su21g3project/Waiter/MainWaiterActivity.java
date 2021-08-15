@@ -63,7 +63,7 @@ public class MainWaiterActivity extends AppCompatActivity {
         });
 
         viewPager2=findViewById(R.id.viewPager);
-        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(this);
+        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(MainWaiterActivity.this);
         viewPager2.setAdapter(viewPagerAdapter);
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             switch (position){
@@ -71,9 +71,12 @@ public class MainWaiterActivity extends AppCompatActivity {
                     tab.setText(R.string.trangchu);
                     break;
                 case 1:
-                    tab.setText(R.string.goimon);
+                    tab.setText(R.string.rado);
                     break;
                 case 2:
+                    tab.setText(R.string.goimon);
+                    break;
+                case 3:
                     tab.setText(R.string.waitingbill);
                     break;
                 default:

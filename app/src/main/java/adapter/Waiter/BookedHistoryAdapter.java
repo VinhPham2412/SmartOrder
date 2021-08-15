@@ -67,9 +67,8 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
         }
     }
 
-    public BookedHistoryAdapter(List<Order> list, Context context) {
+    public BookedHistoryAdapter(List<Order> list) {
         this.list = list;
-        this.context = context;
     }
 
     @Override
@@ -160,6 +159,8 @@ public class BookedHistoryAdapter extends RecyclerView.Adapter<BookedHistoryAdap
             intent.putExtra("orderId",order.getId());
             intent.putExtra("tableId",order.getTableId());
             intent.putExtra("buffetId",order.getBuffetId());
+            intent.putExtra("numPeople",order.getNumberOfPeople());
+
             context.startActivity(intent);
         });
     }

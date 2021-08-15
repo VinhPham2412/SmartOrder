@@ -58,7 +58,7 @@ public class NoticeCustomerActivity extends AppCompatActivity {
 
                 }
                 //show list processOrder by apdater
-                BookedHistoryAdapter adapter = new BookedHistoryAdapter(processOrderList, NoticeCustomerActivity.this);
+                BookedHistoryAdapter adapter = new BookedHistoryAdapter(processOrderList);
                 tableRe.setAdapter(adapter);
 
             }

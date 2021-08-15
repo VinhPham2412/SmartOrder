@@ -33,6 +33,7 @@ import java.util.Random;
 
 import Model.Notice;
 import Model.Order;
+import Model.OrderDetail;
 import Model.User;
 
 public class NotificationService extends Service {
@@ -80,7 +81,9 @@ public class NotificationService extends Service {
         notificationManager = NotificationManagerCompat.from(getApplicationContext());
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-
+        /**
+         * notify when message replied
+         */
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -115,7 +118,7 @@ public class NotificationService extends Service {
 
             }
         });
-
+        //notify when order accepted or rejected
         reference = FirebaseDatabase.getInstance().getReference("Orders");
         reference.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,14 +134,15 @@ public class NotificationService extends Service {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
         });
-
-
-        //this for display only
+        /**
+         *this for display that service is running only
+         */
         int notificationId = new Random().nextInt(99999);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
@@ -159,7 +163,7 @@ public class NotificationService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_ic)
                 .setContentTitle("Smart Order")
-                .setContentText("Your order has been :" + status)
+                .setContentText("Your order has been : " + status)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)

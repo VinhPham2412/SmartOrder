@@ -1,14 +1,15 @@
 package Fragments.Waiter;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,20 +28,24 @@ import java.util.List;
 
 import Model.Order;
 import Model.OrderDetail;
-import adapter.Waiter.OrderProcessingAdapter;
+import adapter.Waiter.CookedOrderAdapter;
 
-
-public class OrderFragment extends Fragment {
-
+/**
+ * Class CookedOrderFragment
+ * this fragment display all the order that belong to current waiter
+ * and have status = cooked
+ * the only action is deliver to destination table
+ */
+public class CookedOrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference reference;
-    private OrderProcessingAdapter orderProcessingAdapter;
+    private CookedOrderAdapter adapter;
     private List<String> orderIds = new ArrayList<>();
     private List<List<OrderDetail>> result = new ArrayList<>();
     private List<OrderDetail> subResult = new ArrayList<>();
     private FirebaseUser user;
 
-    public OrderFragment() {
+    public CookedOrderFragment() {
     }
 
     @Override
@@ -73,7 +78,7 @@ public class OrderFragment extends Fragment {
 
                 }
             });
-            //get details
+            //get details with status = cooked
             reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -83,7 +88,7 @@ public class OrderFragment extends Fragment {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
                         //if not seen
-                        if (orderDetail.getStatus().equals("new") &&
+                        if (orderDetail.getStatus().equals("cooked") &&
                                 orderIds.contains(orderDetail.getOrderId())) {
                             String orderId = orderDetail.getOrderId();
                             Date time = orderDetail.getTime();
@@ -108,8 +113,9 @@ public class OrderFragment extends Fragment {
                             }
                         }
                     }
-                    orderProcessingAdapter = new OrderProcessingAdapter(result);
-                    recyclerView.setAdapter(orderProcessingAdapter);
+                    //set adapter for recycle view
+                    adapter = new CookedOrderAdapter(result);
+                    recyclerView.setAdapter(adapter);
                 }
 
                 @Override

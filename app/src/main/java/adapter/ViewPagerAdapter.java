@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import Fragments.Waiter.CommunicationFragment;
+import Fragments.Waiter.CookedOrderFragment;
 import Fragments.Waiter.WaitingBillFragment;
 import Fragments.Waiter.OrderFragment;
 import Fragments.Waiter.WaiterOrderFragment;
@@ -28,9 +29,12 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 fragment = new OrderFragment();
                 break;
             case 1:
-                fragment= new WaiterOrderFragment();
+                fragment = new CookedOrderFragment();
                 break;
             case 2:
+                fragment= new WaiterOrderFragment();
+                break;
+            case 3:
                 fragment = new WaitingBillFragment();
                 break;
             default:
@@ -40,6 +44,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     }
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }

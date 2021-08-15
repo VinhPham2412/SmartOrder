@@ -1,47 +1,76 @@
-<LinearLayout android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:gravity="fill">
+
         <ImageView
-            android:background="@drawable/custompager"
             android:id="@+id/foodOrderViewMoney"
             android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_height="60dp"
+            android:background="@drawable/custompager"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFoodNameMoney"
+            app:layout_constraintEnd_toStartOf="@+id/tvFoodNameMoney"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:textColor="@color/black"
+            android:id="@+id/tvFoodNameMoney"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
             android:paddingStart="10dp"
             android:paddingTop="15dp"
-            android:id="@+id/tvFoodNameMoney"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-        <TextView
             android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMoney"
+            app:layout_constraintEnd_toStartOf="@+id/tvMoney"
+            app:layout_constraintStart_toEndOf="@+id/foodOrderViewMoney"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMoney"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:paddingTop="20dp"
-            android:id="@+id/tvMoney"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"/>
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/btnRemoveMoney"
+            app:layout_constraintEnd_toStartOf="@+id/btnRemoveMoney"
+            app:layout_constraintStart_toEndOf="@+id/tvFoodNameMoney"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
-            android:src="@drawable/ic_baseline_remove_24"
             android:id="@+id/btnRemoveMoney"
             android:layout_width="50dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="60dp"
+            android:src="@drawable/ic_baseline_remove_24"
+            app:layout_constraintBottom_toBottomOf="@+id/txtNumberFoodMoney"
+            app:layout_constraintEnd_toStartOf="@+id/txtNumberFoodMoney"
+            app:layout_constraintStart_toEndOf="@+id/tvMoney"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:textColor="@color/black"
             android:id="@+id/txtNumberFoodMoney"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
             android:gravity="center"
             android:inputType="number"
-            android:text="0" />
+            android:text="0"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/btnAddMoney"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddMoney"
+            app:layout_constraintStart_toEndOf="@+id/btnRemoveMoney"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/btnAddMoney"
-            android:src="@drawable/ic_baseline_add_24"
             android:layout_width="50dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="60dp"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtNumberFoodMoney"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

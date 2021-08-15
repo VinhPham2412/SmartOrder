@@ -3,7 +3,6 @@
     <string name="app_name">SmartOrder</string>
     <string name="createAccount">Create account</string>
     <string name="account">Account</string>
-    <string name="hello_blank_fragment">loading</string>
     <string name="selectDate">Pick date</string>
     <string name="selectTime">Pick time</string>
     <string name="sl_nopeople">NoPeople</string>
@@ -14,10 +13,8 @@
     <string name="thongtinkhachhang">Customer information</string>
     <string name="goimon">Order</string>
     <string name="register">Sign up</string>
-    <string name="btnHistoryBill">Bill</string>
     <string name="thongtintaikhoan">Profile</string>
     <string name="lichsudatban">Booked</string>
-    <string name="lichsugoimon">Ordered</string>
     <string name="dangxuat">Sign out</string>
     <string name="trangchu">Home</string>
     <string name="taikhoan">Account</string>
@@ -32,7 +29,6 @@
     <string name="bookatable">Book</string>
     <string name="menu">Menu</string>
     <string name="news">Tin tức</string>
-    <string name="notification">Notification</string>
     <string name="foodanddrink">Addition</string>
     <string name="firstname">First name</string>
     <string name="lastname">Last name</string>
@@ -52,12 +48,9 @@
     <string name="FoodPrice">Price</string>
     <string name="FoodTotal">Total</string>
     <string name="done">Done</string>
-    <string name="lam">Cook</string>
     <string name="chefNotice">Notice</string>
     <string name="chefCommunication">Contact to Manager</string>
     <string name="Giaotiep">Communication</string>
-    <string name="history">HistoryOrder</string>
-    <string name="language">Language</string>
     <string name="selectedLanguage">English</string>
     <string name="quanly">Manager</string>
     <string name="delete">Delete</string>
@@ -66,7 +59,6 @@
     <string name="tomorrow1">Two days later</string>
     <string name="tomorrow2">Three days later</string>
     <string name="toastGettable">Please enter number of people</string>
-    <string name="order">Order</string>
     <string name="cancel">Back</string>
     <string name="accepted">Accepted</string>
     <string name="waitingaccept">Waiting</string>
@@ -83,4 +75,7 @@
     <string name="waitforwaiter">Please wait for waiter to come.</string>
     <string name="delivered">Delivered</string>
     <string name="reason">Because : </string>
+    <string name="othermess">Other message</string>
+    <string name="rado">Ra đồ</string>
+    <string name="delivery">Ra đồ</string>
 </resources>

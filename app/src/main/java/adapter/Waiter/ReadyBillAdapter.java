@@ -25,6 +25,7 @@ import java.util.List;
 
 import Model.Bill;
 import Model.Floor;
+import Model.Order;
 import Model.Table;
 
 public class ReadyBillAdapter extends RecyclerView.Adapter<ReadyBillAdapter.ViewHolder> {
@@ -119,11 +120,26 @@ public class ReadyBillAdapter extends RecyclerView.Adapter<ReadyBillAdapter.View
         //get and display time
         holder.getTxtTime().setText(bill.getStrTime());
         holder.getBtnEdit().setOnClickListener(v -> {
-            Intent intent = new Intent(context, BillActivity.class);
-            intent.putExtra("orderId",bill.getOrderId());
-            intent.putExtra("tableId",bill.getTableId());
-            intent.putExtra("buffetId",bill.getBuffetId());
-            context.startActivity(intent);
+            reference = FirebaseDatabase.getInstance().getReference("Orders").child(bill.getOrderId());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        Order order = snapshot.getValue(Order.class);
+                        Intent intent = new Intent(context, BillActivity.class);
+                        intent.putExtra("orderId",order.getId());
+                        intent.putExtra("tableId",order.getTableId());
+                        intent.putExtra("buffetId",order.getBuffetId());
+                        intent.putExtra("numPeople",order.getNumberOfPeople());
+                        context.startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         });
     }
 

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,18 +13,20 @@ import com.example.su21g3project.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Class CommunicationAdapter
+ * take in a list of message and
+ * display them in separate check box
+ */
 public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
     private List<String> list;
     private Context mContext;
     private List<ViewHolder> viewHolders;
-    private EditText txtReason;
 
-    public CommunicationAdapter(List<String> list, Context mContext, EditText reason) {
+    public CommunicationAdapter(List<String> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
         viewHolders = new ArrayList<>();
-        txtReason = reason;
     }
 
     public List<ViewHolder> getViewHolders() {
@@ -51,16 +51,6 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String s = list.get(position);
         holder.checkBox.setText(s);
-        holder.checkBox.setOnClickListener(v -> {
-            String itemSelected = "";
-            for (CommunicationAdapter.ViewHolder viewh : viewHolders) {
-                if (viewh.checkBox.isChecked()) {
-                    itemSelected += viewh.checkBox.getText() + "\n";
-                }
-            }
-            txtReason.setText(itemSelected);
-        });
-
     }
 
     @Override

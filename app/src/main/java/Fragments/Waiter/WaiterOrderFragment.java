@@ -61,7 +61,7 @@ public class WaiterOrderFragment extends Fragment {
                     }
 
                 }
-                adapter = new BookedHistoryAdapter(list, getContext());
+                adapter = new BookedHistoryAdapter(list);
                 recyclerView.setAdapter(adapter);
             }
 

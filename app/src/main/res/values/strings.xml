@@ -2,7 +2,6 @@
     <string name="app_name">SmartOrder</string>
     <string name="createAccount">Đăng ký tài khoản</string>
     <string name="account">Tài khoản</string>
-    <string name="hello_blank_fragment">loading</string>
     <string name="selectDate">Chọn ngày</string>
     <string name="selectTime">Chọn giờ</string>
     <string name="sl_nopeople">Số người</string>
@@ -13,10 +12,8 @@
     <string name="thongtinkhachhang">Thông tin khách hàng</string>
     <string name="goimon">Gọi món</string>
     <string name="register">Đăng ký</string>
-    <string name="btnHistoryBill">Hóa đơn</string>
     <string name="thongtintaikhoan">Thông tin tài khoản</string>
     <string name="lichsudatban">Lịch sử đặt bàn</string>
-    <string name="lichsugoimon">Lịch sử gọi món</string>
     <string name="dangxuat">Đăng xuất</string>
     <string name="trangchu">Trang chủ</string>
     <string name="taikhoan">Tài khoản</string>
@@ -31,8 +28,7 @@
     <string name="bookatable">Đặt bàn</string>
     <string name="menu">Thực đơn</string>
     <string name="news">Tin tức</string>
-    <string name="notification">Thông báo</string>
-    <string name="foodanddrink">Đồ Uống + Đồ ăn </string>
+    <string name="foodanddrink">Món ngoài</string>
     <string name="firstname">Họ</string>
     <string name="lastname">Tên</string>
     <string name="address">Địa chỉ</string>
@@ -51,12 +47,9 @@
     <string name="FoodPrice">Đơn giá</string>
     <string name="FoodTotal">Tổng</string>
     <string name="done">Xong</string>
-    <string name="lam">Làm</string>
     <string name="chefNotice">Thông Báo</string>
     <string name="chefCommunication">Giao tiếp với Quản lí</string>
     <string name="Giaotiep">Giao Tiếp</string>
-    <string name="history">Lịch sử</string>
-    <string name="language">Ngôn ngữ</string>
     <string name="selectedLanguage">Tiếng Việt</string>
     <string name="quanly">Quản lý</string>
     <string name="delete">Xóa</string>
@@ -65,7 +58,6 @@
     <string name="tomorrow1">Ngày kia</string>
     <string name="tomorrow2">Ngày kìa</string>
     <string name="toastGettable">Vui lòng nhập số người</string>
-    <string name="order">Đơn hàng</string>
     <string name="cancel">Quay lại</string>
     <string name="accepted">Đã duyệt</string>
     <string name="waitingaccept">Chờ duyệt</string>
@@ -82,4 +74,8 @@
     <string name="waitforwaiter">Vui lòng chờ nhân viên phục vụ</string>
     <string name="delivered">Đã ra đồ</string>
     <string name="reason">Lý do : </string>
+    <string name="othermess">Ý kiến khác</string>
+    <string name="rado">Ra đồ</string>
+    <string name="delivery">Ra đồ</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>
