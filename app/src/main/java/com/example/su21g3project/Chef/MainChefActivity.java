@@ -10,14 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.su21g3project.Customer.CommunicationActivity;
 import com.example.su21g3project.General.LoginActivity;
 import com.example.su21g3project.General.NoticeActivity;
 import com.example.su21g3project.R;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,25 +25,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import Model.OrderDetail;
 import Model.User;
-import adapter.Chef.ChefViewPagerAdapter;
+import adapter.Chef.ChefAdapter;
 
 public class MainChefActivity extends AppCompatActivity {
     private DatabaseReference reference;
-    private TabLayout tabLayout;
     private TextView txtChefName;
     FirebaseUser user;
     private String role="";
-    private ViewPager2 viewPager2;
+    private RecyclerView recyclerView;
+    private List<List<OrderDetail>> result = new ArrayList<>();
+    private List<OrderDetail> subResult = new ArrayList<>();
+    private ChefAdapter chefAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chef);
+        recyclerView=findViewById(R.id.chefRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         user= FirebaseAuth.getInstance().getCurrentUser();
         txtChefName=findViewById(R.id.chefName);
-        tabLayout=findViewById(R.id.tabLayout);
         reference=FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         /**
          * get info of Chef user
@@ -64,20 +73,56 @@ public class MainChefActivity extends AppCompatActivity {
 
             }
         });
-        viewPager2=findViewById(R.id.viewPager);
-        ChefViewPagerAdapter viewPagerAdapter=new ChefViewPagerAdapter(this);
-        viewPager2.setAdapter(viewPagerAdapter);
-        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
-            switch (position){
-                case 0:
-                    tab.setText(R.string.trangchu);
-                    break;
-                default:
-                    tab.setText(R.string.order);
-                    break;
-            }
-        }).attach();
 
+        reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
+        reference.orderByChild("orderId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                //orderDetails from rtdb
+                result.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    OrderDetail orderDetail = postSnapshot.getValue(OrderDetail.class);
+                    if(orderDetail.getStatus().equals("accepted")){
+                        String orderId = orderDetail.getOrderId();
+                        Date time = orderDetail.getTime();
+                        boolean isFoundPlace = false;
+                        //bellow code is separate result by time and orderId
+                        //go through all exist subResult
+                        for (int i = 0; i < result.size(); i++) {
+
+                            //get list contain elements with same orderId
+                            subResult = result.get(i);
+                            if (isBelong(subResult, orderId, time)) {
+                                subResult.add(orderDetail);
+                                isFoundPlace = true;
+                            }
+                        }
+                        //if not found any existed list belong to then make new list
+                        if (!isFoundPlace) {
+                            subResult = new ArrayList<>();
+                            subResult.add(orderDetail);
+                            //add new list to result
+                            result.add(subResult);
+                        }
+                    }
+
+                }
+                chefAdapter = new ChefAdapter(result, MainChefActivity.this);
+                recyclerView.setAdapter(chefAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
+        });
+
+    }
+    //belong is same orderId and time
+    private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
+        if (!list.isEmpty() && list.get(0) != null) {
+            return list.get(0).getOrderId().equals(orderId)
+                    && list.get(0).getTime().equals(time);
+        }
+        return false;
     }
 
     /**

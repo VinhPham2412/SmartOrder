@@ -1,4 +1,4 @@
-package Fragments.Chef;
+package Fragments.Waiter;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;

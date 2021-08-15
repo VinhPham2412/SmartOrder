@@ -185,7 +185,6 @@ public class BillActivity extends AppCompatActivity {
                 reference.setValue(Integer.parseInt(viewHolder.getEtFoodQuantity().getText().toString()));
             }
             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
-
             String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
             reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
             HashMap details = new HashMap<String,HashMap<String,Object>>();
