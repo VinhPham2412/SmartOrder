@@ -28,7 +28,7 @@
     <string name="login">Sign in</string>
     <string name="bookatable">Book</string>
     <string name="menu">Menu</string>
-    <string name="news">Tin tức</string>
+    <string name="news">News</string>
     <string name="foodanddrink">Addition</string>
     <string name="firstname">First name</string>
     <string name="lastname">Last name</string>
@@ -76,6 +76,12 @@
     <string name="delivered">Delivered</string>
     <string name="reason">Because : </string>
     <string name="othermess">Other message</string>
-    <string name="rado">Ra đồ</string>
-    <string name="delivery">Ra đồ</string>
+    <string name="rado">Delivery</string>
+    <string name="delivery">Delivery</string>
+    <string name="lichsugoimon">Ordered</string>
+    <string name="back">Back</string>
+    <string name="datban">Book</string>
+    <string name="home">Home</string>
+    <string name="daphucvu">Đã phục vụ</string>
+    <string name="requesttopay">Chờ thanh toán</string>
 </resources>

@@ -77,5 +77,11 @@
     <string name="othermess">Ý kiến khác</string>
     <string name="rado">Ra đồ</string>
     <string name="delivery">Ra đồ</string>
+    <string name="lichsugoimon">Lịch sử gọi món</string>
+    <string name="back">Trở về</string>
+    <string name="datban">Đặt bàn</string>
+    <string name="home">Trang chủ</string>
+    <string name="daphucvu">Đã phục vụ</string>
+    <string name="requesttopay">Chờ thanh toán</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

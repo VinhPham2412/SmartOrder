@@ -29,16 +29,17 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 fragment = new OrderFragment();
                 break;
             case 1:
-                fragment = new CookedOrderFragment();
-                break;
-            case 2:
-                fragment= new WaiterOrderFragment();
-                break;
-            case 3:
                 fragment = new WaitingBillFragment();
                 break;
-            default:
+            case 2:
+                fragment = new CookedOrderFragment();
+                break;
+            case 3:
                 fragment= new CommunicationFragment();
+                break;
+            default:
+                fragment= new WaiterOrderFragment();
+                break;
         }
         return fragment;
     }

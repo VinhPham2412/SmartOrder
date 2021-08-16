@@ -163,11 +163,10 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                String a=quantity.getText().toString();
                 int totalPrice=0;
-                if(!a.isEmpty()){
+                if(!s.toString().isEmpty()){
                     int oldTotal=Integer.parseInt(total.getText().toString());
-                    totalPrice= (int)(new Integer(a).intValue()* price);
+                    totalPrice= (int)(new Integer(s.toString()).intValue()* price);
                     total.setText(totalPrice+"");
                     int newTotal=Integer.parseInt(total.getText().toString());
                     reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderId);

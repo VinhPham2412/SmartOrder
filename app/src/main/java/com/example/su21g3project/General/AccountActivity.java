@@ -83,7 +83,7 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intent);
             });
             /**
-             * intent to BookedHistoryActivity
+             * intent to CBookedHistoryActivity
              */
             txtBookedHistory.setOnClickListener(v -> {
                 Intent intent = new Intent(AccountActivity.this, CBookedActivity.class);

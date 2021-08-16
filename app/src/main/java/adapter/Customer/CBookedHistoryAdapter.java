@@ -124,22 +124,37 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
             });
         }
         //display booked info
-        holder.getTxtInfo().setText(context.getString(R.string.tennguoidat) +": "+ order.getName()+"\n"
-                + context.getString(R.string.sodienthoai) +" "+order.getPhone()+ "\n"
-                + context.getString(R.string.gioan) +": "+order.getStrDate()+ "\n"
-                + context.getString(R.string.sl_nopeople) +": "+order.getNumberOfPeople()+ "\n"
-                + context.getString(R.string.ghichu) +": "+order.getNote()+ "\n");
+        holder.getTxtInfo().setText(context.getString(R.string.tennguoidat) + ": " + order.getName() + "\n"
+                + context.getString(R.string.sodienthoai) + " " + order.getPhone() + "\n"
+                + context.getString(R.string.gioan) + ": " + order.getStrDate() + "\n"
+                + context.getString(R.string.sl_nopeople) + ": " + order.getNumberOfPeople() + "\n"
+                + context.getString(R.string.ghichu) + ": " + order.getNote() + "\n");
         //display status info
         String status = order.getStatus();
         switch (status) {
+            case "new":
+                holder.getTxtStatus().setText(context.getString(R.string.waitingaccept));
+                holder.getTxtStatus().setTextColor(Color.BLUE);
+                holder.getBtnOrder().setEnabled(false);
+                break;
             case "accepted":
                 holder.getTxtStatus().setText(context.getString(R.string.accepted));
                 holder.getTxtStatus().setTextColor(Color.GREEN);
                 holder.getBtnOrder().setEnabled(true);
                 break;
-            default:
-                holder.getTxtStatus().setText(context.getString(R.string.waitingaccept));
+            case "rejected":
+                holder.getTxtStatus().setText(context.getString(R.string.rejected));
                 holder.getTxtStatus().setTextColor(Color.RED);
+                holder.getBtnOrder().setEnabled(false);
+                break;
+            case "done":
+                holder.getTxtStatus().setText(context.getString(R.string.daphucvu));
+                holder.getTxtStatus().setTextColor(Color.BLACK);
+                holder.getBtnOrder().setEnabled(false);
+                break;
+            default:
+                holder.getTxtStatus().setText(context.getString(R.string.requesttopay));
+                holder.getTxtStatus().setTextColor(Color.BLACK);
                 holder.getBtnOrder().setEnabled(false);
                 break;
         }

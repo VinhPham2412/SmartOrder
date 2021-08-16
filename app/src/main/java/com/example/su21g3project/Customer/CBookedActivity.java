@@ -1,8 +1,10 @@
 package com.example.su21g3project.Customer;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,9 +31,22 @@ public class CBookedActivity extends AppCompatActivity {
     private List<Order> list;
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_recylerview);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.lichsudatban);
         user = FirebaseAuth.getInstance().getCurrentUser();
         list = new ArrayList<>();
         RecyclerView view = findViewById(R.id.container);
@@ -44,10 +59,10 @@ public class CBookedActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Order processOrder = dataSnapshot.getValue(Order.class);
-                        list.add(processOrder);
+                        Order order = dataSnapshot.getValue(Order.class);
+                        list.add(order);
                     }
                 }
                 //show list processOrder by adapter

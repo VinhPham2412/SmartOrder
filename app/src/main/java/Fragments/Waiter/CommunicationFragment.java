@@ -32,6 +32,7 @@ public class CommunicationFragment extends Fragment {
     private CommunicationAdapter communicationAdapter;
     private List<String> stringList;
     private List<CommunicationAdapter.ViewHolder> viewHolders;
+    private String itemSelected;
 
     public CommunicationFragment() {
     }
@@ -55,12 +56,18 @@ public class CommunicationFragment extends Fragment {
         listviewdata.setAdapter(communicationAdapter);
         viewHolders = communicationAdapter.getViewHolders();
         btnSenReason.setOnClickListener(v -> {
+            itemSelected = "";
             reference = FirebaseDatabase.getInstance().getReference("Communications").child("waiter");
             String communicationId = reference.push().getKey();
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id", communicationId);
             hashMap.put("userId", userId);
-            hashMap.put("message", txtReason.getText().toString());
+            for (CommunicationAdapter.ViewHolder viewHolder : viewHolders) {
+                if(viewHolder.checkBox.isChecked()){
+                    itemSelected+=viewHolder.checkBox.getText().toString()+"\n";
+                }
+            }
+            hashMap.put("message", itemSelected + txtReason.getText().toString());
             hashMap.put("isSeen", false);
             hashMap.put("isReply", false);
             hashMap.put("isNotify", false);
@@ -68,17 +75,7 @@ public class CommunicationFragment extends Fragment {
                     task -> Toast.makeText(getContext(), "Gửi ý kiến thành công",
                             Toast.LENGTH_SHORT).show());
         });
-        for (CommunicationAdapter.ViewHolder viewHolder : viewHolders) {
-            viewHolder.checkBox.setOnClickListener(v -> {
-                String itemSelected = "";
-                for (CommunicationAdapter.ViewHolder viewh : viewHolders) {
-                    if (viewh.checkBox.isChecked()) {
-                        itemSelected += viewh.checkBox.getText() + "\n";
-                    }
-                }
-                txtReason.setText(itemSelected);
-            });
-        }
+
         return view;
     }
 }

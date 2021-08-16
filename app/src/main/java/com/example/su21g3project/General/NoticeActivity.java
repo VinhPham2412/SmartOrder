@@ -1,8 +1,10 @@
 package com.example.su21g3project.General;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +31,20 @@ public class NoticeActivity extends AppCompatActivity {
     private NoticeAdapter noticeAdapter;
     private FirebaseUser user;
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.chefNotice);
         setContentView(R.layout.custom_recylerview);
         user= FirebaseAuth.getInstance().getCurrentUser();
         String role=getIntent().getStringExtra("role");

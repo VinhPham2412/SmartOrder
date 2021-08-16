@@ -38,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/or"
         android:text="@string/delivery"
         app:layout_constraintBottom_toBottomOf="@+id/txtCookedFood"
         app:layout_constraintEnd_toEndOf="parent"

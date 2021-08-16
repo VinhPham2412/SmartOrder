@@ -2,9 +2,11 @@ package com.example.su21g3project.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,9 +34,21 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<OrderDetail> subResult = new ArrayList<>();
     private Button btnBill;
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_order_history);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.lichsugoimon);
         String orderId=getIntent().getStringExtra("orderId");
         reference = FirebaseDatabase.getInstance().getReference("OrderDetails");
         reference.addValueEventListener(new ValueEventListener() {

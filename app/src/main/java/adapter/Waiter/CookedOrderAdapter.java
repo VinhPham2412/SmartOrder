@@ -115,7 +115,7 @@ public class CookedOrderAdapter extends RecyclerView.Adapter<CookedOrderAdapter.
                                         if (snapshot.exists()) {
                                             //got floor name
                                             Floor floor = snapshot.getValue(Floor.class);
-                                            holder.getTxtTable().setText(table.getName() + ", " + floor.getName());
+                                            holder.getTxtTable().setText(table.getName() +context.getString(R.string.floor) + floor.getName());
                                         }
                                     }
 

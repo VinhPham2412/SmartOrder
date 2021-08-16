@@ -100,22 +100,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/or"
             android:text="@string/thanhtoan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/billRecycleView" />
-
-        <Button
-            android:id="@+id/btnConfirmBillCustomer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="@color/colorAccent"
-            android:text="Yêu cầu thanh toán"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnConfirmBill" />
 
         <TextView
             android:id="@+id/textView15"

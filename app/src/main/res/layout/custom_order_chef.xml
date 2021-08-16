@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border">
+    android:background="@drawable/border"
+    android:backgroundTint="@color/or">
 
     <TextView
         android:id="@+id/txtDetails"
@@ -21,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/or"
         android:text="@string/done"
         app:layout_constraintBottom_toBottomOf="@+id/txtDetails"
         app:layout_constraintEnd_toEndOf="parent"

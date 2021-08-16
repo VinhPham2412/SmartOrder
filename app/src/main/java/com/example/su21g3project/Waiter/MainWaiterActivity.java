@@ -1,21 +1,21 @@
 package com.example.su21g3project.Waiter;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.su21g3project.General.LoginActivity;
+import com.example.su21g3project.Customer.ProfileActivity;
+import com.example.su21g3project.General.AccountActivity;
+import com.example.su21g3project.General.MainActivity;
 import com.example.su21g3project.General.NoticeActivity;
 import com.example.su21g3project.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,20 +32,41 @@ import adapter.ViewPagerAdapter;
 public class MainWaiterActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
-    private TextView txtWaiterName;
     private FirebaseUser user;
     private String role="";
     private DatabaseReference reference;
-
+    private BottomNavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_waiter);
-        txtWaiterName=findViewById(R.id.waiterName);
-        user= FirebaseAuth.getInstance().getCurrentUser();
-        txtWaiterName.setText(user.getDisplayName());
-        tabLayout=findViewById(R.id.tabLayout);
 
+        setContentView(R.layout.activity_main_waiter);
+        user= FirebaseAuth.getInstance().getCurrentUser();
+        tabLayout=findViewById(R.id.tabLayout);
+        mNavigationView =findViewById(R.id.navigation2);
+        //init nav
+        mNavigationView.setSelectedItemId(R.id.waiterHome);
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.waiterNotify:
+                    //swich to notify
+                    Intent intent = new Intent(MainWaiterActivity.this, NoticeActivity.class);
+                    intent.putExtra("role",role);
+                    startActivity(intent);
+                    return true;
+                case R.id.waiterHome:
+                    //switch to home
+                    viewPager2.setCurrentItem(0);
+                    return true;
+                case R.id.waiterAccount:
+                    //switch to account
+                    Intent intent1 = new Intent(MainWaiterActivity.this, ProfileActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent1);
+                    return true;
+            }
+            return false;
+        });
         reference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,71 +89,26 @@ public class MainWaiterActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             switch (position){
                 case 0:
-                    tab.setText(R.string.trangchu);
+                    tab.setText(R.string.home);
                     break;
                 case 1:
-                    tab.setText(R.string.rado);
+                    tab.setText(R.string.hoadon);
                     break;
                 case 2:
-                    tab.setText(R.string.goimon);
+                    tab.setText(R.string.lichsugoimon);
                     break;
                 case 3:
-                    tab.setText(R.string.waitingbill);
-                    break;
-                default:
                     tab.setText(R.string.communication);
+                    break;
+                case 4:
+                    tab.setText(R.string.goimon);
                     break;
             }
         }).attach();
     }
-    /**
-     * add options Menu in activity
-     * @param menu
-     * @return
-     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.waiter_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        switch (id){
-            case R.id.Notice:
-                Intent intent= new Intent(MainWaiterActivity.this, NoticeActivity.class);
-                intent.putExtra("role",role);
-                startActivity(intent);
-                break;
-            case R.id.logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainWaiterActivity.this);
-
-                builder.setTitle("Confirm");
-                builder.setMessage("Do you want logout?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(MainWaiterActivity.this,LoginActivity.class));
-                        finish();
-                    }
-                });
-
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setSelectedItemId(R.id.waiterHome);
     }
 }

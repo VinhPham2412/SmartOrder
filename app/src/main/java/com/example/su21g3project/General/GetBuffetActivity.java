@@ -2,10 +2,12 @@ package com.example.su21g3project.General;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,11 +38,22 @@ public class GetBuffetActivity extends AppCompatActivity {
     private Button btnConfirm;
     private BuffetAdapter buffetAdapter;
     private  DatabaseReference reference;
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_buffet);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.back);
         String orderId = getIntent().getStringExtra("orderId");
         recyclerView = findViewById(R.id.billRecycleView);
         btnConfirm = findViewById(R.id.btnConfirm);

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/Notice"
-        android:title="@string/chefNotice" />
     <item
-        android:id="@+id/logout"
-        android:title="@string/dangxuat" />
+        android:id="@+id/waiterNotify"
+        android:icon="@drawable/ic_baseline_notification_important_24"
+        android:title="@string/chefNotice" />
+
+    <item
+        android:id="@+id/waiterHome"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/trangchu" />
+
+    <item
+        android:id="@+id/waiterAccount"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/account" />
 </menu>

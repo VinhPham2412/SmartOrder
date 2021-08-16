@@ -16,9 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.su21g3project.Customer.CBookedActivity;
 import com.example.su21g3project.Customer.NoticeCustomerActivity;
 import com.example.su21g3project.R;
-import com.example.su21g3project.Waiter.BookedHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +33,6 @@ import java.util.Random;
 
 import Model.Notice;
 import Model.Order;
-import Model.OrderDetail;
 import Model.User;
 
 public class NotificationService extends Service {
@@ -157,7 +156,7 @@ public class NotificationService extends Service {
         int notificationId = new Random().nextInt(99999);
         reference = FirebaseDatabase.getInstance().getReference("Orders").child(id).child("isNotify");
         reference.setValue(true);
-        Intent intent = new Intent(getApplicationContext(), BookedHistoryActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CBookedActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
