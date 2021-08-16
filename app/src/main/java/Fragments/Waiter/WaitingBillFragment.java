@@ -60,7 +60,7 @@ public class WaitingBillFragment extends Fragment {
                 list = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Order order = dataSnapshot.getValue(Order.class);
-                    if (order.getStatus().equals("readytopay")&&
+                    if (order.getStatus().equals("requestToPay")&&
                     order.getWaiterId().equals(user.getUid())) {
                         list.add(order.getId());
                     }

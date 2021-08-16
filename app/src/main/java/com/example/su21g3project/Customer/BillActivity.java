@@ -2,6 +2,7 @@ package com.example.su21g3project.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class BillActivity extends AppCompatActivity {
     private TextView txtTableName,billBuffetName,billBuffetNumPeople,billBuffetPrice,billBuffetTotal,txtTotal;
     private RecyclerView recyclerView;
     private BillAdapter billAdapter;
-    private Button btnConfirmBill;
+    private Button btnConfirmBill,btnConfirmBillCustomer;
     private List<OrderDetail> orderDetailList;
     FirebaseUser user;
     private Float finalMoney=0f;
@@ -51,6 +52,7 @@ public class BillActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
+        btnConfirmBillCustomer=findViewById(R.id.btnConfirmBillCustomer);
         user= FirebaseAuth.getInstance().getCurrentUser();
         //get from intent
         String orderId = getIntent().getStringExtra("orderId");
@@ -75,6 +77,14 @@ public class BillActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     User user1 = snapshot.getValue(User.class);
+                    if (user1.getRole().equals("customer")){
+                        btnConfirmBillCustomer.setVisibility(View.VISIBLE);
+                        btnConfirmBill.setVisibility(View.INVISIBLE);
+                    }else
+                    {
+                        btnConfirmBillCustomer.setVisibility(View.INVISIBLE);
+                        btnConfirmBill.setVisibility(View.VISIBLE);
+                    }
                     role = user1.getRole();
                 }
             }
@@ -181,52 +191,48 @@ public class BillActivity extends AppCompatActivity {
         /**
          * action when click confirmBill
          */
-        btnConfirmBill.setOnClickListener(v -> {
-            List<BillAdapter.ViewHolder> viewHolderList=billAdapter.getAllHolder();
-            for (BillAdapter.ViewHolder viewHolder:viewHolderList){
-                reference=FirebaseDatabase.getInstance().getReference("OrderDetails")
-                        .child(viewHolder.getOrderDetailId()).child("quantity");
-                reference.setValue(Integer.parseInt(viewHolder.getEtFoodQuantity().getText().toString()));
-            }
-            Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
-            String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
-            reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
-            HashMap details = new HashMap<String,HashMap<String,Object>>();
-            for (OrderDetail orderDetail:orderDetailList){
-                HashMap detail=new HashMap<String,Object>();
-                detail.put("id",orderDetail.getId());
-                detail.put("foodId",orderDetail.getFoodId());
-                detail.put("quantity",orderDetail.getQuantity());
-                details.put(orderDetail.getId(),detail);
-            }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(this.getString(R.string.sendpayrequest));
-            builder.setPositiveButton(R.string.done, (dialog, which) -> {
-                //push bill to rtdb
-                Bill bill= new Bill(billId,orderId,finalMoney,details,time,tableId,buffetId);
-                reference.setValue(bill.toMap());
-                //update order status
-                reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
-                reference.child("status").setValue("readytopay");
-                //update table status , HERE ?
-                reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
-                reference.child("status").setValue(true);
-                //add current bill id for reception to access later
-                reference.child("currentBillId").setValue(billId);
-                reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
-                        .child("isReadyToPay");
-                reference.setValue(true);
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setTitle(this.getString(R.string.waitforwaiter));
-                builder1.setNegativeButton(R.string.done, ((dialog1, which1) -> {
-                    dialog1.cancel();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+        btnConfirmBillCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
+                String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
+                reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BillActivity.this);
+                builder.setTitle(getApplicationContext().getString(R.string.sendpayrequest));
+                builder.setPositiveButton(R.string.done, (dialog, which) -> {
+                    //push bill to rtdb
+                    Bill bill= new Bill(billId,orderId,finalMoney,time,tableId,buffetId);
+                    reference.setValue(bill.toMap());
+                    //update order status
+                    reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+                    reference.child("status").setValue("requestToPay");
+                    //update table status , HERE ?
+                    reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+                    //add current bill id for reception to access later
+                    reference.child("currentBillId").setValue(billId);
+                    reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
+                            .child("isReadyToPay");
+                    reference.setValue(true);
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(BillActivity.this);
+                    builder1.setTitle(BillActivity.this.getString(R.string.waitforwaiter));
+                    builder1.setNegativeButton(R.string.done, ((dialog1, which1) -> {
+                        dialog1.cancel();
+                        Intent intent = new Intent(BillActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    })).create().show();
+                }).setNegativeButton(R.string.cancel, ((dialog, which) -> {
+                    dialog.cancel();
                 })).create().show();
-            }).setNegativeButton(R.string.cancel, ((dialog, which) -> {
-                dialog.cancel();
-            })).create().show();
+            }
+        });
+        btnConfirmBill.setOnClickListener(v -> {
+            reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+            reference.child("status").setValue("readytopay");
+            //update table status , HERE ?
+            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+            reference.child("status").setValue(true);
+
         });
     }
 }

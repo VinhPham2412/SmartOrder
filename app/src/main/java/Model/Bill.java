@@ -19,7 +19,6 @@ public class Bill {
     private String id;
     private String orderId;
     private Float totalMoney;
-    private HashMap<String,Object> details;
     private Date time;
     private String tableId;
     private String buffetId;
@@ -27,11 +26,10 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(String id, String orderId, Float totalMoney, HashMap<String, Object> details, Date time, String tableId,String buffetId) {
+    public Bill(String id, String orderId, Float totalMoney, Date time, String tableId,String buffetId) {
         this.id = id;
         this.orderId = orderId;
         this.totalMoney = totalMoney;
-        this.details = details;
         this.time = time;
         this.tableId = tableId;
         this.buffetId = buffetId;
@@ -42,7 +40,6 @@ public class Bill {
         result.put("id", id);
         result.put("orderId", orderId);
         result.put("totalMoney", totalMoney);
-        result.put("details", details);
         String d = format.format(time);
         result.put("time", d);
         result.put("tableId", tableId);
@@ -88,14 +85,6 @@ public class Bill {
 
     public void setTotalMoney(Float totalMoney) {
         this.totalMoney = totalMoney;
-    }
-
-    public HashMap<String, Object> getDetails() {
-        return details;
-    }
-
-    public void setDetails(HashMap<String, Object> details) {
-        this.details = details;
     }
 
     public Date getTime() {

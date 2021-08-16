@@ -80,7 +80,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
                         finalSum += total;
                         reference = FirebaseDatabase.getInstance().getReference("SubTotals");
                         reference.child(orderDetail.getOrderId()).setValue(finalSum);
-                        editFood(holder.getEtFoodQuantity(),food.getPrice(),holder.getTxtFoodTotal(),orderDetail.getOrderId(),orderDetail.getId());
+                        editFood(holder.getEtFoodQuantity(),food.getPrice(),holder.getTxtFoodTotal(),orderDetail.getOrderId());
                     }
                 }
                 @Override
@@ -151,7 +151,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             etFoodQuantity=(EditText)itemView.findViewById(R.id.etFoodQantity);
         }
     }
-    private  void editFood(EditText quantity,float price,TextView total,String orderId,String id){
+    private  void editFood(EditText quantity,float price,TextView total,String orderId){
 
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -186,11 +186,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
                         }
                     };
                     reference.addValueEventListener(eventListener);
-                    reference=FirebaseDatabase.getInstance().getReference("OrderDetails").child(id).child("quantity");
-                    reference.setValue(Integer.parseInt(a));
-
-
-
             }
         }
     });
