@@ -13,8 +13,8 @@
 
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
-        android:layout_width="0dp"
-        android:layout_height="236dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/progressBar4" />
@@ -115,6 +115,14 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dangxuat"
+        tools:layout_editor_absoluteX="328dp"
+        tools:layout_editor_absoluteY="206dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

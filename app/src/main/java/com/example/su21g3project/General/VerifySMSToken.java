@@ -170,7 +170,7 @@ public class VerifySMSToken extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.GREEN);
+        waveHeader.setStartColor(Color.BLACK);
         waveHeader.setCloseColor(Color.GRAY);
         txtPhone = findViewById(R.id.textMobile);
         txtResend = findViewById(R.id.textResendOTP);

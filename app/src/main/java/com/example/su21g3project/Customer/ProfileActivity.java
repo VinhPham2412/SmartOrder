@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.su21g3project.General.AccountActivity;
+import com.example.su21g3project.General.LoginActivity;
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,14 +33,15 @@ import Model.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button btnSave;
+    private Button btnSave, btnLogout;
     private FirebaseUser fbuser;
-    private EditText txtName,txtPhone,txtAddress;
+    private EditText txtName, txtPhone, txtAddress;
     private DatabaseReference mDatabase;
     private ProgressBar progressBar;
     private User duser;
     private String id;
     private MultiWaveHeader waveHeader;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -49,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.account);
-        waveHeader=findViewById(R.id.waveHeader);
+        waveHeader = findViewById(R.id.waveHeader);
         waveHeader.setVelocity(1);
         waveHeader.setProgress(1);
         waveHeader.isRunning();
@@ -70,29 +73,41 @@ public class ProfileActivity extends AppCompatActivity {
         txtAddress = findViewById(R.id.txtProfileAdress);
         progressBar = findViewById(R.id.progressBar4);
         btnSave = findViewById(R.id.btnSaveUpdate);
+        btnLogout = findViewById(R.id.btnLogout);
         //get user from authen to get uid
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
         progressBar.setVisibility(View.VISIBLE);
         btnSave.setVisibility(View.INVISIBLE);
-        if(fbuser!=null){
+        if (fbuser != null) {
             //get user info from database with uid
             mDatabase = FirebaseDatabase.getInstance().getReference();
             id = fbuser.getUid();
             mDatabase.child("Users").child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if(snapshot.getValue()!=null){
+                    if (snapshot.getValue() != null) {
                         duser = snapshot.getValue(User.class);
                         txtName.setText(duser.getName());
                         txtPhone.setText(duser.getPhone());
                         txtAddress.setText(duser.getAddress());
                         progressBar.setVisibility(View.GONE);
                         btnSave.setVisibility(View.VISIBLE);
+                        if (duser.getRole().equals("waiter")) {
+                            btnLogout.setVisibility(View.VISIBLE);
+                            btnLogout.setOnClickListener(v -> {
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                finish();
+                            });
+                        } else {
+                            btnLogout.setVisibility(View.GONE);
+                        }
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                    Toast.makeText(ProfileActivity.this,error.getMessage(),
+                    Toast.makeText(ProfileActivity.this, error.getMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -104,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String phone = txtPhone.getText().toString();
                 String address = txtAddress.getText().toString();
 
-                User user = new User(id,name,phone,address);
+                User user = new User(id, name, phone, address);
                 mDatabase.child("Users").child(id).setValue(user.toMap())
                         .addOnCompleteListener(task -> {
                             Toast.makeText(ProfileActivity.this,

@@ -4,14 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_account.xml" value="0.67" />
-        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_bill.xml" value="0.9307909604519774" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_bill.xml" value="0.67" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_communication_customer.xml" value="0.4631578947368421" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_customer_order_history.xml" value="0.33" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_get_buffet.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_get_table.xml" value="0.67" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_main.xml" value="0.8722222222222222" />
-        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_main_waiter.xml" value="0.7116843702579666" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_main_chef.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_main_waiter.xml" value="0.67" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_news.xml" value="0.8763888888888889" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_notice_customer.xml" value="0.67" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_orders_food.xml" value="0.67" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_register.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_update_profile.xml" value="0.8763888888888889" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/activity_verify_s_m_s_token.xml" value="0.8763888888888889" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/booked_history.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/cbooked_history.xml" value="0.4631578947368421" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/cooked_order.xml" value="0.5" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_bill.xml" value="0.4631578947368421" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_communication.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_menu.xml" value="0.5" />
+        <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_notice.xml" value="0.67" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_order_waiter.xml" value="0.4631578947368421" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/custom_recylerview.xml" value="0.5313207547169811" />
         <entry key="..\:/Users/xctbtx/AndroidStudioProjects/SmartOrders/app/src/main/res/layout/dialog_reason.xml" value="0.9027777777777778" />

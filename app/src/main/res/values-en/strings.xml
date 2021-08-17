@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SmartOrder</string>
+    <string name="app_name">Smart Order</string>
     <string name="createAccount">Create account</string>
     <string name="account">Account</string>
     <string name="selectDate">Pick date</string>
@@ -82,6 +82,6 @@
     <string name="back">Back</string>
     <string name="datban">Book</string>
     <string name="home">Home</string>
-    <string name="daphucvu">Đã phục vụ</string>
-    <string name="requesttopay">Chờ thanh toán</string>
+    <string name="daphucvu">Done</string>
+    <string name="requesttopay">Pending</string>
 </resources>

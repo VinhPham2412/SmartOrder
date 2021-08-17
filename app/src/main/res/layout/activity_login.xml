@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textAlignment="center"
-    tools:layout_editor_absoluteY="81dp">
-    <com.scwang.wave.MultiWaveHeader
-        android:id="@+id/waveHeader"
+    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="239dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:gravity="center"
-        android:text="@string/login"
+        android:layout_height="match_parent"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtLoginAccount"
-        app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"></TextView>
+        tools:layout_editor_absoluteY="81dp">
 
-    <EditText
-        android:id="@+id/txtLoginAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="308dp"
-        android:background="@drawable/border"
-        android:drawableStart="@drawable/ic_baseline_account_circle_24"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="@string/sodienthoai"
-        android:inputType="phone"
-        android:padding="16dp"
-        app:layout_constraintStart_toStartOf="@+id/txtAppName"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="119dp"
-        android:layout_height="118dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.716"
-        app:layout_constraintStart_toEndOf="@+id/txtAppName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/buffet" />
+        <com.scwang.wave.MultiWaveHeader
+            android:id="@+id/waveHeader"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/app_name"
-        android:textColor="@color/or"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="@string/login"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txtLoginAccount"
+            app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"></TextView>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="@color/or"
-        android:text="@string/login"
-        android:textColor="@color/cardview_light_background"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
-        app:layout_constraintHorizontal_bias="0.477"
-        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
-        app:layout_constraintTop_toBottomOf="@+id/txtdonthaveacc" />
+        <EditText
+            android:id="@+id/txtLoginAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="308dp"
+            android:background="@drawable/border"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="@string/sodienthoai"
+            android:inputType="phone"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="@+id/txtAppName"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="119dp"
+            android:layout_height="118dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:contentDescription="@string/account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.716"
+            app:layout_constraintStart_toEndOf="@+id/txtAppName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/buffet" />
 
-    <TextView
-        android:id="@+id/txtRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/register"
-        android:textColor="@color/or"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/txtdonthaveacc"
-        app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/app_name"
+            android:textColor="@color/or"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtdonthaveacc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
-        android:textColor="@color/black"
-        android:text="@string/donthaveacc"
-        app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
-        app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/or"
+            android:text="@string/login"
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
+            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
+            app:layout_constraintTop_toBottomOf="@+id/txtdonthaveacc" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+            app:layout_constraintStart_toStartOf="@+id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+        <TextView
+            android:id="@+id/txtRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/register"
+            android:textColor="@color/or"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txtdonthaveacc"
+            app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
+
+        <TextView
+            android:id="@+id/txtdonthaveacc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/donthaveacc"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
+            app:layout_constraintTop_toBottomOf="@+id/txtLoginAccount" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

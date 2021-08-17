@@ -42,7 +42,7 @@ public class AccountActivity extends AppCompatActivity {
         waveHeader.isRunning();
         waveHeader.setGradientAngle(45);
         waveHeader.setWaveHeight(40);
-        waveHeader.setStartColor(Color.GREEN);
+        waveHeader.setStartColor(Color.BLACK);
         waveHeader.setCloseColor(Color.GRAY);
         txtName = findViewById(R.id.fragment_nameAccount);
         txtPhone = findViewById(R.id.fragment_phoneAccount);

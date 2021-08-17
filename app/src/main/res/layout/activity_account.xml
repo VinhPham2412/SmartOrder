@@ -10,11 +10,10 @@
 
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="57dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_nameAccount"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,7 +21,8 @@
         android:id="@+id/fragment_nameAccount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20dp"

@@ -148,7 +148,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             txtFoodName=itemView.findViewById(R.id.txtFoodName);
             txtFoodPrice=itemView.findViewById(R.id.txtFoodPrice);
             txtFoodTotal=itemView.findViewById(R.id.txtFoodTotal);
-            etFoodQuantity=(EditText)itemView.findViewById(R.id.etFoodQantity);
+            etFoodQuantity=itemView.findViewById(R.id.etFoodQantity);
         }
     }
     private  void editFood(EditText quantity,float price,TextView total,String orderId){

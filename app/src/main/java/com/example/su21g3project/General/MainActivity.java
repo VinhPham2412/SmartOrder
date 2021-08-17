@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mNavigationView;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private MultiWaveHeader waveFooter;
-
     private int countNotice = 0;
     private List<Notice> noticeList;
 
@@ -70,14 +68,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         noticeList = new ArrayList<>();
-        waveFooter = findViewById(R.id.waveFooter);
-        waveFooter.setVelocity(1);
-        waveFooter.setProgress(1);
-        waveFooter.isRunning();
-        waveFooter.setGradientAngle(45);
-        waveFooter.setWaveHeight(40);
-        waveFooter.setStartColor(Color.BLACK);
-        waveFooter.setCloseColor(Color.GRAY);
 
         txtNotice = findViewById(R.id.txtNotice);
         btnMenu = findViewById(R.id.btnMenu);

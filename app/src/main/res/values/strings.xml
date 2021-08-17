@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartOrder</string>
+    <string name="app_name">Smart Order</string>
     <string name="createAccount">Đăng ký tài khoản</string>
     <string name="account">Tài khoản</string>
     <string name="selectDate">Chọn ngày</string>
