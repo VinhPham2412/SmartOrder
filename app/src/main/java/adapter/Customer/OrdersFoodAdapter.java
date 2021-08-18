@@ -157,10 +157,10 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public List<ViewHolder> getAllHolder() {
         List<ViewHolder> result = new ArrayList<>();
         for (ViewHolder holder : allViews) {
-            if (!holder.numberFood.getText().toString().trim().isEmpty()) {
+
                 if (Integer.parseInt(holder.numberFood.getText().toString()) > 0) {
                     result.add(holder);
-                }
+
             }
         }
         return result;
