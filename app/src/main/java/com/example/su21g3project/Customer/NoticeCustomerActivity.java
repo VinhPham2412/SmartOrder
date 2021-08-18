@@ -37,7 +37,6 @@ public class NoticeCustomerActivity extends AppCompatActivity {
         processOrderList=new ArrayList<>();
         noticeList=new ArrayList<>();
         user= FirebaseAuth.getInstance().getCurrentUser();
-        tableRe=findViewById(R.id.tableRecyclerView);
         noticeRe=findViewById(R.id.recycleViewNotice);
         tableRe.setLayoutManager(new LinearLayoutManager(this));
         noticeRe.setLayoutManager(new LinearLayoutManager(this));

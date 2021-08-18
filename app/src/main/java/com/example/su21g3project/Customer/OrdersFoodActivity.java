@@ -76,7 +76,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
                         Food food = snapshot1.getValue(Food.class);
-                        if (food.getType().equals(type) &&
+                        if (food.getType().equals(type) && food.isStatus() &&
                                 !isIn(list, food.getId())) {
                             result.add(food);
                         }
@@ -170,8 +170,9 @@ public class OrdersFoodActivity extends AppCompatActivity {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    if (snapshot1.exists()) {
-                        list.add(snapshot1.getValue(Food.class));
+                    Food food=snapshot1.getValue(Food.class);
+                    if (food.isStatus()){
+                        list.add(food);
                     }
                 }
                 inBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), list,false);
@@ -209,7 +210,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
                 foodListMoney.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Food food = snapshot1.getValue(Food.class);
-                    if (!isIn(list, food.getId())) {
+                    if (!isIn(list, food.getId()) && food.isStatus()) {
                         foodListMoney.add(food);
                     }
                 }

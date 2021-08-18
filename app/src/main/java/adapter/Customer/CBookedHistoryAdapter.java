@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.su21g3project.Customer.BillActivity;
 import com.example.su21g3project.Customer.OrdersFoodActivity;
 import com.example.su21g3project.General.GetBuffetActivity;
 import com.example.su21g3project.R;
@@ -39,7 +40,7 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
         private TextView txtTableAndFloor;
         private TextView txtInfo;
         private TextView txtStatus;
-        private Button btnOrder;
+        private Button btnOrder,btnCBill;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -47,6 +48,15 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
             txtInfo = itemView.findViewById(R.id.txtBookedInfo);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             btnOrder = itemView.findViewById(R.id.btnCOrder);
+            btnCBill=itemView.findViewById(R.id.btnCBill);
+        }
+
+        public Button getBtnCBill() {
+            return btnCBill;
+        }
+
+        public void setBtnCBill(Button btnCBill) {
+            this.btnCBill = btnCBill;
         }
 
         public TextView getTxtTableAndFloor() {
@@ -133,31 +143,47 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
         String status = order.getStatus();
         switch (status) {
             case "new":
+                holder.getBtnCBill().setEnabled(false);
                 holder.getTxtStatus().setText(context.getString(R.string.waitingaccept));
                 holder.getTxtStatus().setTextColor(Color.BLUE);
                 holder.getBtnOrder().setEnabled(false);
                 break;
             case "accepted":
+                holder.getBtnCBill().setEnabled(false);
                 holder.getTxtStatus().setText(context.getString(R.string.accepted));
                 holder.getTxtStatus().setTextColor(Color.GREEN);
                 holder.getBtnOrder().setEnabled(true);
                 break;
             case "rejected":
+                holder.getBtnCBill().setEnabled(false);
                 holder.getTxtStatus().setText(context.getString(R.string.rejected));
                 holder.getTxtStatus().setTextColor(Color.RED);
                 holder.getBtnOrder().setEnabled(false);
                 break;
             case "done":
+                holder.getBtnCBill().setEnabled(true);
                 holder.getTxtStatus().setText(context.getString(R.string.daphucvu));
                 holder.getTxtStatus().setTextColor(Color.BLACK);
                 holder.getBtnOrder().setEnabled(false);
                 break;
             default:
+                holder.getBtnCBill().setEnabled(true);
                 holder.getTxtStatus().setText(context.getString(R.string.requesttopay));
                 holder.getTxtStatus().setTextColor(Color.BLACK);
                 holder.getBtnOrder().setEnabled(false);
                 break;
         }
+        holder.getBtnCBill().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1=new Intent(context, BillActivity.class);
+                intent1.putExtra("orderId", order.getId());
+                intent1.putExtra("tableId", order.getTableId());
+                intent1.putExtra("buffetId",order.getBuffetId());
+                intent1.putExtra("numPeople",order.getNumberOfPeople());
+                context.startActivity(intent1);
+            }
+        });
         //btn order work
         holder.getBtnOrder().setOnClickListener(v -> {
             Intent intent;

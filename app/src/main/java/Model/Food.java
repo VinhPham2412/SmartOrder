@@ -13,6 +13,15 @@ public class Food {
     private int calories;
     private String image;
     private String type;
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -63,14 +72,17 @@ public class Food {
     }
 
 
-    public Food(String id, String name, float price, String description, int calories, String image) {
+    public Food(String id, String name, float price, String description, int calories, String image, String type, boolean status) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.calories = calories;
-        this.image=image;
+        this.image = image;
+        this.type = type;
+        this.status = status;
     }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();

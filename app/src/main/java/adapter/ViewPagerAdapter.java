@@ -26,22 +26,16 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         Fragment fragment;
         switch (position){
             case 0:
-                fragment = new OrderFragment();
-                break;
+                return new OrderFragment();
             case 1:
-                fragment = new WaitingBillFragment();
-                break;
+                return new WaitingBillFragment();
             case 2:
-                fragment = new CookedOrderFragment();
-                break;
+                return new CookedOrderFragment();
             case 3:
-                fragment= new CommunicationFragment();
-                break;
+                return new CommunicationFragment();
             default:
-                fragment= new WaiterOrderFragment();
-                break;
+                return new WaiterOrderFragment();
         }
-        return fragment;
     }
     @Override
     public int getItemCount() {

@@ -115,6 +115,12 @@ public class BillActivity extends AppCompatActivity {
                         });
                     }else{
                         btnConfirmBill.setOnClickListener(v -> {
+                            List<OrderDetail> orderDetails;
+                            orderDetails=billAdapter.returnOrderDetail();
+                            for (OrderDetail orderDetail:orderDetails){
+                                reference=FirebaseDatabase.getInstance().getReference("OrderDetails").child(orderDetail.getId()).child("quantity");
+                                reference.setValue(orderDetail.getQuantity());
+                            }
                             reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
                             reference.child("status").setValue("readytopay");
                             //update table status , HERE ?

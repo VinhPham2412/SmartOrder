@@ -13,8 +13,15 @@ public class Buffet implements Serializable {
     private float price;
     private String description;
     private String image;
+    private boolean status;
 
+    public boolean isStatus() {
+        return status;
+    }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
