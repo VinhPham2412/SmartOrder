@@ -33,6 +33,7 @@ import java.util.TimeZone;
 
 import Model.Bill;
 import Model.Buffet;
+import Model.Order;
 import Model.OrderDetail;
 import Model.Table;
 import Model.User;
@@ -59,6 +60,7 @@ public class BillActivity extends AppCompatActivity {
         String buffetId=getIntent().getStringExtra("buffetId");
         int numPeople=getIntent().getIntExtra("numPeople",0);
 
+
         btnConfirmBill=findViewById(R.id.btnConfirmBill);
         billBuffetName=findViewById(R.id.billBuffetName);
         billBuffetNumPeople=findViewById(R.id.billBuffetNumpeople);
@@ -70,6 +72,24 @@ public class BillActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         txtTableName = findViewById(R.id.txtTableName);
+        reference=FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Order order=snapshot.getValue(Order.class);
+                    if (order.getStatus().equals("done") || order.getStatus().equals("requestToPay") ||order.getStatus().equals("readytopay")){
+                        btnConfirmBill.setVisibility(View.INVISIBLE);
+                    }else
+                        btnConfirmBill.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

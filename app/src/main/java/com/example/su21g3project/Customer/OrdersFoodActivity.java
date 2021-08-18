@@ -248,27 +248,31 @@ public class OrdersFoodActivity extends AppCompatActivity {
             List<OrdersFoodAdapter.ViewHolder> allOutHolder = outBuffetAdapter.getAllHolder();
             if(allInHolder.size()>0){
                 for (OrdersFoodAdapter.ViewHolder food : allInHolder) {
-                    int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
-                    String id = reference.push().getKey();
-                    OrderDetail detail;
-                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time,
-                            true,role.equals("waiter") ? "accepted" : "new");
-                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
-                            Log.println(Log.INFO, "addOk", "Add ok"));
-                    food.getNumberFood().setText("0");
+
+                        int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
+                        String id = reference.push().getKey();
+                        OrderDetail detail;
+                        detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time,
+                                true, role.equals("waiter") ? "accepted" : "new");
+                        reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                                Log.println(Log.INFO, "addOk", "Add ok"));
+                        food.getNumberFood().setText("0");
+
                 }
             }
             //get food and quantity from food out of buffet
             if(allOutHolder.size()>0){
                 for (OrdersFoodAdapter.ViewHolder food : allOutHolder) {
-                    int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
-                    String id = reference.push().getKey();
-                    OrderDetail detail;
-                    detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time,
-                            false,role.equals("waiter") ? "accepted" : "new");
-                    reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
-                            Log.println(Log.INFO, "addOk", "Add ok"));
-                    food.getNumberFood().setText("0");
+
+                        int quantity = Integer.parseInt(food.getNumberFood().getText().toString());
+                        String id = reference.push().getKey();
+                        OrderDetail detail;
+                        detail = new OrderDetail(id, orderId, userId, food.getFoodId(), quantity, time,
+                                false, role.equals("waiter") ? "accepted" : "new");
+                        reference.child(id).setValue(detail.toMap()).addOnCompleteListener(task ->
+                                Log.println(Log.INFO, "addOk", "Add ok"));
+                        food.getNumberFood().setText("0");
+
                 }
             }
             int count = allInHolder.size()+ allOutHolder.size();

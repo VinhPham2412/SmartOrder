@@ -94,27 +94,30 @@ public class RegisterActivity extends AppCompatActivity {
         };
 
         btnRegister.setOnClickListener(v -> {
-            btnRegister.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-            fName = txtFName.getText().toString();
-            lName = txtLName.getText().toString();
-            phone = txtPhone.getText().toString();
-            if (checkInput(fName) && checkInput(lName) && checkInput(phone)) {
-                //send code
-                phone = txtPhone.getText().toString().replaceFirst("0","+84");
-                //send OTP
-                PhoneAuthOptions options =
-                        PhoneAuthOptions.newBuilder(mAuth)
-                                .setPhoneNumber(phone)       // Phone number to verify
-                                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                                .setActivity(RegisterActivity.this)                 // Activity (for callback binding)
-                                .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                                .build();
-                PhoneAuthProvider.verifyPhoneNumber(options);
-            }else
-                Toast.makeText(getApplicationContext(),"All field is required."
-                        ,Toast.LENGTH_SHORT).show();
+
+                fName = txtFName.getText().toString();
+                lName = txtLName.getText().toString();
+                phone = txtPhone.getText().toString();
+                if (checkInput(fName) && checkInput(lName) && checkInput(phone) && phone.length()==10) {
+                    btnRegister.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    //send code
+                    phone = txtPhone.getText().toString().replaceFirst("0", "+84");
+                    //send OTP
+                    PhoneAuthOptions options =
+                            PhoneAuthOptions.newBuilder(mAuth)
+                                    .setPhoneNumber(phone)       // Phone number to verify
+                                    .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                                    .setActivity(RegisterActivity.this)                 // Activity (for callback binding)
+                                    .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                                    .build();
+                    PhoneAuthProvider.verifyPhoneNumber(options);
+                } else
+                    Toast.makeText(getApplicationContext(), "All field is required."
+                            , Toast.LENGTH_SHORT).show();
+
         });
+
 
     }
     private boolean checkInput(String string){

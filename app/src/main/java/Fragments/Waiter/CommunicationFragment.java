@@ -67,13 +67,20 @@ public class CommunicationFragment extends Fragment {
                     itemSelected+=viewHolder.checkBox.getText().toString()+"\n";
                 }
             }
-            hashMap.put("message", itemSelected + txtReason.getText().toString());
-            hashMap.put("isSeen", false);
-            hashMap.put("isReply", false);
-            hashMap.put("isNotify", false);
-            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
-                    task -> Toast.makeText(getContext(), "Gửi ý kiến thành công",
-                            Toast.LENGTH_SHORT).show());
+            itemSelected+=txtReason.getText().toString().trim();
+            if(!itemSelected.isEmpty()) {
+                hashMap.put("message", itemSelected );
+                hashMap.put("isSeen", false);
+                hashMap.put("isReply", false);
+                hashMap.put("isNotify", false);
+                reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
+                        task -> Toast.makeText(getContext(), "Gửi ý kiến thành công",
+                                Toast.LENGTH_SHORT).show());
+            }else {
+                Toast.makeText(getContext(), "Không có nội dung xin mời nhập lại",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
         });
 
         return view;

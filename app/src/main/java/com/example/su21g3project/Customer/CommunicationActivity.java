@@ -88,21 +88,30 @@ public class CommunicationActivity extends AppCompatActivity {
                         if (txtReason.getText() != null) {
                             messageContents += txtReason.getText().toString();
                         }
-                        if (role.equals("customer"))
-                            reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
-                        else
-                            reference = FirebaseDatabase.getInstance().getReference("Communications").child("chef");
-                        String communicationId = reference.push().getKey();
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("id", communicationId);
-                        hashMap.put("userId", userId);
-                        hashMap.put("message", messageContents);
-                        hashMap.put("isSeen", false);
-                        hashMap.put("isReply",false);
-                        hashMap.put("isNotify",false);
-                        reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
-                                task -> Toast.makeText(CommunicationActivity.this, "Gửi ý kiến thành công",
-                                        Toast.LENGTH_SHORT).show());
+                        if (messageContents.isEmpty()){
+                            Toast.makeText(CommunicationActivity.this, "Không có nội dung xin mời nhập lại",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else {
+
+
+                            if (role.equals("customer"))
+                                reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
+                            else
+                                reference = FirebaseDatabase.getInstance().getReference("Communications").child("chef");
+                            String communicationId = reference.push().getKey();
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("id", communicationId);
+                            hashMap.put("userId", userId);
+                            hashMap.put("message", messageContents);
+                            hashMap.put("isSeen", false);
+                            hashMap.put("isReply", false);
+                            hashMap.put("isNotify", false);
+                            reference.child(communicationId).setValue(hashMap).addOnCompleteListener(
+                                    task -> Toast.makeText(CommunicationActivity.this, "Gửi ý kiến thành công",
+                                            Toast.LENGTH_SHORT).show());
+                        }
                     });
                 }
             }

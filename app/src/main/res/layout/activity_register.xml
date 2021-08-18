@@ -47,6 +47,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:maxLength="10"
             android:id="@+id/txtPhone"
             android:layout_width="match_parent"
             android:layout_height="57dp"
@@ -77,6 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
 
         <EditText
+            android:maxLength="20"
             android:id="@+id/txtfName"
             android:layout_width="match_parent"
             android:layout_height="57dp"
@@ -96,6 +98,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:maxLength="20"
             android:id="@+id/txtlName"
             android:layout_width="match_parent"
             android:layout_height="57dp"

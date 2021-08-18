@@ -52,6 +52,7 @@ public class MenuActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
                     if(snapshot.exists()){
                         list.add(snapshot1.getValue(Buffet.class));

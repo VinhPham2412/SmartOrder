@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +74,11 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
             } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
+            if (number<5)
             holder.getNumberFood().setText(String.valueOf(number + 1));
+            else
+                Toast.makeText(mContext, "Xin lỗi, tối đa cho 1 món là 5 đĩa!",
+                        Toast.LENGTH_SHORT).show();
         });
         holder.getRemove().setOnClickListener(v -> {
             int number = 0;
@@ -152,8 +157,10 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public List<ViewHolder> getAllHolder() {
         List<ViewHolder> result = new ArrayList<>();
         for (ViewHolder holder : allViews) {
-            if (Integer.parseInt(holder.numberFood.getText().toString()) > 0) {
-                result.add(holder);
+            if (!holder.numberFood.getText().toString().trim().isEmpty()) {
+                if (Integer.parseInt(holder.numberFood.getText().toString()) > 0) {
+                    result.add(holder);
+                }
             }
         }
         return result;
