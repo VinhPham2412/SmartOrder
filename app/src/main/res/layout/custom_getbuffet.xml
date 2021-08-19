@@ -4,39 +4,44 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/imageViewBuffet"
+        android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_width="80dp"/>
+        android:scaleType="centerCrop" />
+
     <TextView
 
-        android:textColor="@color/black"
-        android:paddingStart="10dp"
-        android:textStyle="bold"
-        android:textSize="20dp"
         android:id="@+id/txtBuffetName"
-        android:layout_toRightOf="@+id/imageViewBuffet"
         android:layout_width="250dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/imageViewBuffet"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <TextView
-        android:gravity="center"
-        android:paddingStart="10dp"
         android:id="@+id/txtBuffetPrice"
-        android:textSize="18dp"
-        android:textColor="@color/black"
-        android:layout_toRightOf="@+id/imageViewBuffet"
         android:layout_width="250dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/txtBuffetName"
-        android:layout_marginBottom="-28dp" />
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="-33dp"
+        android:layout_toRightOf="@+id/imageViewBuffet"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
     <ImageView
         android:id="@+id/imageViewChecked"
-        android:layout_toRightOf="@id/txtBuffetName"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_baseline_check_circle_24"/>
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/txtBuffetName"
+        android:src="@drawable/ic_baseline_check_circle_24" />
 
 
 </RelativeLayout>

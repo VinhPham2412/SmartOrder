@@ -117,7 +117,7 @@ public class MainChefActivity extends AppCompatActivity {
 
     }
     //belong is same orderId and time
-    private boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
+    boolean isBelong(List<OrderDetail> list, String orderId, Date time) {
         if (!list.isEmpty() && list.get(0) != null) {
             return list.get(0).getOrderId().equals(orderId)
                     && list.get(0).getTime().equals(time);
@@ -168,13 +168,9 @@ public class MainChefActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                        dialog.dismiss();
-                    }
+                builder.setNegativeButton("NO", (dialog, which) -> {
+                    // Do nothing
+                    dialog.dismiss();
                 });
 
                 AlertDialog alert = builder.create();

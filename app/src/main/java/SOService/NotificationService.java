@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.su21g3project.Customer.CBookedActivity;
-import com.example.su21g3project.Customer.NoticeCustomerActivity;
+import com.example.su21g3project.General.NoticeActivity;
 import com.example.su21g3project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -176,7 +176,8 @@ public class NotificationService extends Service {
         reference = FirebaseDatabase.getInstance().getReference("Communications").child(path).child(id).child("isNotify");
         reference.setValue(true);
         int notificationId = new Random().nextInt(99999);
-        Intent intent = new Intent(getApplicationContext(), NoticeCustomerActivity.class);
+        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+        intent.putExtra("role",path);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)

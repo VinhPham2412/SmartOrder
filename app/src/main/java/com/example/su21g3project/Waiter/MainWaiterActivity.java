@@ -86,6 +86,7 @@ public class MainWaiterActivity extends AppCompatActivity {
         viewPager2=findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(MainWaiterActivity.this);
         viewPager2.setAdapter(viewPagerAdapter);
+        viewPager2.setOffscreenPageLimit(5);
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             switch (position){
                 case 0:

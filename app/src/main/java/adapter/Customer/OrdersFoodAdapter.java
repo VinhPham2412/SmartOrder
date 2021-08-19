@@ -39,7 +39,6 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -49,11 +48,8 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-
-
         View uView =
                 inflater.inflate(R.layout.custom_orders_money, parent, false);
-
         ViewHolder viewHolder = new ViewHolder(uView);
         allViews.add(viewHolder);
         return viewHolder;
@@ -64,6 +60,9 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         final Food food = foodList.get(position);
         holder.setFoodId(food.getId());
         holder.getTvFoodName().setText(food.getName());
+        /**
+         * if this has money argument then display price
+         */
         if(money){
             holder.getTvPrice().setText((int)food.getPrice()+"");
         }
@@ -83,9 +82,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
         holder.getRemove().setOnClickListener(v -> {
             int number = 0;
             try {
-
                 number = Integer.parseInt(holder.getNumberFood().getText().toString());
-
             } catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
@@ -94,7 +91,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
             }
 
         });
-        new DownloadImageTask((ImageView) (holder.getImageView()))
+        new DownloadImageTask(holder.getImageView())
                 .execute(food.getImage());
     }
 
@@ -157,10 +154,8 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
     public List<ViewHolder> getAllHolder() {
         List<ViewHolder> result = new ArrayList<>();
         for (ViewHolder holder : allViews) {
-
                 if (Integer.parseInt(holder.numberFood.getText().toString()) > 0) {
                     result.add(holder);
-
             }
         }
         return result;

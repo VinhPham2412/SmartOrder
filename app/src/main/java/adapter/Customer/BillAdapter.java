@@ -31,7 +31,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     private DatabaseReference reference;
     private Float finalSum = 0f;
     private List<ViewHolder> allViews;
-    ValueEventListener eventListener;
+    private ValueEventListener eventListener;
     private String role;
     public BillAdapter(List<OrderDetail> orderDetailList, Context mContext,String role) {
         this.orderDetailList = orderDetailList;
@@ -59,11 +59,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             final OrderDetail orderDetail = orderDetailList.get(position);
-            if (role.equals("waiter")){
-                holder.getEtFoodQuantity().setEnabled(true);
-            }
-            else
-                holder.getEtFoodQuantity().setEnabled(false);
+            holder.getEtFoodQuantity().setEnabled(role.equals("waiter")?true:false);
             holder.setOrderDetailId(orderDetail.getId());
             int quantity = orderDetail.getQuantity();
             holder.getEtFoodQuantity().setText(quantity+"");
@@ -101,8 +97,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             public void afterTextChanged(Editable s) {
                 int totalPrice=0;
                 if(!s.toString().isEmpty()){
+                    orderDetail.setQuantity((int)(Integer.valueOf(s.toString()).intValue()));
                     int oldTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
-                    totalPrice= (int)(new Integer(s.toString()).intValue()* Integer.parseInt(holder.txtFoodPrice.getText().toString()));
+                    totalPrice= (int)(new Integer(s.toString()) * Integer.parseInt(holder.txtFoodPrice.getText().toString()));
                     holder.getTxtFoodTotal().setText(totalPrice+"");
                     int newTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
                     reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderDetail.getOrderId());
@@ -122,9 +119,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
                     };
                     reference.addValueEventListener(eventListener);
                 }
-//                else
-//                    holder.getEtFoodQuantity().setText(s);
-
             }
         });
 
@@ -193,26 +187,4 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     public List<OrderDetail> returnOrderDetail(){
         return orderDetailList;
     }
-//    private  void editFood(EditText quantity,float price,TextView total,String orderId){
-//
-//        quantity.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                int totalPrice=0;
-//                if(!s.toString().isEmpty()){
-//                    int oldTotal=Integer.parseInt(total.getText().toString());
-//                    totalPrice= (int)(new Integer(s.toString()).intValue()* price);
-//                    total.setText(totalPrice+"");
-//
-//            }
-//        }
-//    });
-//}
 }

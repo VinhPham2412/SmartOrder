@@ -26,6 +26,7 @@ import com.scwang.wave.MultiWaveHeader;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InvalidObjectException;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
@@ -37,8 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView phone;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    String phoneNumber;
+    private String phoneNumber;
+    private ProgressBar progressBar;
     private MultiWaveHeader waveHeader;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -64,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         waveHeader.setStartColor(Color.BLACK);
         waveHeader.setCloseColor(Color.GRAY);
         phone = findViewById(R.id.txtLoginAccount);
-        final ProgressBar progressBar=findViewById(R.id.progressBar);
+        progressBar=findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -105,10 +108,14 @@ public class LoginActivity extends AppCompatActivity {
         txtRegister =findViewById(R.id.txtRegister);
         txtRegister.setPaintFlags(txtRegister.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnLogin.setOnClickListener(v -> {
-
-            if (phone.getText().toString().trim().isEmpty() || phone.getText().toString().length()!=10){
-                Toast.makeText(LoginActivity.this,"Enter phone number",Toast.LENGTH_SHORT).show();
-                return;
+            String textPhone = phone.getText().toString();
+            if (textPhone.trim().isEmpty()||textPhone.length()!=10){
+                Toast.makeText(LoginActivity.this,getString(R.string.toastinvalidphone),Toast.LENGTH_SHORT).show();
+                try {
+                    throw new InvalidObjectException("Phonenumber");
+                } catch (InvalidObjectException e) {
+                    e.printStackTrace();
+                }
             }
             phoneNumber = phone.getText().toString().replaceFirst("0","+84");
             progressBar.setVisibility(View.VISIBLE);
@@ -130,4 +137,67 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public Button getBtnLogin() {
+        return btnLogin;
+    }
+
+    public void setBtnLogin(Button btnLogin) {
+        this.btnLogin = btnLogin;
+    }
+
+    public TextView getTxtRegister() {
+        return txtRegister;
+    }
+
+    public void setTxtRegister(TextView txtRegister) {
+        this.txtRegister = txtRegister;
+    }
+
+    public TextView getPhone() {
+        return phone;
+    }
+
+    public void setPhone(TextView phone) {
+        this.phone = phone;
+    }
+
+    public FirebaseAuth getmAuth() {
+        return mAuth;
+    }
+
+    public void setmAuth(FirebaseAuth mAuth) {
+        this.mAuth = mAuth;
+    }
+
+    public PhoneAuthProvider.OnVerificationStateChangedCallbacks getmCallbacks() {
+        return mCallbacks;
+    }
+
+    public void setmCallbacks(PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
+        this.mCallbacks = mCallbacks;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
+    public MultiWaveHeader getWaveHeader() {
+        return waveHeader;
+    }
+
+    public void setWaveHeader(MultiWaveHeader waveHeader) {
+        this.waveHeader = waveHeader;
+    }
 }

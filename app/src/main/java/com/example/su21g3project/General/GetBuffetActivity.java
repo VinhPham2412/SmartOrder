@@ -68,11 +68,10 @@ public class GetBuffetActivity extends AppCompatActivity {
                         list.add(snapshot1.getValue(Buffet.class));
                     }
                 }
-                buffetAdapter = new BuffetAdapter(getApplicationContext(), list);
+                buffetAdapter = new BuffetAdapter(list);
                 recyclerView.setAdapter(buffetAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(GetBuffetActivity.this));
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 

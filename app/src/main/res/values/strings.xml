@@ -83,5 +83,6 @@
     <string name="home">Trang chủ</string>
     <string name="daphucvu">Đã phục vụ</string>
     <string name="requesttopay">Chờ thanh toán</string>
+    <string name="toastinvalidphone">Vui lòng kiểm tra lại số điện thoại</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

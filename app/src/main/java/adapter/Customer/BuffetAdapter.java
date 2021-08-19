@@ -19,11 +19,9 @@ import Model.Buffet;
 
 public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder> {
     private int checkedPosition=0;
-    private Context mContext;
     private List<Buffet> list;
 
-    public BuffetAdapter(Context mContext, List<Buffet> list) {
-        this.mContext = mContext;
+    public BuffetAdapter(List<Buffet> list) {
         this.list = list;
     }
 
@@ -32,8 +30,6 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
-
         View uView =
                 inflater.inflate(R.layout.custom_getbuffet, parent, false);
 
@@ -44,7 +40,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        final Buffet buffet=list.get(position);
-        holder.txtBufffetName.setText(buffet.getName()+" "+(int)(buffet.getPrice())+"K");
+        holder.txtBuffetName.setText(buffet.getName()+" "+(int)(buffet.getPrice())+"K");
         holder.txtBuffetPrice.setText(buffet.getDescription());
         if(checkedPosition==-1){
             holder.imageView.setVisibility(View.GONE);
@@ -63,7 +59,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
             }
         });
 
-        new DownloadImageTask((ImageView) (holder.imageViewBuffet))
+        new DownloadImageTask((holder.imageViewBuffet))
                 .execute(buffet.getImage());
         holder.imageView.setClipToOutline(true);
     }
@@ -76,12 +72,12 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageViewBuffet;
-        public TextView txtBufffetName,txtBuffetPrice;
+        public TextView txtBuffetName,txtBuffetPrice;
         public ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewBuffet=itemView.findViewById(R.id.imageViewBuffet);
-            txtBufffetName=itemView.findViewById(R.id.txtBuffetName);
+            txtBuffetName=itemView.findViewById(R.id.txtBuffetName);
             txtBuffetPrice=itemView.findViewById(R.id.txtBuffetPrice);
             imageView=itemView.findViewById(R.id.imageViewChecked);
 

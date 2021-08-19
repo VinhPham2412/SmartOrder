@@ -33,7 +33,6 @@
 
         <service android:name="SOService.NotificationService" />
 
-        <activity android:name=".Customer.NoticeCustomerActivity" />
         <activity android:name=".General.NoticeActivity" />
         <activity android:name=".Customer.NewsActivity" />
         <activity android:name=".Chef.MainChefActivity" />

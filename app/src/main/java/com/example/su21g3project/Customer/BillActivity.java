@@ -194,14 +194,16 @@ public class BillActivity extends AppCompatActivity {
                 /**
                  * check if same food then add quantity together
                  */
-                for(int i=0;i<orderDetailList.size()-1;i++){
-                    for(int j=i+1;j<orderDetailList.size();j++){
-                        if(orderDetailList.get(i).getFoodId()
-                                .equals(orderDetailList.get(j).getFoodId())){
-                            int oldQuantity = orderDetailList.get(i).getQuantity();
-                            int alphaQuantity = orderDetailList.get(j).getQuantity();
-                            orderDetailList.get(i).setQuantity(oldQuantity+alphaQuantity);
-                            orderDetailList.remove(j);
+                if(role.equals("customer")){
+                    for(int i=0;i<orderDetailList.size()-1;i++){
+                        for(int j=i+1;j<orderDetailList.size();j++){
+                            if(orderDetailList.get(i).getFoodId()
+                                    .equals(orderDetailList.get(j).getFoodId())){
+                                int oldQuantity = orderDetailList.get(i).getQuantity();
+                                int alphaQuantity = orderDetailList.get(j).getQuantity();
+                                orderDetailList.get(i).setQuantity(oldQuantity+alphaQuantity);
+                                orderDetailList.remove(j);
+                            }
                         }
                     }
                 }
@@ -226,7 +228,6 @@ public class BillActivity extends AppCompatActivity {
                             Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
                             String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
                             reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
-
                             //push bill to rtdb
                             Bill bill= new Bill(billId,orderId,finalMoney,time,tableId,buffetId);
                             reference.setValue(bill.toMap());
@@ -239,9 +240,6 @@ public class BillActivity extends AppCompatActivity {
                             //update order status
                             reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
                             reference.child("status").setValue("requestToPay");
-                            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
-                                    .child("isReadyToPay");
-                            reference.setValue(true);
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(BillActivity.this);
                             builder1.setTitle(BillActivity.this.getString(R.string.waitforwaiter));
                             builder1.setNegativeButton(R.string.done, ((dialog1, which1) -> {
@@ -264,17 +262,15 @@ public class BillActivity extends AppCompatActivity {
                             reference.child("status").setValue(true);
                             finish();
                         }
-
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
-
+            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
+                    .child("isReadyToPay");
+            reference.setValue(role.equals("waiter")?true:false);
         });
 
         reference=FirebaseDatabase.getInstance().getReference("Buffets").child(buffetId);

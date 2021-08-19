@@ -84,4 +84,5 @@
     <string name="home">Home</string>
     <string name="daphucvu">Done</string>
     <string name="requesttopay">Pending</string>
+    <string name="toastinvalidphone">Vui lòng kiểm tra lại số điện thoại</string>
 </resources>
