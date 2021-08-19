@@ -71,7 +71,7 @@ public class OrdersFoodAdapter extends RecyclerView.Adapter<OrdersFoodAdapter.Vi
             int number = 0;
             try {
                 number = Integer.parseInt(holder.getNumberFood().getText().toString());
-            } catch (NumberFormatException e) {
+            }catch (NumberFormatException e) {
                 System.out.println("Could not parse " + e);
             }
             if (number<5)

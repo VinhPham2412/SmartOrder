@@ -23,7 +23,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment;
         switch (position){
             case 0:
                 return new OrderFragment();

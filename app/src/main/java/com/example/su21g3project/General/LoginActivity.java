@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         txtRegister.setPaintFlags(txtRegister.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnLogin.setOnClickListener(v -> {
 
-            if (phone.getText().toString().trim().isEmpty()){
+            if (phone.getText().toString().trim().isEmpty() || phone.getText().toString().length()!=10){
                 Toast.makeText(LoginActivity.this,"Enter phone number",Toast.LENGTH_SHORT).show();
                 return;
             }

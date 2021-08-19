@@ -100,7 +100,7 @@ public class MainWaiterActivity extends AppCompatActivity {
                 case 3:
                     tab.setText(R.string.communication);
                     break;
-                case 4:
+                default:
                     tab.setText(R.string.goimon);
                     break;
             }

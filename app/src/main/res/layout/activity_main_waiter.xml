@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Waiter.MainWaiterActivity">
 
     <com.google.android.material.tabs.TabLayout
@@ -16,9 +15,7 @@
         app:itemTextColor="@color/color_bottom_nav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/black"
-        app:tabPaddingEnd="-1dp"
-        app:tabPaddingStart="-1dp" />
+        app:tabIndicatorColor="@color/black" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

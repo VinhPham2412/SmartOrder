@@ -95,9 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(v -> {
 
-                fName = txtFName.getText().toString();
-                lName = txtLName.getText().toString();
-                phone = txtPhone.getText().toString();
+                fName = txtFName.getText().toString().trim();
+                lName = txtLName.getText().toString().trim();
+                phone = txtPhone.getText().toString().trim();
                 if (checkInput(fName) && checkInput(lName) && checkInput(phone) && phone.length()==10) {
                     btnRegister.setVisibility(View.GONE);
                     progressBar.setVisibility(View.VISIBLE);
@@ -117,8 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
                             , Toast.LENGTH_SHORT).show();
 
         });
-
-
     }
     private boolean checkInput(String string){
         if(string.isEmpty()||string==null)

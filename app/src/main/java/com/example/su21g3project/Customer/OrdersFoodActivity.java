@@ -150,8 +150,11 @@ public class OrdersFoodActivity extends AppCompatActivity {
                     btnOrder.setVisibility(View.VISIBLE);
                     if (role.equals("waiter")){
                         btnC.setVisibility(View.INVISIBLE);
-                    }else
+                        btnHistory.setVisibility(View.INVISIBLE);
+                    }else {
                         btnC.setVisibility(View.VISIBLE);
+                        btnHistory.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override

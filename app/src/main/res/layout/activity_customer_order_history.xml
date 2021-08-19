@@ -16,14 +16,5 @@
         android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:textColor="@color/white"
-        android:id="@+id/btnCBill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:backgroundTint="@color/or"
-        android:text="@string/hoadon" />
 </LinearLayout>
 </ScrollView>
