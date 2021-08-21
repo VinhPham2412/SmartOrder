@@ -84,5 +84,8 @@
     <string name="daphucvu">Đã phục vụ</string>
     <string name="requesttopay">Chờ thanh toán</string>
     <string name="toastinvalidphone">Vui lòng kiểm tra lại số điện thoại</string>
+    <string name="toasrequired">Không được để trống</string>
+    <string name="toasinvalidotp">Vui lòng kiểm tra lại mã OTP</string>
+    <string name="toastInvalidNumer">Số người phải lớn hơn 0</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -78,7 +78,7 @@ public class GetTableActivity extends AppCompatActivity {
         today3 = findViewById(R.id.btnNextAfterTomorrow);
         prTime = findViewById(R.id.txtPreviewTime);
         slTime = findViewById(R.id.seekBar_slTime);
-        slTime.setMax(1440);
+        slTime.setMax(1320);
         date.add(Calendar.DAY_OF_MONTH,3);
         String td = getString(R.string.today);
         String td1 = getString(R.string.tomorrow);
@@ -125,7 +125,7 @@ public class GetTableActivity extends AppCompatActivity {
             date.add(Calendar.DAY_OF_MONTH,1);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-1);
-            slTime.setMin(1);
+            slTime.setMin(540);
         });
         today2.setOnClickListener(v -> {
             today2.setBackgroundColor(Color.LTGRAY);
@@ -135,7 +135,7 @@ public class GetTableActivity extends AppCompatActivity {
             date.add(Calendar.DAY_OF_MONTH,2);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-2);
-            slTime.setMin(1);
+            slTime.setMin(540);
         });
         today3.setOnClickListener(v -> {
             today3.setBackgroundColor(Color.LTGRAY);
@@ -145,7 +145,7 @@ public class GetTableActivity extends AppCompatActivity {
             date.add(Calendar.DAY_OF_MONTH,3);
             selectedDate = format.format(date.getTime());
             date.add(Calendar.DAY_OF_MONTH,-3);
-            slTime.setMin(1);
+            slTime.setMin(540);
         });
         btnNext = findViewById(R.id.btnNext);
         noPp = findViewById(R.id.txtNoPP);
@@ -169,6 +169,14 @@ public class GetTableActivity extends AppCompatActivity {
         });
         btnNext.setOnClickListener(v -> {
             String numberOfPeople = noPp.getText().toString();
+            try {
+                int nopp = Integer.parseInt(numberOfPeople);
+                if(nopp==0){
+                    Toast.makeText(this,getString(R.string.toastInvalidNumer)
+                            ,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }catch (NumberFormatException e){}
             if(numberOfPeople!=null&&!numberOfPeople.trim().isEmpty()){
                 Intent intent = new Intent(GetTableActivity.this, GetTableActivity2.class);
                 //transfer date,time,number of people to next view

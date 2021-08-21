@@ -84,21 +84,28 @@ public class RegisterActivity extends AppCompatActivity {
             public void onVerificationCompleted(@NonNull @NotNull PhoneAuthCredential phoneAuthCredential) {
                 btnRegister.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+
             }
 
             @Override
             public void onVerificationFailed(@NonNull @NotNull FirebaseException e) {
                 btnRegister.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(RegisterActivity.this,getString(R.string.toastinvalidphone),Toast.LENGTH_SHORT)
+                        .show();
             }
         };
 
         btnRegister.setOnClickListener(v -> {
-
                 fName = txtFName.getText().toString().trim();
                 lName = txtLName.getText().toString().trim();
                 phone = txtPhone.getText().toString().trim();
-                if (checkInput(fName) && checkInput(lName) && checkInput(phone) && phone.length()==10) {
+                if (checkInput(fName) && checkInput(lName)) {
+                    if(phone.length()!=10){
+                        Toast.makeText(getApplicationContext(), getString(R.string.toastinvalidphone)
+                                , Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     btnRegister.setVisibility(View.GONE);
                     progressBar.setVisibility(View.VISIBLE);
                     //send code
@@ -112,9 +119,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                                     .build();
                     PhoneAuthProvider.verifyPhoneNumber(options);
-                } else
-                    Toast.makeText(getApplicationContext(), "All field is required."
+                } else{
+                    Toast.makeText(getApplicationContext(), getString(R.string.toasrequired)
                             , Toast.LENGTH_SHORT).show();
+                }
 
         });
     }

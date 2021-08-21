@@ -391,7 +391,7 @@ public class VerifySMSToken extends AppCompatActivity {
                 || num4.getText().toString().trim().isEmpty()
                 || num5.getText().toString().trim().isEmpty()
                 || num6.getText().toString().trim().isEmpty()) {
-            Toast.makeText(VerifySMSToken.this, "Please enter valid code",
+            Toast.makeText(VerifySMSToken.this, getString(R.string.toasinvalidotp),
                     Toast.LENGTH_SHORT).show();
             return;
         }

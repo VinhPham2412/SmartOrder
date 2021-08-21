@@ -102,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
                 txtRegister.setVisibility(View.VISIBLE);
+                Toast.makeText(LoginActivity.this,getString(R.string.toastinvalidphone),Toast.LENGTH_SHORT)
+                        .show();
             }
         };
         btnLogin=findViewById(R.id.btnLogin);
@@ -111,11 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             String textPhone = phone.getText().toString();
             if (textPhone.trim().isEmpty()||textPhone.length()!=10){
                 Toast.makeText(LoginActivity.this,getString(R.string.toastinvalidphone),Toast.LENGTH_SHORT).show();
-                try {
-                    throw new InvalidObjectException("Phonenumber");
-                } catch (InvalidObjectException e) {
-                    e.printStackTrace();
-                }
+                return;
             }
             phoneNumber = phone.getText().toString().replaceFirst("0","+84");
             progressBar.setVisibility(View.VISIBLE);
