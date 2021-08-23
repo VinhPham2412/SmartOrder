@@ -113,6 +113,7 @@ public class OrdersFoodActivity extends AppCompatActivity {
         btnDoan = findViewById(R.id.doan);
         btnOrder = findViewById(R.id.btnOrder);
         btnC = findViewById(R.id.btnCommunication);
+        buffetName = findViewById(R.id.buffetName);
         role = "customer";
 
         btnHistory.setOnClickListener(v -> {
@@ -164,21 +165,27 @@ public class OrdersFoodActivity extends AppCompatActivity {
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String buffetId = getIntent().getStringExtra("buffetId");
+        if(buffetId==null){
+            finish();
+            Toast.makeText(getParent().getBaseContext(),"Có lỗi xảy ra, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+        }
         list = new ArrayList<>();
         //get food in buffet
         reference = FirebaseDatabase.getInstance().getReference("Buffets");
         reference.child(buffetId).child("foods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                list.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    Food food=snapshot1.getValue(Food.class);
-                    if (food.isStatus()){
-                        list.add(food);
+                if(snapshot.exists()){
+                    list.clear();
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Food food=snapshot1.getValue(Food.class);
+                        if (food.isStatus()){
+                            list.add(food);
+                        }
                     }
+                    inBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), list,false);
+                    recyclerView.setAdapter(inBuffetAdapter);
                 }
-                inBuffetAdapter = new OrdersFoodAdapter(getApplicationContext(), list,false);
-                recyclerView.setAdapter(inBuffetAdapter);
             }
 
             @Override
@@ -190,9 +197,12 @@ public class OrdersFoodActivity extends AppCompatActivity {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                Buffet buffet = snapshot.getValue(Buffet.class);
-                buffetName = findViewById(R.id.buffetName);
-                buffetName.setText(buffet.getName() + " " + (int) (buffet.getPrice()) + "K");
+                if(snapshot.exists()){
+                    Buffet buffet = snapshot.getValue(Buffet.class);
+                    buffetName.setText(buffet.getName() + " " + (int) (buffet.getPrice()) + "K");
+                }else{
+                    buffetName.setText("Lỗi khi tải thông tin buffet");
+                }
             }
 
             @Override

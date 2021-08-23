@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,7 +34,8 @@ import Model.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button btnSave, btnLogout;
+    private Button btnSave;
+    private ImageButton btnLogout;
     private FirebaseUser fbuser;
     private EditText txtName, txtPhone, txtAddress;
     private DatabaseReference mDatabase;

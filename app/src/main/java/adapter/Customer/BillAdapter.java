@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -97,27 +98,33 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             public void afterTextChanged(Editable s) {
                 int totalPrice=0;
                 if(!s.toString().isEmpty()){
-                    orderDetail.setQuantity((int)(Integer.valueOf(s.toString()).intValue()));
-                    int oldTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
-                    totalPrice= (int)(new Integer(s.toString()) * Integer.parseInt(holder.txtFoodPrice.getText().toString()));
-                    holder.getTxtFoodTotal().setText(totalPrice+"");
-                    int newTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
-                    reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderDetail.getOrderId());
-                    eventListener=new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-                                int finalSum = snapshot.getValue(int.class);
-                                finalSum +=newTotal-oldTotal;
-                                reference.setValue(finalSum);
-                                reference.removeEventListener(eventListener);
+                    if (s.length()>=3){
+                        Toast.makeText(mContext,"Số lượng sửa quá lớn, vui  lòng kiểm tra lại",Toast.LENGTH_SHORT).show();
+                        holder.getEtFoodQuantity().setText(orderDetail.getQuantity()+"");
+                    }else {
+                        orderDetail.setQuantity(Integer.valueOf(s.toString()).intValue());
+                        int oldTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
+                        totalPrice= new Integer(s.toString()) * Integer.parseInt(holder.txtFoodPrice.getText().toString());
+                        holder.getTxtFoodTotal().setText(totalPrice+"");
+                        int newTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
+                        reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderDetail.getOrderId());
+                        eventListener=new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()){
+                                    int finalSum = snapshot.getValue(int.class);
+                                    finalSum +=newTotal-oldTotal;
+                                    reference.setValue(finalSum);
+                                    reference.removeEventListener(eventListener);
+                                }
                             }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    };
-                    reference.addValueEventListener(eventListener);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        };
+                        reference.addValueEventListener(eventListener);
+                    }
+
                 }
             }
         });

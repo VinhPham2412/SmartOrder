@@ -32,7 +32,6 @@ public class BuffetAdapter extends RecyclerView.Adapter<BuffetAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
         View uView =
                 inflater.inflate(R.layout.custom_getbuffet, parent, false);
-
         ViewHolder viewHolder = new ViewHolder(uView);
         return viewHolder;
     }

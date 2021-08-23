@@ -40,6 +40,7 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
         private TextView txtTableAndFloor;
         private TextView txtInfo;
         private TextView txtStatus;
+        private TextView txtReason;
         private Button btnOrder,btnCBill;
 
         public ViewHolder(View itemView) {
@@ -49,6 +50,7 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
             txtStatus = itemView.findViewById(R.id.txtStatus);
             btnOrder = itemView.findViewById(R.id.btnCOrder);
             btnCBill=itemView.findViewById(R.id.btnCBill);
+            txtReason = itemView.findViewById(R.id.txtBReason);
         }
 
         public Button getBtnCBill() {
@@ -73,6 +75,10 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
 
         public Button getBtnOrder() {
             return btnOrder;
+        }
+
+        public TextView getTxtReason() {
+            return txtReason;
         }
     }
 
@@ -159,6 +165,7 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
                 holder.getTxtStatus().setText(context.getString(R.string.rejected));
                 holder.getTxtStatus().setTextColor(Color.RED);
                 holder.getBtnOrder().setEnabled(false);
+                holder.getTxtReason().setText(context.getString(R.string.reason)+order.getReason());
                 break;
             case "done":
                 holder.getBtnCBill().setEnabled(true);

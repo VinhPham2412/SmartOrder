@@ -62,7 +62,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/btnAddMoney"
             app:layout_constraintEnd_toStartOf="@+id/btnAddMoney"
             app:layout_constraintStart_toEndOf="@+id/btnRemoveMoney"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false"/>
 
         <ImageButton
             android:id="@+id/btnAddMoney"

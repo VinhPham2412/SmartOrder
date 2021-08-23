@@ -37,7 +37,6 @@ public class CookedOrderAdapter extends RecyclerView.Adapter<CookedOrderAdapter.
     private List<List<OrderDetail>> result;
     private Context context;
     private DatabaseReference reference;
-    private List<String> ids;
     private String foodName;
 
     public CookedOrderAdapter(List<List<OrderDetail>> result) {
@@ -58,6 +57,7 @@ public class CookedOrderAdapter extends RecyclerView.Adapter<CookedOrderAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final List<OrderDetail> details = result.get(position);
+        final List<String> ids;
         ids = new ArrayList<>();
         //display food and quantity
         for (OrderDetail od : details) {

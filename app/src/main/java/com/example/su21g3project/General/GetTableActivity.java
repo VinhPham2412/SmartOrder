@@ -175,6 +175,10 @@ public class GetTableActivity extends AppCompatActivity {
                     Toast.makeText(this,getString(R.string.toastInvalidNumer)
                             ,Toast.LENGTH_SHORT).show();
                     return;
+                }else if(nopp>50){
+                    Toast.makeText(this,getString(R.string.tooBigNumer)
+                            ,Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }catch (NumberFormatException e){}
             if(numberOfPeople!=null&&!numberOfPeople.trim().isEmpty()){

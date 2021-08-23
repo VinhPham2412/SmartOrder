@@ -27,9 +27,8 @@
             android:id="@+id/billBuffetName"
             android:layout_width="112dp"
             android:layout_height="19dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/border"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -38,9 +37,8 @@
             android:id="@+id/billBuffetNumpeople"
             android:layout_width="48dp"
             android:layout_height="18dp"
-            android:layout_marginStart="164dp"
+            android:layout_marginStart="172dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/border"
             android:gravity="center"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -51,12 +49,11 @@
             android:id="@+id/billBuffetPrice"
             android:layout_width="49dp"
             android:layout_height="18dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/border"
+
+
             android:gravity="center"
-
-
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/billBuffetNumpeople"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -66,7 +63,6 @@
             android:layout_width="70dp"
             android:layout_height="18dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/border"
             android:gravity="center"
 
             android:textColor="@color/red"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -218,100 +219,89 @@ public class BillActivity extends AppCompatActivity {
          * action when click confirmBill
          */
         btnConfirmBill.setOnClickListener(v -> {
-            reference=FirebaseDatabase.getInstance().getReference("Orders").child(orderId).child("status");
+            if (role.equals("customer")){
+                //update order status
+                reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+                reference.child("status").setValue("requestToPay");
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(BillActivity.this);
+                builder1.setTitle(BillActivity.this.getString(R.string.waitforwaiter));
+                builder1.setNegativeButton(R.string.done, ((dialog1, which1) -> {
+                    dialog1.cancel();
+                    Intent intent = new Intent(BillActivity.this, MainActivity.class);
+                    startActivity(intent);
+                })).create().show();
+            }else{
+
+                List<OrderDetail> orderDetails;
+                orderDetails=billAdapter.returnOrderDetail();
+                for (OrderDetail orderDetail:orderDetails){
+                    reference=FirebaseDatabase.getInstance().getReference("OrderDetails").child(orderDetail.getId()).child("quantity");
+                    reference.setValue(orderDetail.getQuantity());
+                }
+                reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
+                reference.child("status").setValue("readytopay");
+                //update table status , HERE ?
+                reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+                reference.child("status").setValue(true);
+                reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
+                        .child("isReadyToPay");
+                reference.setValue(role.equals("waiter")?true:false);
+                Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
+                String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
+                reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
+                //push bill to rtdb
+                Bill bill= new Bill(billId,orderId,finalMoney,time,tableId,buffetId);
+                reference.setValue(bill.toMap());
+                //update table status , HERE ?
+                reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
+                //add current bill id for reception to access later
+                reference.child("currentBillId").setValue(billId);
+                Toast.makeText(getApplicationContext(),getApplicationContext()
+                        .getString(R.string.toastBill),Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        if(buffetId!=null){
+            reference=FirebaseDatabase.getInstance().getReference("Buffets").child(buffetId);
+            /**
+             * Display buffet info in Orders
+             */
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
-                        String s=snapshot.getValue(String.class);
-                        if (s.equals("accepted")){
-                            Date time = Calendar.getInstance(TimeZone.getTimeZone("GMT +7:00")).getTime();
-                            String billId = FirebaseDatabase.getInstance().getReference("Bills").push().getKey();
-                            reference=FirebaseDatabase.getInstance().getReference("Bills").child(billId);
-                            //push bill to rtdb
-                            Bill bill= new Bill(billId,orderId,finalMoney,time,tableId,buffetId);
-                            reference.setValue(bill.toMap());
-                            //update table status , HERE ?
-                            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
-                            //add current bill id for reception to access later
-                            reference.child("currentBillId").setValue(billId);
-                        }
-                        if (role.equals("customer")){
-                            //update order status
-                            reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
-                            reference.child("status").setValue("requestToPay");
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(BillActivity.this);
-                            builder1.setTitle(BillActivity.this.getString(R.string.waitforwaiter));
-                            builder1.setNegativeButton(R.string.done, ((dialog1, which1) -> {
-                                dialog1.cancel();
-                                Intent intent = new Intent(BillActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            })).create().show();
-                        }else{
-                            List<OrderDetail> orderDetails;
-                            orderDetails=billAdapter.returnOrderDetail();
-                            for (OrderDetail orderDetail:orderDetails){
-                                reference=FirebaseDatabase.getInstance().getReference("OrderDetails").child(orderDetail.getId()).child("quantity");
-                                reference.setValue(orderDetail.getQuantity());
+                        Buffet buffet=snapshot.getValue(Buffet.class);
+                        billBuffetName.setText(buffet.getName());
+                        billBuffetNumPeople.setText(numPeople+"");
+                        billBuffetPrice.setText((int)buffet.getPrice()+"");
+                        Float buffetSum = buffet.getPrice()*numPeople;
+                        billBuffetTotal.setText(buffetSum+"");
+                        finalMoney=buffetSum;
+                        txtTotal.setText("Tổng : "+finalMoney+"K");
+                        reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderId);
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    Long finalSum = snapshot.getValue(Long.class);
+                                    finalMoney=finalSum+buffetSum;
+                                    txtTotal.setText("Tổng : "+finalMoney+"K");
+                                }
                             }
-                            reference = FirebaseDatabase.getInstance().getReference("Orders").child(orderId);
-                            reference.child("status").setValue("readytopay");
-                            //update table status , HERE ?
-                            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId);
-                            reference.child("status").setValue(true);
-                            finish();
-                        }
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                            }
+                        });
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
-            reference = FirebaseDatabase.getInstance().getReference("Tables").child(tableId)
-                    .child("isReadyToPay");
-            reference.setValue(role.equals("waiter")?true:false);
-        });
-
-        reference=FirebaseDatabase.getInstance().getReference("Buffets").child(buffetId);
-        /**
-         * Display buffet info in Orders
-         */
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    Buffet buffet=snapshot.getValue(Buffet.class);
-                    billBuffetName.setText(buffet.getName());
-                    billBuffetNumPeople.setText(numPeople+"");
-                    billBuffetPrice.setText((int)buffet.getPrice()+"");
-                    Float buffetSum = buffet.getPrice()*numPeople;
-                    billBuffetTotal.setText(buffetSum+"");
-                    finalMoney=buffetSum;
-                    txtTotal.setText("Tổng : "+finalMoney+"K");
-                    reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderId);
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                Long finalSum = snapshot.getValue(Long.class);
-                                finalMoney=finalSum+buffetSum;
-                                txtTotal.setText("Tổng : "+finalMoney+"K");
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+        }else{
+            billBuffetName.setText("Không có gì ở đây.");
+        }
     }
 }

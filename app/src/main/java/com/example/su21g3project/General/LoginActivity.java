@@ -113,21 +113,21 @@ public class LoginActivity extends AppCompatActivity {
             String textPhone = phone.getText().toString();
             if (textPhone.trim().isEmpty()||textPhone.length()!=10){
                 Toast.makeText(LoginActivity.this,getString(R.string.toastinvalidphone),Toast.LENGTH_SHORT).show();
-                return;
-            }
-            phoneNumber = phone.getText().toString().replaceFirst("0","+84");
-            progressBar.setVisibility(View.VISIBLE);
-            btnLogin.setVisibility(View.INVISIBLE);
-            txtRegister.setVisibility(View.INVISIBLE);
+            }else{
+                phoneNumber = phone.getText().toString().replaceFirst("0","+84");
+                progressBar.setVisibility(View.VISIBLE);
+                btnLogin.setVisibility(View.INVISIBLE);
+                txtRegister.setVisibility(View.INVISIBLE);
 
-            PhoneAuthOptions options =
-                    PhoneAuthOptions.newBuilder(mAuth)
-                            .setPhoneNumber(phoneNumber)       // Phone number to verify
-                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                            .setActivity(LoginActivity.this)                 // Activity (for callback binding)
-                            .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                            .build();
-            PhoneAuthProvider.verifyPhoneNumber(options);
+                PhoneAuthOptions options =
+                        PhoneAuthOptions.newBuilder(mAuth)
+                                .setPhoneNumber(phoneNumber)       // Phone number to verify
+                                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                                .setActivity(LoginActivity.this)                 // Activity (for callback binding)
+                                .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                                .build();
+                PhoneAuthProvider.verifyPhoneNumber(options);
+            }
         });
         txtRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

@@ -4,125 +4,129 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Customer.ProfileActivity">
 
-
-    <com.scwang.wave.MultiWaveHeader
-        android:id="@+id/waveHeader"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progressBar4" />
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="155dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="184dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+        android:layout_height="match_parent"
+        tools:context=".Customer.ProfileActivity">
 
-    <EditText
-        android:id="@+id/txtProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="1dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/or"
-        app:layout_constraintEnd_toEndOf="@+id/txtProfilePhone"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfilePhone" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
-        android:gravity="start"
-        android:text="@string/sodienthoai"
-        app:layout_constraintBaseline_toBaselineOf="@+id/txtProfilePhone"
-        app:layout_constraintEnd_toStartOf="@+id/txtProfilePhone" />
+        <com.scwang.wave.MultiWaveHeader
+            android:id="@+id/waveHeader"
+            android:layout_width="479dp"
+            android:layout_height="204dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:gravity="start"
-        android:text="@string/lastname"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/textView5" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="124dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
-    <EditText
-        android:id="@+id/txtProfileAdress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="1dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/or"
-        app:layout_constraintEnd_toEndOf="@+id/txtProfileName"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileName" />
+        <EditText
+            android:id="@+id/txtProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="1dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/or"
+            app:layout_constraintEnd_toEndOf="@+id/txtProfilePhone"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfilePhone" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="start"
-        android:text="@string/address"
-        app:layout_constraintBottom_toBottomOf="@+id/txtProfileAdress"
-        app:layout_constraintStart_toStartOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="26dp"
+            android:gravity="start"
+            android:text="@string/sodienthoai"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtProfilePhone"
+            app:layout_constraintEnd_toStartOf="@+id/txtProfilePhone" />
 
-    <Button
-        android:id="@+id/btnSaveUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
-        android:backgroundTint="@color/or"
-        android:text="@string/btnSave"
-        app:layout_constraintStart_toStartOf="@+id/txtProfileAdress"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileAdress" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="63dp"
+            android:gravity="start"
+            android:text="@string/lastname"
+            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/textView5" />
 
-    <EditText
-        android:id="@+id/txtProfilePhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
-        android:layout_marginEnd="70dp"
-        android:editable="false"
-        android:ems="10"
-        android:textColor="@color/or"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        <EditText
+            android:id="@+id/txtProfileAdress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="1dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/or"
+            app:layout_constraintEnd_toEndOf="@+id/txtProfileName"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfileName" />
 
-    <ProgressBar
-        android:id="@+id/progressBar4"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="start"
+            android:text="@string/address"
+            app:layout_constraintBottom_toBottomOf="@+id/txtProfileAdress"
+            app:layout_constraintStart_toStartOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dangxuat"
-        tools:layout_editor_absoluteX="328dp"
-        tools:layout_editor_absoluteY="206dp" />
+        <Button
+            android:id="@+id/btnSaveUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="@color/or"
+            android:text="@string/btnSave"
+            app:layout_constraintStart_toStartOf="@+id/txtProfileAdress"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfileAdress" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/txtProfilePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="70dp"
+            android:editable="false"
+            android:ems="10"
+            android:textColor="@color/or"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="56dp"
+            android:layout_height="54dp"
+            android:src="@android:drawable/ic_lock_power_off"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

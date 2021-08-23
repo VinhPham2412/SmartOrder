@@ -96,7 +96,7 @@ public class MainWaiterActivity extends AppCompatActivity {
                     tab.setText(R.string.hoadon);
                     break;
                 case 2:
-                    tab.setText(R.string.lichsugoimon);
+                    tab.setText(R.string.cooked);
                     break;
                 case 3:
                     tab.setText(R.string.communication);

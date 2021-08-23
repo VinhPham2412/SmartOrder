@@ -63,9 +63,13 @@ public class GetBuffetActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     if (snapshot1.exists()) {
-                        list.add(snapshot1.getValue(Buffet.class));
+                        Buffet buffet = snapshot1.getValue(Buffet.class);
+                        if(buffet.isStatus()){
+                            list.add(buffet);
+                        }
                     }
                 }
                 buffetAdapter = new BuffetAdapter(list);
