@@ -89,5 +89,6 @@
     <string name="toastInvalidNumer">Số người phải lớn hơn 0</string>
     <string name="tooBigNumer">Số người không được quá 50</string>
     <string name="toastBill">Xác nhận thanh toán thành công</string>
+    <string name="toastinvalidorder">Vui lòng chọn đồ</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

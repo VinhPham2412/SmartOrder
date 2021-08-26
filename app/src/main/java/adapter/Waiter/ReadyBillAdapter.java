@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.Customer.BillActivity;
+import com.example.su21g3project.General.BillActivity;
 import com.example.su21g3project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -127,6 +127,7 @@ public class ReadyBillAdapter extends RecyclerView.Adapter<ReadyBillAdapter.View
                     if(snapshot.exists()){
                         Order order = snapshot.getValue(Order.class);
                         Intent intent = new Intent(context, BillActivity.class);
+                        intent.putExtra("billId",bill.getId());
                         intent.putExtra("orderId",order.getId());
                         intent.putExtra("tableId",order.getTableId());
                         intent.putExtra("buffetId",order.getBuffetId());

@@ -113,7 +113,7 @@ public class VerifySMSToken extends AppCompatActivity {
                                 if (!snapshot.exists() && type.equals("login")) {
                                     Toast.makeText(VerifySMSToken.this, "Your account don't exist in our database, please register.",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(VerifySMSToken.this, RegisterActivity.class);
+                                    Intent intent = new Intent(VerifySMSToken.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

@@ -114,7 +114,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_account:
-                    Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                    Intent intent;
+                    if(firebaseUser==null){
+                        intent = new Intent(MainActivity.this, LoginActivity.class);
+                    }else{
+                        intent = new Intent(MainActivity.this, AccountActivity.class);
+                    }
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);

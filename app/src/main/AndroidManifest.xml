@@ -36,7 +36,7 @@
         <activity android:name=".General.NoticeActivity" />
         <activity android:name=".Customer.NewsActivity" />
         <activity android:name=".Chef.MainChefActivity" />
-        <activity android:name=".Customer.BillActivity" />
+        <activity android:name=".General.BillActivity" />
         <activity android:name=".Customer.OrderHistoryActivity" />
         <activity android:name=".Waiter.MainWaiterActivity" />
         <activity android:name=".Customer.CommunicationActivity" />

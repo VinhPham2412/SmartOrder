@@ -37,18 +37,19 @@
 
         <EditText
             android:id="@+id/txtLoginAccount"
-            android:layout_width="wrap_content"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="308dp"
-            android:maxLength="10"
             android:background="@drawable/border"
             android:drawableStart="@drawable/ic_baseline_account_circle_24"
             android:drawablePadding="16dp"
+            android:gravity="center"
             android:hint="@string/sodienthoai"
             android:inputType="phone"
+            android:maxLength="10"
             android:padding="16dp"
-            app:layout_constraintStart_toStartOf="@+id/txtAppName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         <ImageView
@@ -86,9 +87,9 @@
             android:text="@string/login"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/txtLoginAccount"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.477"
-            app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtdonthaveacc" />
 
         <ProgressBar
@@ -106,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="44dp"
             android:text="@string/register"
             android:textColor="@color/or"
             android:textStyle="bold"
@@ -117,8 +118,8 @@
             android:id="@+id/txtdonthaveacc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="44dp"
             android:text="@string/donthaveacc"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/txtLoginAccount"

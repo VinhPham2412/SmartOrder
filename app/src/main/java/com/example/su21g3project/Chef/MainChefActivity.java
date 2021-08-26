@@ -67,7 +67,6 @@ public class MainChefActivity extends AppCompatActivity {
                     role=user.getRole();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

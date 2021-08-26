@@ -27,20 +27,42 @@ import Model.Food;
 import Model.OrderDetail;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
-    private List<OrderDetail> orderDetailList;
+    private List<OrderDetail> detailsView;
+    private List<OrderDetail> detailsOriginal;
     private Context mContext;
     private DatabaseReference reference;
     private Float finalSum = 0f;
     private List<ViewHolder> allViews;
     private ValueEventListener eventListener;
     private String role;
-    public BillAdapter(List<OrderDetail> orderDetailList, Context mContext,String role) {
-        this.orderDetailList = orderDetailList;
+
+    public BillAdapter(List<OrderDetail> orderDetailList, Context mContext, String role) {
+        detailsOriginal = orderDetailList;
+        /**
+         * view different for each role
+         */
+        if (role.equals("customer")) {
+            List<OrderDetail> detailForCustomer = orderDetailList;
+            for (int i = 0; i < detailForCustomer.size() - 1; i++) {
+                for (int j = i + 1; j < detailForCustomer.size(); j++) {
+                    if (detailForCustomer.get(i).getFoodId()
+                            .equals(detailForCustomer.get(j).getFoodId())) {
+                        int oldQuantity = detailForCustomer.get(i).getQuantity();
+                        int alphaQuantity = detailForCustomer.get(j).getQuantity();
+                        detailForCustomer.get(i).setQuantity(oldQuantity + alphaQuantity);
+                        detailForCustomer.remove(j);
+                    }
+                }
+            }
+            detailsView = detailForCustomer;
+        } else {
+            detailsView = detailsOriginal;
+        }
         this.mContext = mContext;
         reference = FirebaseDatabase.getInstance().getReference("Foods");
-        allViews=new ArrayList<>();
-        eventListener=null;
-        this.role=role;
+        allViews = new ArrayList<>();
+        eventListener = null;
+        this.role = role;
     }
 
     @NonNull
@@ -53,37 +75,34 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
         allViews.add(viewHolder);
         return viewHolder;
     }
-    public List<ViewHolder> getAllHolder() {
-        return allViews;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            final OrderDetail orderDetail = orderDetailList.get(position);
-            holder.getEtFoodQuantity().setEnabled(role.equals("waiter")?true:false);
-            holder.setOrderDetailId(orderDetail.getId());
-            int quantity = orderDetail.getQuantity();
-            holder.getEtFoodQuantity().setText(quantity+"");
-            reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        Food food = snapshot.getValue(Food.class);
-                        int total = (int) (food.getPrice() * quantity);
-                        holder.getTxtFoodName().setText(food.getName());
-                        holder.getTxtFoodPrice().setText((int)food.getPrice()+"");
-                        holder.getTxtFoodTotal().setText(total+ "");
-                        finalSum += total;
-                        reference = FirebaseDatabase.getInstance().getReference("SubTotals");
-                        reference.child(orderDetail.getOrderId()).setValue(finalSum);
-                    }
+        final OrderDetail orderDetail = detailsView.get(position);
+        holder.getEtFoodQuantity().setEnabled(role.equals("waiter") ? true : false);
+        int quantity = orderDetail.getQuantity();
+        holder.getEtFoodQuantity().setText(quantity + "");
+        reference.child(orderDetail.getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Food food = snapshot.getValue(Food.class);
+                    int total = (int) (food.getPrice() * quantity);
+                    holder.getTxtFoodName().setText(food.getName());
+                    holder.getTxtFoodPrice().setText((int) food.getPrice() + "");
+                    holder.getTxtFoodTotal().setText(total + "");
+                    finalSum += total;
+                    reference = FirebaseDatabase.getInstance().getReference("SubTotals");
+                    reference.child(orderDetail.getOrderId()).setValue(finalSum);
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-                }
-            });
-            holder.getEtFoodQuantity().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        holder.getEtFoodQuantity().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -96,28 +115,29 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int totalPrice=0;
-                if(!s.toString().isEmpty()){
-                    if (s.length()>=3){
-                        Toast.makeText(mContext,"Số lượng sửa quá lớn, vui  lòng kiểm tra lại",Toast.LENGTH_SHORT).show();
-                        holder.getEtFoodQuantity().setText(orderDetail.getQuantity()+"");
-                    }else {
+                int totalPrice = 0;
+                if (!s.toString().isEmpty()) {
+                    if (s.length() >= 3) {
+                        Toast.makeText(mContext, "Số lượng sửa quá lớn, vui  lòng kiểm tra lại", Toast.LENGTH_SHORT).show();
+                        holder.getEtFoodQuantity().setText(orderDetail.getQuantity() + "");
+                    } else {
                         orderDetail.setQuantity(Integer.valueOf(s.toString()).intValue());
-                        int oldTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
-                        totalPrice= new Integer(s.toString()) * Integer.parseInt(holder.txtFoodPrice.getText().toString());
-                        holder.getTxtFoodTotal().setText(totalPrice+"");
-                        int newTotal=Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
+                        int oldTotal = Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
+                        totalPrice = new Integer(s.toString()) * Integer.parseInt(holder.txtFoodPrice.getText().toString());
+                        holder.getTxtFoodTotal().setText(totalPrice + "");
+                        int newTotal = Integer.parseInt(holder.getTxtFoodTotal().getText().toString());
                         reference = FirebaseDatabase.getInstance().getReference("SubTotals").child(orderDetail.getOrderId());
-                        eventListener=new ValueEventListener() {
+                        eventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()){
+                                if (snapshot.exists()) {
                                     int finalSum = snapshot.getValue(int.class);
-                                    finalSum +=newTotal-oldTotal;
+                                    finalSum += newTotal - oldTotal;
                                     reference.setValue(finalSum);
                                     reference.removeEventListener(eventListener);
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
@@ -134,19 +154,10 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return orderDetailList.size();
+        return detailsView.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private String orderDetailId;
-
-        public String getOrderDetailId() {
-            return orderDetailId;
-        }
-
-        public void setOrderDetailId(String orderDetailId) {
-            this.orderDetailId = orderDetailId;
-        }
 
         public TextView getTxtFoodName() {
             return txtFoodName;
@@ -180,18 +191,19 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
             this.etFoodQuantity = etFoodQuantity;
         }
 
-        private TextView txtFoodName,txtFoodPrice,txtFoodTotal;
+        private TextView txtFoodName, txtFoodPrice, txtFoodTotal;
         private EditText etFoodQuantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtFoodName=itemView.findViewById(R.id.txtFoodName);
-            txtFoodPrice=itemView.findViewById(R.id.txtFoodPrice);
-            txtFoodTotal=itemView.findViewById(R.id.txtFoodTotal);
-            etFoodQuantity=itemView.findViewById(R.id.etFoodQantity);
+            txtFoodName = itemView.findViewById(R.id.txtFoodName);
+            txtFoodPrice = itemView.findViewById(R.id.txtFoodPrice);
+            txtFoodTotal = itemView.findViewById(R.id.txtFoodTotal);
+            etFoodQuantity = itemView.findViewById(R.id.etFoodQantity);
         }
     }
-    public List<OrderDetail> returnOrderDetail(){
-        return orderDetailList;
+
+    public List<OrderDetail> getDetails() {
+        return role.equals("customer")?detailsOriginal: detailsView;
     }
 }

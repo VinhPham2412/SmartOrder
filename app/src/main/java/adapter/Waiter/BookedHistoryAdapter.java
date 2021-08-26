@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.su21g3project.Customer.BillActivity;
+import com.example.su21g3project.General.BillActivity;
 import com.example.su21g3project.Customer.OrdersFoodActivity;
 import com.example.su21g3project.General.GetBuffetActivity;
 import com.example.su21g3project.R;

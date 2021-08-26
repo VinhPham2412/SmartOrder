@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/yellow"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    android:background="@color/yellow">
 
     <TextView
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
         android:id="@+id/buffet_name"
-        android:textSize="22dp"
+        android:layout_width="480dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
+
     <TextView
-        android:gravity="center"
         android:id="@+id/bufet_description"
-        android:textSize="18dp"
+        android:layout_width="480dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center"
         android:textColor="@color/black"
+        android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </TextView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buffet_name"></TextView>
 
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:columnCount="2"
-        android:useDefaultMargins="true"
-        android:layout_marginHorizontal="55dp" />
+        android:layout_marginHorizontal="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bufet_description" />
 
     <ImageView
-        android:scaleType="centerCrop"
+        android:id="@+id/imageViewMenu"
+        android:layout_width="480dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custompager"
         android:backgroundTint="@color/material_on_primary_emphasis_medium"
-        android:id="@+id/imageViewMenu"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-         />
-</LinearLayout>
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
