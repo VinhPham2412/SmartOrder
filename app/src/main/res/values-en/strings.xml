@@ -84,11 +84,13 @@
     <string name="home">Home</string>
     <string name="daphucvu">Done</string>
     <string name="requesttopay">Pending</string>
-    <string name="toastinvalidphone">Vui lòng kiểm tra lại số điện thoại</string>
-    <string name="toasrequired">Không được để trống</string>
-    <string name="toasinvalidotp">Vui lòng kiểm tra lại mã OTP</string>
-    <string name="toastInvalidNumer">Số người phải lớn hơn 0</string>
-    <string name="tooBigNumer">Số người không được quá 50</string>
-    <string name="toastBill">Xác nhận thanh toán thành công</string>
-    <string name="toastinvalidorder">Vui lòng chọn đồ</string>
+    <string name="toastinvalidphone">Please check your phone number</string>
+    <string name="toasrequired">Cannot empty</string>
+    <string name="toasinvalidotp">Please check your OTP code</string>
+    <string name="toastInvalidNumer">Number of people cannot lower than 0</string>
+    <string name="tooBigNumer">Number of people cannot exceed 50</string>
+    <string name="toastBill">Bill confirmed</string>
+    <string name="toastinvalidorder">You need to choose something</string>
+    <string name="yourmess">You :</string>
+    <string name="accountBan">Your account has been banned</string>
 </resources>

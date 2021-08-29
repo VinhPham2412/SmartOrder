@@ -13,6 +13,7 @@ public class User {
     private String address;
     private String phone;
     private String role;
+    private boolean status;
 
     public User() {
         role = "customer";
@@ -24,6 +25,13 @@ public class User {
         this.address = address;
         this.phone = phone;
         role = "customer";
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getRole() {

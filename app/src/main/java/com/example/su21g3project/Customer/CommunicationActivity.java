@@ -94,8 +94,6 @@ public class CommunicationActivity extends AppCompatActivity {
                             return;
                         }
                         else {
-
-
                             if (role.equals("customer"))
                                 reference = FirebaseDatabase.getInstance().getReference("Communications").child("customer");
                             else

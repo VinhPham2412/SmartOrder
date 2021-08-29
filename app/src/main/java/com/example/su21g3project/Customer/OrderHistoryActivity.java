@@ -60,13 +60,14 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             String iorderId = orderDetail.getOrderId();
                         if(orderId.equals(iorderId)){
                             Date time = orderDetail.getTime();
+                            String status = orderDetail.getStatus();
                             boolean isFoundPlace = false;
 
                             //go through all exist subResult
                             for (int i = 0; i < result.size(); i++) {
                                 //get list contain elements with same orderId
                                 subResult = result.get(i);
-                                if (isBelong(subResult, time)) {
+                                if (isBelong(subResult, time,status)) {
                                     subResult.add(orderDetail);
                                     isFoundPlace = true;
                                 }
@@ -97,10 +98,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isBelong(List<OrderDetail> list,  Date time) {
+    private boolean isBelong(List<OrderDetail> list, Date time, String status) {
         if (!list.isEmpty() && list != null) {
-            return list.get(0).getTime().toString()
-                    .equals(time.toString());
+            return list.get(0).getTime().toString().equals(time.toString())&&
+                    list.get(0).getStatus().equals(status);
         }
         return false;
     }

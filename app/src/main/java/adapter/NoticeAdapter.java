@@ -51,14 +51,12 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Notice notice=noticeList.get(position);
         holder.txtYourMessage.setText(notice.getMessage());
-        holder.txtMessage.setText(notice.getMessageReply());
+        String reply = notice.getMessageReply();
+        if(reply!=null){
+            holder.txtMessage.setText(reply);
+        }
         viewBinderHelper.bind(holder.swipeRevealLayout,notice.getId());
-        holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reference.child(notice.getId()).child("isSeen").setValue(true);
-            }
-        });
+        holder.layoutDelete.setOnClickListener(v -> reference.child(notice.getId()).child("isSeen").setValue(true));
 
     }
 
@@ -77,8 +75,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             swipeRevealLayout=itemView.findViewById(R.id.SwipeRevealLayout);
             layoutDelete=itemView.findViewById(R.id.layoutDelete);
             txtYourMessage=itemView.findViewById(R.id.txtYourMessgae);
-
-
         }
     }
 }

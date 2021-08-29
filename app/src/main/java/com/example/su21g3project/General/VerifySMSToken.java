@@ -69,23 +69,30 @@ public class VerifySMSToken extends AppCompatActivity {
                                 //if have account and login
                                 if (snapshot.exists() && type.equals("login")) {
                                     User user = snapshot.getValue(User.class);
-                                    String role = user.getRole();
-                                    switch (role) {
-                                        case "customer":
-                                            Intent intent = new Intent(VerifySMSToken.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                            break;
-                                        case "waiter":
-                                            Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
-                                            startActivity(intent1);
-                                            finish();
-                                            break;
-                                        case "chef":
-                                            Intent intent2 = new Intent(VerifySMSToken.this, MainChefActivity.class);
-                                            startActivity(intent2);
-                                            finish();
-                                            break;
+                                    if(user.getStatus()){
+                                        String role = user.getRole();
+                                        switch (role) {
+                                            case "customer":
+                                                Intent intent = new Intent(VerifySMSToken.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                                break;
+                                            case "waiter":
+                                                Intent intent1 = new Intent(VerifySMSToken.this, MainWaiterActivity.class);
+                                                startActivity(intent1);
+                                                finish();
+                                                break;
+                                            case "chef":
+                                                Intent intent2 = new Intent(VerifySMSToken.this, MainChefActivity.class);
+                                                startActivity(intent2);
+                                                finish();
+                                                break;
+                                        }
+                                    }else{
+                                        Intent intent = new Intent(VerifySMSToken.this, LoginActivity.class);
+                                        Toast.makeText(getApplicationContext(),getString(R.string.accountBan),Toast.LENGTH_SHORT).show();
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 }
                                 //if don't have account and register

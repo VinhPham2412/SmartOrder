@@ -171,7 +171,7 @@ public class GetTableActivity extends AppCompatActivity {
             String numberOfPeople = noPp.getText().toString();
             try {
                 int nopp = Integer.parseInt(numberOfPeople);
-                if(nopp==0){
+                if(nopp<=0){
                     Toast.makeText(this,getString(R.string.toastInvalidNumer)
                             ,Toast.LENGTH_SHORT).show();
                     return;

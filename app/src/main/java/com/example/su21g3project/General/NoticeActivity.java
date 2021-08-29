@@ -58,7 +58,7 @@ public class NoticeActivity extends AppCompatActivity {
                 noticeList.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Notice notice=dataSnapshot.getValue(Notice.class);
-                    if (!notice.getIsSeen()&& notice.getUserId().equals(user.getUid()) && notice.getIsReply()){
+                    if (!notice.getIsSeen()&& notice.getUserId().equals(user.getUid())){
                         noticeList.add(notice);
                     }
                 }

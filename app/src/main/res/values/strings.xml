@@ -51,7 +51,7 @@
     <string name="chefCommunication">Giao tiếp với Quản lí</string>
     <string name="Giaotiep">Giao Tiếp</string>
     <string name="selectedLanguage">Tiếng Việt</string>
-    <string name="quanly">Quản lý</string>
+    <string name="quanly">Quản lý : </string>
     <string name="delete">Xóa</string>
     <string name="today">Hôm nay</string>
     <string name="tomorrow">Ngày mai</string>
@@ -90,5 +90,7 @@
     <string name="tooBigNumer">Số người không được quá 50</string>
     <string name="toastBill">Xác nhận thanh toán thành công</string>
     <string name="toastinvalidorder">Vui lòng chọn đồ</string>
+    <string name="yourmess">Bạn :</string>
+    <string name="accountBan">Tài khoản của bạn đã bị khóa</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

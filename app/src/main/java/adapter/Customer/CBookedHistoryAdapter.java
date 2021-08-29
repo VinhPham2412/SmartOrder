@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import Model.Floor;
@@ -83,6 +84,7 @@ public class CBookedHistoryAdapter extends RecyclerView.Adapter<CBookedHistoryAd
     }
 
     public CBookedHistoryAdapter(List<Order> list, Context context) {
+        Collections.reverse(list);
         this.list = list;
         this.context = context;
     }
